@@ -1,0 +1,30 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      # Pflicht – schlägt fehl, wenn nicht gesetzt. Pro Deployment einzigartig erzeugen.
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?PAYLOAD_SECRET muss gesetzt sein (openssl rand -hex 32)}
+      SITE_NAME: ${SITE_NAME:-Draft Website}
+      DATABASE_URI: file:/app/data/content.db
+      MEDIA_DIR: /app/media
+      PUBLIC_URL: ${PUBLIC_URL:-}
+      # Optional: E-Mail-Versand für Formular-Benachrichtigungen.
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM_ADDRESS: ${SMTP_FROM_ADDRESS:-}
+      SMTP_FROM_NAME: ${SMTP_FROM_NAME:-}
+      # Optionaler Admin-Erstbenutzer beim ersten Start.
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+    volumes:
+      - draft_data:/app/data
+      - draft_media:/app/media
+
+volumes:
+  draft_data:
+  draft_media:

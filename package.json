@@ -1,0 +1,46 @@
+{
+  "name": "draft-website",
+  "version": "1.0.0",
+  "description": "Wiederverwendbarer Website-Draft (Next.js + Payload CMS + SQLite)",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "devsafe": "rm -rf .next && next dev",
+    "reset": "node scripts/reset.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap",
+    "migrate": "payload migrate",
+    "migrate:create": "payload migrate:create",
+    "start:prod": "payload migrate && next start",
+    "payload": "payload"
+  },
+  "dependencies": {
+    "@payloadcms/db-sqlite": "3.85.0",
+    "@payloadcms/email-nodemailer": "3.85.0",
+    "@payloadcms/next": "3.85.0",
+    "@payloadcms/plugin-form-builder": "3.85.0",
+    "@payloadcms/richtext-lexical": "3.85.0",
+    "graphql": "^16.8.1",
+    "next": "15.4.11",
+    "payload": "3.85.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "sharp": "0.34.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@types/node": "^22.5.4",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.11",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  }
+}
