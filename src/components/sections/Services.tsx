@@ -8,13 +8,13 @@ export function Services({ leistungen }: { leistungen: Leistungen[] }) {
     <section className="sec services" id="leistungen">
       <div className="wrap">
         <div className="sec-head reveal" data-index="01">
-          <span className="eyebrow">Was wir können</span>
+          <span className="eyebrow">Unsere Leistungen</span>
           <h2>
-            Ein Gewerk. <em>Volle Verantwortung.</em>
+            Medizin, <em>die mitdenkt.</em>
           </h2>
           <p>
-            Wir planen, fertigen und montieren — vom ersten Aufmaß bis zur letzten Schraube. So bleibt die Qualität in einer Hand und Sie haben einen
-            Ansprechpartner.
+            Von der hausärztlichen Versorgung bis zur Vorsorge — bei uns sind Sie in guten Händen. Diagnostik, Behandlung und Begleitung aus einer Hand,
+            mit Zeit für das persönliche Gespräch.
           </p>
         </div>
         <div className="svc-grid">

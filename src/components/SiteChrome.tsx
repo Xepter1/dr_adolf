@@ -13,22 +13,41 @@ export interface ChromeSettings {
   addressCity?: string | null
 }
 
+export interface NavLeistung {
+  title: string
+  slug?: string | null
+}
+
 const PhoneIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
   </svg>
 )
 
-export function HeaderHome({ settings }: { settings: ChromeSettings }) {
+export function HeaderHome({ settings, leistungen = [] }: { settings: ChromeSettings; leistungen?: NavLeistung[] }) {
   return (
     <header className="site-header site-header--home" id="hdr">
       <div className="wrap nav">
         <Brand name={settings.brandName} suffix={settings.brandSuffix} href="/" />
         <nav>
           <ul>
-            <li><a href="#leistungen">Leistungen</a></li>
-            <li><a href="#projekte">Projekte</a></li>
-            <li><a href="#ueber">Über uns</a></li>
+            <li className={leistungen.length > 0 ? 'has-sub' : undefined}>
+              <a href="#leistungen" aria-haspopup={leistungen.length > 0 ? true : undefined}>
+                Leistungen
+                {leistungen.length > 0 && <span className="caret" aria-hidden="true">▾</span>}
+              </a>
+              {leistungen.length > 0 && (
+                <ul className="submenu">
+                  {leistungen.map((l) => (
+                    <li key={l.slug ?? l.title}>
+                      <Link href={`/leistungen/${l.slug}`}>{l.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+            <li><a href="#team">Unser Team</a></li>
+            <li><a href="#oeffnungszeiten">Öffnungszeiten</a></li>
             <li><a href="#karriere">Karriere</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
           </ul>
@@ -37,9 +56,9 @@ export function HeaderHome({ settings }: { settings: ChromeSettings }) {
           <a href={`tel:${settings.phoneHref}`} className="tel">
             <PhoneIcon /> {settings.phoneDisplay}
           </a>
-          <a href="#kontakt" className="btn">
-            Angebot anfragen <span className="arr">→</span>
-          </a>
+          <Link href="/termin" className="btn">
+            Termin buchen <span className="arr">→</span>
+          </Link>
         </div>
         <button className="burger" id="burger" aria-label="Menü öffnen">
           <span />
@@ -71,8 +90,8 @@ export function HeaderSub({
             {backLabel}
           </Link>
           {showButton && (
-            <Link href="/#kontakt" className="btn">
-              Angebot anfragen <span className="arr">→</span>
+            <Link href="/termin" className="btn">
+              Termin buchen <span className="arr">→</span>
             </Link>
           )}
         </div>
@@ -81,7 +100,8 @@ export function HeaderSub({
   )
 }
 
-export function FooterHome({ settings, year }: { settings: ChromeSettings; year: number }) {
+export function FooterHome({ settings, year, leistungen = [] }: { settings: ChromeSettings; year: number; leistungen?: NavLeistung[] }) {
+  const footLeistungen = leistungen.slice(0, 5)
   return (
     <footer className="site-footer--home">
       <div className="wrap">
@@ -93,17 +113,23 @@ export function FooterHome({ settings, year }: { settings: ChromeSettings; year:
           <div className="foot-col">
             <h4>Leistungen</h4>
             <ul>
-              <li><Link href="/#leistungen">Dachstühle</Link></li>
-              <li><Link href="/#leistungen">Holzhäuser</Link></li>
-              <li><Link href="/#leistungen">Carports</Link></li>
-              <li><Link href="/#leistungen">Sanierung</Link></li>
+              {footLeistungen.length > 0 ? (
+                footLeistungen.map((l) => (
+                  <li key={l.slug ?? l.title}>
+                    <Link href={`/leistungen/${l.slug}`}>{l.title}</Link>
+                  </li>
+                ))
+              ) : (
+                <li><Link href="/#leistungen">Unsere Leistungen</Link></li>
+              )}
             </ul>
           </div>
           <div className="foot-col">
-            <h4>Betrieb</h4>
+            <h4>Praxis</h4>
             <ul>
-              <li><Link href="/#ueber">Über uns</Link></li>
-              <li><Link href="/#projekte">Projekte</Link></li>
+              <li><Link href="/termin">Termin buchen</Link></li>
+              <li><Link href="/#team">Unser Team</Link></li>
+              <li><Link href="/#oeffnungszeiten">Öffnungszeiten</Link></li>
               <li><Link href="/#karriere">Karriere</Link></li>
               <li><Link href="/#kontakt">Kontakt</Link></li>
             </ul>

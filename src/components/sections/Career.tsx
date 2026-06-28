@@ -9,7 +9,7 @@ export function Career({ settings: s, jobs }: { settings: Setting; jobs: Job[] }
       <div className="wrap">
         <div className="career-grid">
           <div>
-            <span className="eyebrow">Karriere bei {s.brandName}</span>
+            <span className="eyebrow">Jobs & Karriere</span>
             <h2>
               {s.careerHeadingPrefix}
               <em>{s.careerHeadingAccent}</em>

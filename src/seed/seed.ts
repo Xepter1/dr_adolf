@@ -1,25 +1,19 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
 import type { Payload } from 'payload'
 import { rt } from './richtext'
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
-const imgPath = (file: string) => path.resolve(dirname, '../../public/projekte', file)
-
 /**
- * Einmaliges, idempotentes Befüllen der Demo-Inhalte ("Muster"-Daten von
- * AIGNER Holzbau). Jeder Schritt prüft selbst, ob er schon erledigt ist –
- * so kann der Seed jederzeit gefahrlos erneut laufen.
+ * Einmaliges, idempotentes Befüllen der Demo-Inhalte (Muster-Arztpraxis
+ * „Praxis am Stadtpark"). Jeder Schritt prüft selbst, ob er schon erledigt ist –
+ * so kann der Seed jederzeit gefahrlos erneut laufen. Dies ist die kanonische
+ * Inhaltsquelle für den Umbau (siehe CLAUDE.md).
  */
 export const seed = async (payload: Payload): Promise<void> => {
   await seedAdmin(payload)
-  const media = await seedMedia(payload)
-  await seedProjekte(payload, media)
   await seedLeistungen(payload)
+  await seedAerzte(payload)
   await seedTestimonials(payload)
   await seedJobs(payload)
   await seedFaqs(payload)
-  await seedContactForm(payload)
   await seedSettings(payload)
 }
 
@@ -28,225 +22,10 @@ export const seed = async (payload: Payload): Promise<void> => {
 async function seedAdmin(payload: Payload): Promise<void> {
   const { totalDocs } = await payload.count({ collection: 'users' })
   if (totalDocs > 0) return
-  const email = process.env.ADMIN_EMAIL || 'admin@aigner-holzbau.de'
-  const password = process.env.ADMIN_PASSWORD || 'aigner-admin'
+  const email = process.env.ADMIN_EMAIL || 'admin@praxis-am-stadtpark.de'
+  const password = process.env.ADMIN_PASSWORD || 'praxis-admin'
   await payload.create({ collection: 'users', data: { email, password, name: 'Administrator' } })
   payload.logger.info(`✓ Admin-Benutzer angelegt: ${email} (Passwort bitte ändern!)`)
-}
-
-const IMAGES: Record<string, string> = {
-  'wohnhaus-isarhang.jpg': 'Holzhaus-Neubau am Isarhang',
-  'pfettendach-vierseithof.jpg': 'Pfettendach eines Vierseithofs',
-  'geschossaufbau.jpg': 'Geschossaufbau in Holztafelbauweise',
-  'carport-laerche.jpg': 'Doppelcarport aus Lärchenholz',
-  'denkmal-dachsanierung.jpg': 'Sanierter denkmalgeschützter Dachstuhl',
-  'sichtdachstuhl-loft.jpg': 'Ausgebauter Sichtdachstuhl als Loft',
-}
-
-async function seedMedia(payload: Payload): Promise<Record<string, number>> {
-  const map: Record<string, number> = {}
-  for (const [file, alt] of Object.entries(IMAGES)) {
-    const existing = await payload.find({
-      collection: 'media',
-      where: { filename: { equals: file } },
-      limit: 1,
-    })
-    if (existing.docs.length) {
-      map[file] = existing.docs[0].id as number
-      continue
-    }
-    const created = await payload.create({
-      collection: 'media',
-      filePath: imgPath(file),
-      data: { alt },
-    })
-    map[file] = created.id as number
-  }
-  return map
-}
-
-async function seedProjekte(payload: Payload, media: Record<string, number>): Promise<void> {
-  const { totalDocs } = await payload.count({ collection: 'projekte' })
-  if (totalDocs > 0) return
-
-  const projekte = [
-    {
-      slug: 'wohnhaus-isarhang',
-      title: 'Wohnhaus am Isarhang',
-      tag: 'Holzhaus · Neubau',
-      location: 'Landshut',
-      year: '2024',
-      hero: media['wohnhaus-isarhang.jpg'],
-      featuredSize: 'big' as const,
-      lead: 'Ein diffusionsoffenes Holzrahmenhaus am Hang — hoch gedämmt, lichtdurchflutet und in nur sieben Monaten schlüsselfertig.',
-      facts: [
-        { label: 'Bauweise', value: 'Holzrahmenbau' },
-        { label: 'Wohnfläche', value: '184 m²' },
-        { label: 'Bauzeit', value: '7 Monate' },
-        { label: 'Holzart', value: 'Fichte / Lärche' },
-      ],
-      aufgabe:
-        'Die Bauherren wünschten sich ein modernes Effizienzhaus an einem steilen Südhang mit Blick ins Isartal — wohngesund, energiesparend und mit viel sichtbarem Holz. Die Hanglage und ein enges Zeitfenster vor dem Winter machten die Vorfertigung zur Schlüsselfrage.',
-      loesung:
-        'Wände, Decken und Dach haben wir komplett in unserer Halle vorgefertigt — millimetergenau abgebunden und gedämmt. Innerhalb von drei Tagen stand der wetterfeste Rohbau auf der vorbereiteten Bodenplatte. Großflächige Lärchen-Fenster nach Süden, eine Holzfassade aus heimischer Lärche und eine diffusionsoffene Konstruktion sorgen für ein behagliches Raumklima.',
-      ergebnis:
-        'Ein KfW-fähiges Effizienzhaus, das im Sommer kühl und im Winter warm bleibt — und das dank Vorfertigung pünktlich vor dem ersten Schnee unter Dach war. Jeder verbaute Kubikmeter Holz bindet hier dauerhaft CO₂.',
-      gallery: ['wohnhaus-isarhang.jpg', 'geschossaufbau.jpg', 'sichtdachstuhl-loft.jpg'],
-    },
-    {
-      slug: 'pfettendach-vierseithof',
-      title: 'Pfettendach Vierseithof',
-      tag: 'Dachstuhl',
-      location: 'Ergolding',
-      year: '2024',
-      hero: media['pfettendach-vierseithof.jpg'],
-      featuredSize: 'tall' as const,
-      lead: 'Ein weitgespanntes Pfettendach für einen denkmalnahen Vierseithof — traditionell gefügt, modern berechnet.',
-      facts: [
-        { label: 'Konstruktion', value: 'Pfettendach' },
-        { label: 'Spannweite', value: '11,40 m' },
-        { label: 'Material', value: 'KVH / BSH' },
-        { label: 'Montage', value: '2 Tage' },
-      ],
-      aufgabe:
-        'Der historische Vierseithof brauchte einen neuen, statisch tragfähigen Dachstuhl, der sich harmonisch in das bestehende Ensemble einfügt — bei großer Spannweite und ohne störende Stützen im Inneren.',
-      loesung:
-        'Wir haben ein klassisches Pfettendach mit liegendem Stuhl geplant, statisch in BSH ausgeführt und in unserer Halle CNC-abgebunden. Die sichtbaren Verbindungen sind traditionell gezimmert — Versätze und Zapfen statt Stahlwinkel, wo es das Auge sieht.',
-      ergebnis:
-        'Ein Dachtragwerk, das Generationen hält und dem Hof seine Würde zurückgibt. Die Montage war an zwei Tagen abgeschlossen, der Innenraum bleibt stützenfrei nutzbar.',
-      gallery: ['pfettendach-vierseithof.jpg', 'denkmal-dachsanierung.jpg', 'sichtdachstuhl-loft.jpg'],
-    },
-    {
-      slug: 'geschossaufbau',
-      title: 'Geschossaufbau in Holz',
-      tag: 'Aufstockung',
-      location: 'Dingolfing',
-      year: '2023',
-      hero: media['geschossaufbau.jpg'],
-      featuredSize: 'wide' as const,
-      lead: 'Ein komplettes Wohngeschoss in Holztafelbauweise — aufgesetzt auf den Bestand, bei laufendem Betrieb darunter.',
-      facts: [
-        { label: 'Bauweise', value: 'Holztafelbau' },
-        { label: 'Neue Fläche', value: '96 m²' },
-        { label: 'Aufrichtung', value: '1 Tag' },
-        { label: 'Last', value: 'leicht & trocken' },
-      ],
-      aufgabe:
-        'Eine Familie brauchte mehr Platz, wollte aber nicht umziehen. Auf dem bestehenden Flachdachbungalow sollte ein vollwertiges Wohngeschoss entstehen — ohne die Bewohner über Wochen auszuquartieren.',
-      loesung:
-        'Holz ist hier der ideale Baustoff: leicht genug für die vorhandene Statik, trocken und schnell. Die kompletten Wand- und Dachelemente wurden vorgefertigt und an einem einzigen Tag per Kran aufgesetzt. Das Bestandsdach war abends wieder regensicher geschlossen.',
-      ergebnis:
-        'Zwei neue Kinderzimmer, ein Bad und ein Studio — ohne monatelange Baustelle und ohne Umzug. Die Trockenbauweise machte den Innenausbau unmittelbar möglich.',
-      gallery: ['geschossaufbau.jpg', 'wohnhaus-isarhang.jpg', 'pfettendach-vierseithof.jpg'],
-    },
-    {
-      slug: 'doppelcarport-laerche',
-      title: 'Doppelcarport Lärche',
-      tag: 'Carport',
-      location: 'Vilsbiburg',
-      year: '2023',
-      hero: media['carport-laerche.jpg'],
-      featuredSize: 'wide' as const,
-      lead: 'Ein freitragender Doppelcarport aus heimischer Lärche — offen, elegant und ohne störende Mittelstütze.',
-      facts: [
-        { label: 'Holzart', value: 'Lärche, sägerau' },
-        { label: 'Stellplätze', value: '2 + Geräteraum' },
-        { label: 'Konstruktion', value: 'freitragend' },
-        { label: 'Schutz', value: 'naturbelassen' },
-      ],
-      aufgabe:
-        'Gewünscht war ein Unterstand für zwei Fahrzeuge plus Stauraum, der nicht wie ein Fremdkörper wirkt, sondern zum Holzhaus und Garten passt — und der ohne Mittelstütze bequem befahrbar ist.',
-      loesung:
-        'Aus heimischer Lärche haben wir eine freitragende Konstruktion mit verdeckten Stahlverbindern gefertigt. Das Holz bleibt naturbelassen und vergraut mit der Zeit zu einem edlen Silbergrau — wartungsfrei und langlebig.',
-      ergebnis:
-        'Ein Carport, der mehr ist als ein Zweckbau: ein ruhiges, handwerklich sauberes Element, das den Hof aufwertet und Jahrzehnte ohne Pflege übersteht.',
-      gallery: ['carport-laerche.jpg', 'wohnhaus-isarhang.jpg', 'geschossaufbau.jpg'],
-    },
-    {
-      slug: 'denkmal-dachsanierung',
-      title: 'Denkmal-Dachsanierung',
-      tag: 'Sanierung',
-      location: 'Landshut Altstadt',
-      year: '2022',
-      hero: media['denkmal-dachsanierung.jpg'],
-      featuredSize: 'wide' as const,
-      lead: 'Die behutsame Sanierung eines denkmalgeschützten Dachstuhls in der Landshuter Altstadt — Substanz erhalten, Statik ertüchtigt.',
-      facts: [
-        { label: 'Objekt', value: 'Denkmalschutz' },
-        { label: 'Baujahr', value: 'um 1780' },
-        { label: 'Leistung', value: 'Reparatur & Dämmung' },
-        { label: 'Verbindungen', value: 'handgezimmert' },
-      ],
-      aufgabe:
-        'Der über 240 Jahre alte Dachstuhl eines Altstadthauses war an tragenden Punkten geschädigt. In enger Abstimmung mit dem Denkmalschutz sollte so viel historische Substanz wie möglich erhalten und das Dach zugleich energetisch ertüchtigt werden.',
-      loesung:
-        'Wir haben jeden Balken einzeln begutachtet, schadhafte Hölzer mit traditionellen Holzverbindungen — Blattungen und Zapfen — partiell ausgetauscht und gesundes Eichenholz erhalten. Eine diffusionsoffene Aufdachdämmung bringt den Altbau auf einen zeitgemäßen Stand, ohne das Erscheinungsbild zu verändern.',
-      ergebnis:
-        'Ein gerettetes Stück Stadtgeschichte: statisch sicher, gedämmt und für weitere Generationen vorbereitet — vom Denkmalamt ausdrücklich gelobt.',
-      beforeAfter: {
-        before: 'pfettendach-vierseithof.jpg',
-        after: 'denkmal-dachsanierung.jpg',
-        caption: 'Vom geschädigten Bestand zum sanierten Dachstuhl — ziehen Sie den Regler.',
-      },
-      gallery: ['denkmal-dachsanierung.jpg', 'pfettendach-vierseithof.jpg', 'sichtdachstuhl-loft.jpg'],
-    },
-    {
-      slug: 'sichtdachstuhl-loft',
-      title: 'Sichtdachstuhl Loft',
-      tag: 'Innenausbau',
-      location: 'Essenbach',
-      year: '2022',
-      hero: media['sichtdachstuhl-loft.jpg'],
-      featuredSize: 'wide' as const,
-      lead: 'Ein offener Sichtdachstuhl wird zum Herzstück eines Loft-Ausbaus — Konstruktion als Gestaltung.',
-      facts: [
-        { label: 'Charakter', value: 'Sichtkonstruktion' },
-        { label: 'Fläche', value: '72 m²' },
-        { label: 'Oberfläche', value: 'geseift / geölt' },
-        { label: 'Detail', value: 'sichtbare Zapfen' },
-      ],
-      aufgabe:
-        'Unter einem alten Scheunendach sollte ein Wohn-Loft entstehen, das die mächtige Holzkonstruktion nicht verkleidet, sondern feiert — und dabei wohnliche Behaglichkeit erreicht.',
-      loesung:
-        'Wir haben das Tragwerk freigelegt, gereinigt und mit einer natürlichen Seifen- und Öl-Oberfläche veredelt. Neue Einbauten — Galerie, Treppe und Wandschränke — sind präzise auf die bestehenden Sparren abgestimmt und maßgefertigt.',
-      ergebnis:
-        'Ein Raum mit Charakter, in dem jede Verbindung sichtbar bleibt. Handwerk wird hier zur Architektur — warm, ehrlich und einzigartig.',
-      gallery: ['sichtdachstuhl-loft.jpg', 'geschossaufbau.jpg', 'denkmal-dachsanierung.jpg'],
-    },
-  ]
-
-  for (let i = 0; i < projekte.length; i++) {
-    const p = projekte[i]
-    await payload.create({
-      collection: 'projekte',
-      data: {
-        slug: p.slug,
-        title: p.title,
-        tag: p.tag,
-        location: p.location,
-        year: p.year,
-        hero: p.hero,
-        featuredSize: p.featuredSize,
-        sortOrder: i,
-        lead: p.lead,
-        facts: p.facts,
-        aufgabe: p.aufgabe,
-        loesung: p.loesung,
-        ergebnis: p.ergebnis,
-        gallery: p.gallery.map((f) => media[f]),
-        ...(p.beforeAfter
-          ? {
-              beforeAfter: {
-                before: media[p.beforeAfter.before],
-                after: media[p.beforeAfter.after],
-                caption: p.beforeAfter.caption,
-              },
-            }
-          : {}),
-      },
-    })
-  }
-  payload.logger.info('✓ 6 Projekte angelegt')
 }
 
 async function seedLeistungen(payload: Payload): Promise<void> {
@@ -254,15 +33,143 @@ async function seedLeistungen(payload: Payload): Promise<void> {
   if (totalDocs > 0) return
   const leistungen: Array<{
     title: string
-    icon: 'roof' | 'house' | 'carport' | 'renovation' | 'addition' | 'interior'
+    icon: 'stethoscope' | 'heart' | 'shield' | 'child' | 'lab' | 'housecall'
     description: string
+    lead: string
+    intro: string
+    leistungspunkte: Array<{ text: string }>
+    ablauf: Array<{ titel: string; text: string }>
+    faq: Array<{ frage: string; antwort: string }>
   }> = [
-    { title: 'Dachstühle', icon: 'roof', description: 'Pfetten-, Sparren- und Kehlbalkendächer — millimetergenau abgebunden in unserer Halle, sturmsicher montiert auf Ihrem Rohbau.' },
-    { title: 'Holzhäuser', icon: 'house', description: 'Holzrahmen- und Holztafelbau für Wohngebäude — diffusionsoffen, hoch gedämmt und schlüsselfertig auf Wunsch.' },
-    { title: 'Carports & Terrassen', icon: 'carport', description: 'Freitragende Carports, überdachte Terrassen und Pergolen aus heimischem Lärchen- und Douglasienholz.' },
-    { title: 'Dachsanierung', icon: 'renovation', description: 'Energetische Sanierung, neue Dämmung und Eindeckung — wir bringen Ihren Altbau auf den heutigen Stand.' },
-    { title: 'Aufstockungen', icon: 'addition', description: 'Mehr Wohnraum ohne Umzug: wir setzen ganze Geschosse in Holzbauweise auf bestehende Gebäude — schnell und trocken.' },
-    { title: 'Innenausbau', icon: 'interior', description: 'Sichtbare Holzdecken, Trockenbau, Böden und maßgefertigte Einbauten — der warme letzte Schliff im Innenraum.' },
+    {
+      title: 'Hausärztliche Versorgung',
+      icon: 'stethoscope',
+      description: 'Ihre erste Anlaufstelle bei Beschwerden — Diagnostik, Behandlung und die Begleitung chronischer Erkrankungen, alles aus einer Hand.',
+      lead: 'Ihre erste Anlaufstelle für alle gesundheitlichen Fragen — von akuten Beschwerden bis zur langfristigen Begleitung.',
+      intro:
+        'Als Hausarztpraxis sind wir Ihr fester Ansprechpartner: Wir kennen Ihre Krankengeschichte, koordinieren Fachärzte und behalten den Überblick über Ihre Medikamente. Ob grippaler Infekt, Rückenschmerzen oder eine chronische Erkrankung — bei uns bekommen Sie Diagnostik, Behandlung und Beratung aus einer Hand, mit Zeit für das persönliche Gespräch.',
+      leistungspunkte: [
+        { text: 'Akutsprechstunde bei Infekten, Schmerzen und Verletzungen' },
+        { text: 'Betreuung chronischer Erkrankungen (Bluthochdruck, Diabetes, Asthma)' },
+        { text: 'Disease-Management-Programme (DMP) und Vorsorgeplanung' },
+        { text: 'Wundversorgung, Verbände und kleine Eingriffe' },
+        { text: 'Überweisungs- und Medikamentenmanagement, Rezepte' },
+      ],
+      ablauf: [
+        { titel: 'Termin buchen', text: 'Wählen Sie online einen freien Termin oder rufen Sie uns an. Als Neupatient können Sie den Anamnesebogen vorab verschlüsselt ausfüllen.' },
+        { titel: 'Untersuchung & Gespräch', text: 'Wir hören zu, untersuchen und besprechen die nächsten Schritte verständlich mit Ihnen.' },
+        { titel: 'Behandlung & Begleitung', text: 'Sie erhalten einen klaren Plan — und bei Bedarf Folgetermine, Überweisungen oder Rezepte.' },
+      ],
+      faq: [
+        { frage: 'Brauche ich eine Überweisung?', antwort: 'Nein. Als Hausarztpraxis sind wir Ihre direkte Anlaufstelle — Sie können sich jederzeit ohne Überweisung bei uns vorstellen.' },
+        { frage: 'Bekomme ich Folgerezepte auch ohne Termin?', antwort: 'Für Dauermedikamente genügt oft ein kurzer Anruf an der Anmeldung. Bei Änderungen vereinbaren wir einen kurzen Termin.' },
+      ],
+    },
+    {
+      title: 'Vorsorge & Check-ups',
+      icon: 'heart',
+      description: 'Gesundheits-Check-up, Hautkrebs-Screening und Herz-Kreislauf-Vorsorge — damit kleine Auffälligkeiten früh erkannt werden.',
+      lead: 'Früh erkennen, statt spät behandeln — strukturierte Vorsorge, die zu Ihrem Alter und Risiko passt.',
+      intro:
+        'Viele Erkrankungen lassen sich vermeiden oder gut behandeln, wenn man sie früh erkennt. In der Vorsorge nehmen wir uns Zeit, Ihre Werte einzuordnen und gemeinsam mit Ihnen die richtigen Schritte zu planen — vom gesetzlichen Gesundheits-Check-up bis zur individuellen Herz-Kreislauf-Vorsorge.',
+      leistungspunkte: [
+        { text: 'Gesundheits-Check-up (ab 18 bzw. ab 35 Jahren, gesetzlich)' },
+        { text: 'Hautkrebs-Screening' },
+        { text: 'Herz-Kreislauf-Vorsorge inkl. Blutdruck- und Blutfettwerte' },
+        { text: 'Krebsfrüherkennung und Beratung zu weiteren Untersuchungen' },
+        { text: 'Impfstatus-Check und Vorsorgeplanung' },
+      ],
+      ablauf: [
+        { titel: 'Anamnese', text: 'Wir besprechen Ihre Vorgeschichte, Lebensgewohnheiten und mögliche Risiken.' },
+        { titel: 'Untersuchung & Labor', text: 'Körperliche Untersuchung, Blutdruck, EKG und bei Bedarf eine Blutprobe direkt in der Praxis.' },
+        { titel: 'Auswertung', text: 'Sie erhalten Ihre Ergebnisse verständlich erklärt — mit konkreten Empfehlungen.' },
+      ],
+      faq: [
+        { frage: 'Wie oft steht mir ein Check-up zu?', antwort: 'Gesetzlich Versicherte haben ab 35 Jahren alle drei Jahre Anspruch auf den Gesundheits-Check-up; zwischen 18 und 34 einmalig. Wir beraten Sie zum richtigen Intervall.' },
+      ],
+    },
+    {
+      title: 'Impfungen & Reisemedizin',
+      icon: 'shield',
+      description: 'Schutzimpfungen nach STIKO, Auffrischungen und eine individuelle Reiseberatung inklusive der nötigen Impfungen.',
+      lead: 'Gut geschützt — im Alltag wie auf Reisen. Wir prüfen Ihren Impfstatus und beraten individuell.',
+      intro:
+        'Impfungen gehören zum wirksamsten Schutz, den die Medizin kennt. Wir impfen nach den Empfehlungen der STIKO, frischen abgelaufene Impfungen auf und beraten Sie vor Fernreisen, welche Impfungen und Prophylaxen sinnvoll sind — abgestimmt auf Reiseziel, Dauer und Ihre Gesundheit.',
+      leistungspunkte: [
+        { text: 'Standard- und Auffrischimpfungen nach STIKO' },
+        { text: 'Grippe- und weitere saisonale Impfungen' },
+        { text: 'Reiseberatung inkl. empfohlener Reiseimpfungen' },
+        { text: 'Malaria-Prophylaxe und Reiseapotheke' },
+        { text: 'Impfausweis prüfen und vervollständigen' },
+      ],
+      ablauf: [
+        { titel: 'Impfpass-Check', text: 'Bringen Sie Ihren Impfausweis mit — wir prüfen, was fehlt oder aufgefrischt werden sollte.' },
+        { titel: 'Beratung', text: 'Bei Reisen besprechen wir Ziel, Route und Zeitplan und empfehlen die passenden Impfungen.' },
+        { titel: 'Impfung', text: 'Viele Impfungen sind sofort möglich; Reiseimpfungen planen wir rechtzeitig vor Abreise.' },
+      ],
+      faq: [
+        { frage: 'Wie früh vor einer Reise sollte ich kommen?', antwort: 'Am besten vier bis sechs Wochen vorher, da manche Impfungen mehrere Dosen oder einen Vorlauf brauchen. Auch kurzfristig beraten wir Sie gern.' },
+      ],
+    },
+    {
+      title: 'Kinder- & Jugendmedizin',
+      icon: 'child',
+      description: 'U-Untersuchungen, Impfberatung und akute Erkrankungen — einfühlsame Betreuung vom Säugling bis zum Teenager.',
+      lead: 'Einfühlsame Begleitung vom Säugling bis zum Teenager — medizinisch fundiert und kindgerecht.',
+      intro:
+        'Kinder brauchen eine Medizin, die auf ihr Alter eingeht. Wir begleiten die Entwicklung Ihres Kindes durch die Vorsorgeuntersuchungen, beraten zu Impfungen und sind bei akuten Erkrankungen schnell für Sie da — ruhig, geduldig und auf Augenhöhe mit den kleinen Patienten.',
+      leistungspunkte: [
+        { text: 'U-Untersuchungen (Früherkennung der Entwicklung)' },
+        { text: 'Impfungen und Impfberatung nach STIKO' },
+        { text: 'Akute Erkrankungen im Kindesalter' },
+        { text: 'Beratung zu Ernährung, Schlaf und Entwicklung' },
+        { text: 'Jugend- und Sporttauglichkeitsuntersuchungen' },
+      ],
+      ablauf: [],
+      faq: [
+        { frage: 'Werden die U-Untersuchungen von der Kasse übernommen?', antwort: 'Ja, die regulären Vorsorgeuntersuchungen für Kinder sind Leistungen der gesetzlichen Krankenkassen. Bringen Sie das gelbe Untersuchungsheft mit.' },
+      ],
+    },
+    {
+      title: 'Labor & Diagnostik',
+      icon: 'lab',
+      description: 'Blutbild, EKG, Langzeitmessungen und Ultraschall direkt in der Praxis — schnelle Klarheit ohne lange Wege.',
+      lead: 'Klarheit ohne lange Wege — moderne Diagnostik direkt bei uns in der Praxis.',
+      intro:
+        'Gute Behandlung beginnt mit einer guten Diagnose. Viele Untersuchungen führen wir direkt vor Ort durch, sodass Sie schnell Gewissheit haben. Von der Blutabnahme über das EKG bis zum Ultraschall — kurze Wege, schnelle Ergebnisse und eine verständliche Einordnung.',
+      leistungspunkte: [
+        { text: 'Blutabnahme und Labordiagnostik' },
+        { text: 'Ruhe- und Belastungs-EKG' },
+        { text: 'Langzeit-Blutdruck- und Langzeit-EKG-Messung' },
+        { text: 'Ultraschall (Sonografie) von Bauch und Schilddrüse' },
+        { text: 'Lungenfunktionstest (Spirometrie)' },
+      ],
+      ablauf: [
+        { titel: 'Untersuchung', text: 'Die Messung oder Probenentnahme erfolgt direkt in der Praxis — meist in wenigen Minuten.' },
+        { titel: 'Auswertung', text: 'Laborwerte und Befunde werten wir aus und besprechen sie verständlich mit Ihnen.' },
+      ],
+      faq: [
+        { frage: 'Muss ich für die Blutabnahme nüchtern sein?', antwort: 'Für einige Werte ist Nüchternheit nötig. Wir sagen Ihnen bei der Terminvergabe, ob und wie lange Sie vorher nichts essen sollten.' },
+      ],
+    },
+    {
+      title: 'Hausbesuche',
+      icon: 'housecall',
+      description: 'Wenn der Weg zu uns nicht möglich ist, kommen wir zu Ihnen — für unsere Patienten im Einzugsgebiet.',
+      lead: 'Wenn der Weg in die Praxis nicht möglich ist, kommen wir zu Ihnen nach Hause.',
+      intro:
+        'Nicht immer ist der Weg in die Praxis machbar — etwa bei schwerer Erkrankung, eingeschränkter Mobilität oder in der letzten Lebensphase. Für unsere Patienten im Einzugsgebiet bieten wir Hausbesuche an, damit eine gute Versorgung auch zu Hause sichergestellt ist.',
+      leistungspunkte: [
+        { text: 'Hausbesuche bei akuter Erkrankung und eingeschränkter Mobilität' },
+        { text: 'Betreuung pflegebedürftiger Patienten zu Hause' },
+        { text: 'Versorgung in Zusammenarbeit mit Pflegediensten und Angehörigen' },
+        { text: 'Palliative Begleitung in der letzten Lebensphase' },
+      ],
+      ablauf: [],
+      faq: [
+        { frage: 'Wie vereinbare ich einen Hausbesuch?', antwort: 'Bitte rufen Sie uns möglichst am Vormittag an. Wir klären den Bedarf und stimmen einen passenden Zeitpunkt im Einzugsgebiet der Praxis ab.' },
+      ],
+    },
   ]
   for (let i = 0; i < leistungen.length; i++) {
     await payload.create({ collection: 'leistungen', data: { ...leistungen[i], sortOrder: i } })
@@ -270,13 +177,50 @@ async function seedLeistungen(payload: Payload): Promise<void> {
   payload.logger.info('✓ 6 Leistungen angelegt')
 }
 
+async function seedAerzte(payload: Payload): Promise<void> {
+  const { totalDocs } = await payload.count({ collection: 'aerzte' })
+  if (totalDocs > 0) return
+  // Sprechzeiten: 1 = Mo … 5 = Fr.
+  const vormittag = (tage: string[]) => tage.map((t) => ({ wochentag: t, von: '08:00', bis: '12:00' }))
+  const nachmittag = (tage: string[]) => tage.map((t) => ({ wochentag: t, von: '14:00', bis: '17:00' }))
+  const aerzte = [
+    {
+      titel: 'Dr. med.',
+      name: 'Anna Berger',
+      fachrichtung: 'Fachärztin für Allgemeinmedizin',
+      vita: 'Hausärztliche Versorgung, Vorsorge und Reisemedizin. Seit 2012 in der Praxis.',
+      slotDauerMin: 20,
+      sprechzeiten: [...vormittag(['1', '2', '3', '4', '5']), ...nachmittag(['1', '2', '4'])],
+    },
+    {
+      titel: 'Dr. med.',
+      name: 'Jonas Frey',
+      fachrichtung: 'Facharzt für Innere Medizin',
+      vita: 'Schwerpunkte Herz-Kreislauf und Diabetologie. Internistische Diagnostik und Langzeitbetreuung.',
+      slotDauerMin: 30,
+      sprechzeiten: [...vormittag(['1', '2', '3', '4']), ...nachmittag(['2', '3'])],
+    },
+    {
+      name: 'Sofia Klein',
+      fachrichtung: 'Fachärztin für Kinder- und Jugendmedizin',
+      vita: 'Kindervorsorge (U-Untersuchungen), Impfberatung und akute Erkrankungen im Kindesalter.',
+      slotDauerMin: 20,
+      sprechzeiten: [...vormittag(['1', '3', '5']), ...nachmittag(['1', '4', '5'])],
+    },
+  ]
+  for (let i = 0; i < aerzte.length; i++) {
+    await payload.create({ collection: 'aerzte', data: { ...aerzte[i], aktiv: true, sortOrder: i } as never })
+  }
+  payload.logger.info('✓ 3 Ärzte angelegt')
+}
+
 async function seedTestimonials(payload: Payload): Promise<void> {
   const { totalDocs } = await payload.count({ collection: 'testimonials' })
   if (totalDocs > 0) return
   const stimmen = [
-    { initials: 'FH', author: 'Familie Huber', project: 'Einfamilienhaus, Ergolding', rating: 5, quote: 'Der Dachstuhl stand an einem Tag — und alles passte auf den Millimeter. So eine saubere Baustelle haben wir noch nie erlebt.' },
-    { initials: 'SB', author: 'S. Brandl', project: 'Aufstockung, Dingolfing', rating: 5, quote: 'Festpreis war Festpreis. Keine bösen Überraschungen, ehrliche Beratung und ein Team, dem man beim Arbeiten gern zuschaut.' },
-    { initials: 'RW', author: 'Dr. R. Weiß', project: 'Sanierung, Landshut', rating: 5, quote: 'Unser denkmalgeschütztes Dach war eine Herausforderung. Aigner hat sie mit echtem Handwerksstolz gelöst. Absolute Empfehlung.' },
+    { initials: 'FH', author: 'Familie Hofmann', project: 'Patienten seit 2019', rating: 5, quote: 'Termine online buchen, kurze Wartezeit, und man fühlt sich ernst genommen. Genau so wünscht man sich eine Hausarztpraxis.' },
+    { initials: 'KS', author: 'Karin S.', project: 'Vorsorge', rating: 5, quote: 'Den Anamnesebogen konnte ich vorab in Ruhe von zuhause ausfüllen — beim Termin blieb dann richtig Zeit fürs Gespräch.' },
+    { initials: 'TB', author: 'Thomas B.', project: 'Gesundheits-Check', rating: 5, quote: 'Freundliches Team, modernes Labor direkt vor Ort. Meine Ergebnisse hatte ich schneller als je zuvor.' },
   ]
   for (let i = 0; i < stimmen.length; i++) {
     await payload.create({ collection: 'testimonials', data: { ...stimmen[i], sortOrder: i } })
@@ -288,9 +232,9 @@ async function seedJobs(payload: Payload): Promise<void> {
   const { totalDocs } = await payload.count({ collection: 'jobs' })
   if (totalDocs > 0) return
   const jobs = [
-    { title: 'Zimmerer (m/w/d)', type: 'Vollzeit · Landshut' },
-    { title: 'Azubi Zimmerer (m/w/d)', type: 'Ausbildung ab Sept. · 3 Plätze' },
-    { title: 'Holzbau-Vorarbeiter (m/w/d)', type: 'Vollzeit · Montage' },
+    { title: 'Medizinische:r Fachangestellte:r (m/w/d)', type: 'Vollzeit · ab sofort' },
+    { title: 'MFA für die Anmeldung (m/w/d)', type: 'Teilzeit · flexible Zeiten' },
+    { title: 'Auszubildende:r zur/zum MFA (m/w/d)', type: 'Ausbildung ab September' },
   ]
   for (let i = 0; i < jobs.length; i++) {
     await payload.create({ collection: 'jobs', data: { ...jobs[i], sortOrder: i } })
@@ -302,12 +246,12 @@ async function seedFaqs(payload: Payload): Promise<void> {
   const { totalDocs } = await payload.count({ collection: 'faqs' })
   if (totalDocs > 0) return
   const faqs = [
-    { question: 'Was kostet ein neuer Dachstuhl?', answer: ['Das hängt von Spannweite, Dachform und Ausführung ab — ein einfaches Satteldach kalkuliert sich anders als ein Krüppelwalmdach mit Gauben. Nach einem kostenlosen Vor-Ort-Termin erhalten Sie von uns einen verbindlichen Festpreis, mit dem Sie sicher planen können.'] },
-    { question: 'Wie lange dauert Planung und Montage?', answer: ['Vom Auftrag bis zur Montage vergehen in der Regel wenige Wochen. Weil wir in unserer Halle vorfertigen, steht der Dachstuhl auf der Baustelle dann oft in ein bis zwei Tagen — wetterunabhängig und ohne langen Baulärm.'] },
-    { question: 'Übernehmen Sie auch Statik und Planung?', answer: ['Ja — alles aus einer Hand. Wir liefern Statik, 3D-Abbundplanung und die komplette Ausführung. Sie haben einen Ansprechpartner vom ersten Aufmaß bis zur besenreinen Übergabe.'] },
-    { question: 'Gibt es Förderungen für den Holzbau?', answer: ['Energetische Maßnahmen und effiziente Neubauten sind häufig über KfW- oder BAFA-Programme förderfähig. Wir kennen die gängigen Anforderungen und bauen KfW-fähig — die Antragstellung läuft über Ihren Energieberater, wir liefern die nötigen Nachweise zu.'] },
-    { question: 'Bauen Sie auch außerhalb von Landshut?', answer: ['Unser Stammgebiet ist Niederbayern — Landshut, Ergolding, Dingolfing, Vilsbiburg und Umgebung. Für größere Projekte sind wir auch darüber hinaus unterwegs. Fragen Sie einfach an, wir sagen Ihnen ehrlich, ob wir der richtige Partner sind.'] },
-    { question: 'Festpreis — wirklich ohne Nachträge?', answer: ['Was wir anbieten, gilt. Unser Festpreis umfasst die vereinbarte Leistung vollständig — Mehrkosten entstehen nur, wenn Sie den Umfang ändern. Keine versteckten Posten, keine bösen Überraschungen.'] },
+    { question: 'Wie bekomme ich einen Termin?', answer: ['Am einfachsten online über „Termin buchen": Sie wählen Ihren Arzt und eine Wunschzeit und bestätigen per E-Mail. Telefonisch und persönlich an der Anmeldung geht es natürlich weiterhin.'] },
+    { question: 'Nehmen Sie neue Patienten auf?', answer: ['Ja, wir freuen uns über neue Patienten. Als Neupatient können Sie den Anamnesebogen bequem vorab online ausfüllen — Ende-zu-Ende verschlüsselt und nur für unsere Praxis lesbar.'] },
+    { question: 'Welche Versicherungen akzeptieren Sie?', answer: ['Wir behandeln gesetzlich und privat Versicherte sowie Selbstzahler. Bitte bringen Sie zum ersten Termin Ihre Versichertenkarte mit.'] },
+    { question: 'Was muss ich zum ersten Termin mitbringen?', answer: ['Ihre Versichertenkarte, eine Liste Ihrer aktuellen Medikamente sowie relevante Vorbefunde. Den Anamnesebogen können Sie vorab bequem online ausfüllen.'] },
+    { question: 'Bieten Sie Hausbesuche an?', answer: ['Für Patienten, die nicht in die Praxis kommen können, bieten wir im Einzugsgebiet Hausbesuche an. Bitte sprechen Sie uns dazu telefonisch an.'] },
+    { question: 'Wie erhalte ich ein Folgerezept oder eine Überweisung?', answer: ['Folge- und Dauerrezepte können Sie telefonisch oder über die Anmeldung anfordern. Überweisungen stellen wir im Rahmen der Behandlung aus.'] },
   ]
   for (let i = 0; i < faqs.length; i++) {
     await payload.create({
@@ -318,58 +262,6 @@ async function seedFaqs(payload: Payload): Promise<void> {
   payload.logger.info('✓ 6 FAQ angelegt')
 }
 
-async function seedContactForm(payload: Payload): Promise<void> {
-  const existing = await payload.find({ collection: 'forms', where: { title: { equals: 'Kontakt' } }, limit: 1 })
-  if (existing.docs.length) return
-  // Felder 1:1 wie das ursprüngliche statische Formular.
-  const fields = [
-    { blockType: 'text', name: 'name', label: 'Name', required: true, width: 50 },
-    { blockType: 'text', name: 'telefon', label: 'Telefon', required: false, width: 50 },
-    { blockType: 'email', name: 'email', label: 'E-Mail', required: true, width: 100 },
-    {
-      blockType: 'select',
-      name: 'vorhaben',
-      label: 'Ihr Vorhaben',
-      required: false,
-      width: 100,
-      options: [
-        { label: 'Dachstuhl / Neubau', value: 'dachstuhl-neubau' },
-        { label: 'Holzhaus', value: 'holzhaus' },
-        { label: 'Carport / Terrasse', value: 'carport-terrasse' },
-        { label: 'Dachsanierung', value: 'dachsanierung' },
-        { label: 'Aufstockung', value: 'aufstockung' },
-        { label: 'Innenausbau', value: 'innenausbau' },
-        { label: 'Sonstiges', value: 'sonstiges' },
-      ],
-    },
-    { blockType: 'textarea', name: 'nachricht', label: 'Nachricht', required: false, width: 100 },
-  ]
-
-  await payload.create({
-    collection: 'forms',
-    // Das Block-Union des Form-Builders ist sehr breit typisiert – hier bewusst gelockert.
-    data: {
-      title: 'Kontakt',
-      submitButtonLabel: 'Anfrage senden',
-      confirmationType: 'message',
-      confirmationMessage: rt(['Danke — wir melden uns innerhalb von 24 Stunden bei Ihnen!']),
-      emails: [
-        {
-          emailTo: process.env.CONTACT_TO || 'servus@aigner-holzbau.de',
-          subject: 'Neue Anfrage über die Website',
-          message: rt([
-            'Neue Anfrage von {{name}} ({{email}}, Telefon: {{telefon}}).',
-            'Vorhaben: {{vorhaben}}',
-            'Nachricht: {{nachricht}}',
-          ]),
-        },
-      ],
-      fields,
-    } as never,
-  })
-  payload.logger.info('✓ Kontaktformular angelegt')
-}
-
 async function seedSettings(payload: Payload): Promise<void> {
   const current = await payload.findGlobal({ slug: 'settings' })
   // Nur befüllen, wenn die Listen-Felder noch leer sind (sonst Editor-Eingaben nicht überschreiben).
@@ -377,26 +269,55 @@ async function seedSettings(payload: Payload): Promise<void> {
   await payload.updateGlobal({
     slug: 'settings',
     data: {
+      brandName: 'Praxis am',
+      brandSuffix: 'Stadtpark',
+      legalName: 'Gemeinschaftspraxis am Stadtpark',
+      region: 'Musterstadt',
+      tagline: 'Ihre Hausarztpraxis im Herzen von Musterstadt — moderne Medizin, ein herzliches Team und Termine, die Sie bequem online buchen.',
+      phoneDisplay: '0123 456 78 90',
+      phoneHref: '+491234567890',
+      email: 'praxis@praxis-am-stadtpark.de',
+      addressStreet: 'Stadtparkallee 12',
+      addressCity: '12345 Musterstadt',
+      oeffnungszeiten: [
+        { tag: 'Montag', zeit: '08:00 – 12:00 · 14:00 – 17:00' },
+        { tag: 'Dienstag', zeit: '08:00 – 12:00 · 14:00 – 17:00' },
+        { tag: 'Mittwoch', zeit: '08:00 – 12:00' },
+        { tag: 'Donnerstag', zeit: '08:00 – 12:00 · 14:00 – 17:00' },
+        { tag: 'Freitag', zeit: '08:00 – 12:00' },
+        { tag: 'Samstag & Sonntag', zeit: 'geschlossen' },
+      ],
+      heroBadge: 'Hausärztliche Gemeinschaftspraxis · Musterstadt',
+      heroHeadingLine1: 'Willkommen',
+      heroHeadingPrefix: 'in der ',
+      heroHeadingAccent: 'Praxis',
+      heroLead: '',
       heroStats: [
-        { value: '35+', label: 'Jahre Erfahrung' },
-        { value: '640', label: 'Projekte realisiert' },
-        { value: '18', label: 'Mitarbeiter & Meister' },
+        { value: '3', label: 'Ärzte im Team' },
+        { value: '< 24 h', label: 'online buchbar' },
+        { value: '4,9 ★', label: 'Patientenbewertung' },
       ],
       marquee: [
-        { word: 'Dachstühle' },
-        { word: 'Holzrahmenbau' },
-        { word: 'Carports' },
-        { word: 'Aufstockungen' },
-        { word: 'Dachsanierung' },
-        { word: 'Terrassen' },
-        { word: 'Innenausbau' },
+        { word: 'Hausärztliche Versorgung' },
+        { word: 'Vorsorge' },
+        { word: 'Impfungen' },
+        { word: 'Kindermedizin' },
+        { word: 'Labor & Diagnostik' },
+        { word: 'Reisemedizin' },
+        { word: 'Hausbesuche' },
       ],
       stats: [
-        { count: 35, suffix: '+', label: 'Jahre am Markt' },
-        { count: 640, suffix: '', label: 'Dächer & Häuser gebaut' },
-        { count: 100, suffix: '%', label: 'Termintreue 2024' },
-        { count: 12000, suffix: ' m³', label: 'Holz verbaut' },
+        { count: 3, suffix: '', label: 'Ärzte' },
+        { count: 12, suffix: '', label: 'im gesamten Team' },
+        { count: 9500, suffix: '+', label: 'Patienten betreut' },
+        { count: 24, suffix: ' h', label: 'online buchbar' },
       ],
+      careerHeadingPrefix: 'Werde Teil ',
+      careerHeadingAccent: 'unseres Teams.',
+      careerText:
+        'Wir suchen Menschen, die mit Herz und Sorgfalt arbeiten. Bei uns erwarten dich ein freundliches Team, moderne Ausstattung, geregelte Arbeitszeiten und faire Bezahlung.',
+      buchungIntro:
+        'Buchen Sie Ihren Termin online — wählen Sie Ihren Arzt und eine Wunschzeit und bestätigen Sie per E-Mail. Bitte geben Sie keine sensiblen Gesundheitsdetails an; die Terminart genügt.',
     },
   })
   payload.logger.info('✓ Einstellungen befüllt')

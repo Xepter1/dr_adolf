@@ -5,7 +5,7 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
     <section className="sec testi">
       <div className="wrap">
         <div className="sec-head reveal center" data-index="03">
-          <span className="eyebrow">Stimmen unserer Bauherren</span>
+          <span className="eyebrow">Das sagen unsere Patienten</span>
           <h2>
             Was am Ende <em>zählt.</em>
           </h2>

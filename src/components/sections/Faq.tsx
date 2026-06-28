@@ -11,7 +11,7 @@ export function Faq({ faqs }: { faqs: FaqType[] }) {
           <h2>
             Gut zu <em>wissen.</em>
           </h2>
-          <p>Die Fragen, die uns Bauherren am häufigsten stellen — ehrlich beantwortet.</p>
+          <p>Die Fragen, die uns Patienten am häufigsten stellen — klar beantwortet.</p>
         </div>
         <div className="faq-list">
           {faqs.map((f, i) => (

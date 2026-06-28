@@ -6,7 +6,6 @@ import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { mediaUrl, mediaAlt, currentYear } from '@/lib/format'
 import { HeaderSub, FooterSub } from '@/components/SiteChrome'
-import { ThemeSwitch } from '@/components/ThemeSwitch'
 import type { Projekte, Setting } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -28,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: p.title,
     description: p.lead,
-    openGraph: { type: 'article', title: `${p.title} — AIGNER Holzbau`, description: p.lead, images: [mediaUrl(p.hero)] },
+    openGraph: { type: 'article', title: `${p.title} — Praxis am Stadtpark`, description: p.lead, images: [mediaUrl(p.hero)] },
   }
 }
 
@@ -207,8 +206,6 @@ export default async function ProjektPage({ params }: { params: Promise<{ slug: 
           { href: '/', label: 'Startseite' },
         ]}
       />
-
-      <ThemeSwitch />
 
       {/* LIGHTBOX */}
       <div className="lb" id="lb" role="dialog" aria-modal="true" aria-label="Bildansicht" aria-hidden="true">

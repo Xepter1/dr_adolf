@@ -23,34 +23,29 @@ const hanken = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.PUBLIC_URL || 'http://localhost:3000'),
   title: {
-    default: 'AIGNER Holzbau — Meisterhafter Holzbau aus Niederbayern',
-    template: '%s — AIGNER Holzbau',
+    default: 'Praxis am Stadtpark — Hausärztliche Gemeinschaftspraxis in Musterstadt',
+    template: '%s — Praxis am Stadtpark',
   },
   description:
-    'AIGNER Holzbau – Meisterbetrieb für Dachstühle, Holzhäuser, Carports und Innenausbau aus Niederbayern. Holzbau, der bleibt.',
-  authors: [{ name: 'AIGNER Holzbau GmbH' }],
+    'Hausärztliche Gemeinschaftspraxis in Musterstadt. Termine bequem online buchen, den Anamnesebogen vorab ausfüllen — moderne Medizin und persönliche Betreuung.',
+  authors: [{ name: 'Gemeinschaftspraxis am Stadtpark' }],
   icons: { icon: '/favicon.svg', apple: '/favicon.svg' },
   openGraph: {
     type: 'website',
     locale: 'de_DE',
-    siteName: 'AIGNER Holzbau',
-    title: 'AIGNER Holzbau — Holzbau, der bleibt.',
+    siteName: 'Praxis am Stadtpark',
+    title: 'Praxis am Stadtpark — Ihre Hausarztpraxis',
     description:
-      'Meisterbetrieb aus Niederbayern für Dachstühle, Holzhäuser, Carports & Sanierung. Ehrlich, präzise, aus einer Hand.',
-    images: ['/projekte/wohnhaus-isarhang.jpg'],
+      'Hausärztliche Gemeinschaftspraxis in Musterstadt: Termine online buchen, Anamnese vorab ausfüllen, kurze Wege. Moderne Medizin, persönlich.',
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary' },
 }
-
-// Setzt die gespeicherte Farbwelt VOR dem ersten Paint (kein Flackern).
-const themeBootstrap = `(function(){try{var t=localStorage.getItem('site-theme');if(t&&t!=='holz')document.documentElement.dataset.theme=t;}catch(e){}})();`
 
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de" className={`${fraunces.variable} ${hanken.variable}`}>
       <head>
-        <meta name="theme-color" content="#1b1409" />
-        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+        <meta name="theme-color" content="#102019" />
       </head>
       <body>
         <SiteScripts />

@@ -72,6 +72,9 @@ export interface Config {
     testimonials: Testimonial;
     jobs: Job;
     faqs: Faq;
+    aerzte: Aerzte;
+    termine: Termine;
+    anamnese: Anamnese;
     media: Media;
     users: User;
     forms: Form;
@@ -88,6 +91,9 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    aerzte: AerzteSelect<false> | AerzteSelect<true>;
+    termine: TermineSelect<false> | TermineSelect<true>;
+    anamnese: AnamneseSelect<false> | AnamneseSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -241,7 +247,7 @@ export interface Media {
   };
 }
 /**
- * Die Leistungskacheln im Abschnitt „Was wir können".
+ * Die Leistungskacheln in der Hero — jede mit eigener Detailseite unter /leistungen/<slug>.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "leistungen".
@@ -249,9 +255,50 @@ export interface Media {
 export interface Leistungen {
   id: number;
   title: string;
+  /**
+   * Erscheint als Teaser (Kachel/Liste) und als Meta-Description der Detailseite.
+   */
   description: string;
-  icon: 'roof' | 'house' | 'carport' | 'renovation' | 'addition' | 'interior';
+  icon: 'stethoscope' | 'heart' | 'shield' | 'child' | 'lab' | 'housecall';
+  /**
+   * Ein bis zwei Sätze unter der Überschrift der Detailseite.
+   */
+  lead?: string | null;
+  /**
+   * Der Hauptabsatz: worum geht es bei dieser Leistung.
+   */
+  intro?: string | null;
+  /**
+   * Stichpunkt-Liste der konkreten Leistungen.
+   */
+  leistungspunkte?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optionale Schritte, die den Ablauf erklären.
+   */
+  ablauf?:
+    | {
+        titel: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  faq?:
+    | {
+        frage: string;
+        antwort: string;
+        id?: string | null;
+      }[]
+    | null;
   sortOrder?: number | null;
+  /**
+   * Wird automatisch aus dem Titel erzeugt – nur ändern, wenn nötig.
+   */
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -317,6 +364,127 @@ export interface Faq {
     [k: string]: unknown;
   };
   sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Die Ärzte der Praxis – Profilkarten und buchbare Sprechzeiten.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aerzte".
+ */
+export interface Aerzte {
+  id: number;
+  /**
+   * z. B. „Dr. med.", optional.
+   */
+  titel?: string | null;
+  name: string;
+  /**
+   * Erscheint unter dem Namen, z. B. „Fachärztin für Innere Medizin".
+   */
+  fachrichtung: string;
+  foto?: (number | null) | Media;
+  /**
+   * Ein bis zwei Sätze zur Person – erscheint auf der Profilkarte.
+   */
+  vita?: string | null;
+  /**
+   * Nur aktive Ärzte erscheinen im Buchungstool.
+   */
+  aktiv?: boolean | null;
+  /**
+   * Länge eines Slots im Buchungsraster.
+   */
+  slotDauerMin: number;
+  /**
+   * Wöchentliche Blöcke. Lücken zwischen Blöcken (z. B. Mittagspause) sind automatisch nicht buchbar.
+   */
+  sprechzeiten?:
+    | {
+        wochentag: '1' | '2' | '3' | '4' | '5' | '6' | '7';
+        von: string;
+        bis: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * In diesen Zeiträumen werden keine Slots angeboten.
+   */
+  abwesenheiten?:
+    | {
+        von: string;
+        bis: string;
+        grund?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  sortOrder?: number | null;
+  /**
+   * Wird automatisch aus dem Titel erzeugt – nur ändern, wenn nötig.
+   */
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Gebuchte Termine. Enthält Patientendaten – streng vertraulich.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "termine".
+ */
+export interface Termine {
+  id: number;
+  arzt: number | Aerzte;
+  /**
+   * Geschlossene Kategorie – kein Freitext (Datenschutz).
+   */
+  terminart: 'kontrolle' | 'akut' | 'vorsorge' | 'erstgespraech' | 'befundbesprechung';
+  start: string;
+  ende?: string | null;
+  patientName: string;
+  patientGeburtsdatum?: string | null;
+  patientEmail: string;
+  patientTelefon?: string | null;
+  versicherung?: ('gesetzlich' | 'privat' | 'selbstzahler') | null;
+  istNeupatient?: boolean | null;
+  /**
+   * Nur bei Neupatienten, sofern ausgefüllt.
+   */
+  anamnese?: (number | null) | Anamnese;
+  status: 'ausstehend' | 'bestaetigt' | 'abgesagt' | 'wahrgenommen' | 'nicht_erschienen';
+  /**
+   * Nur mit ausdrücklicher Einwilligung bei der Buchung (Art. 9 DSGVO).
+   */
+  erinnerungErwuenscht?: boolean | null;
+  erinnerungGesendet?: boolean | null;
+  /**
+   * Terminkalender ist keine Behandlungsdoku – kurz nach dem Termin löschen.
+   */
+  loeschdatum?: string | null;
+  /**
+   * Nur praxisintern – nicht vom Patienten ausgefüllt.
+   */
+  notizPraxis?: string | null;
+  verifyToken?: string | null;
+  verifyExpiresAt?: string | null;
+  manageToken?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Verschlüsselte Anamnesebögen. Inhalt nur mit dem Praxis-Schlüssel lesbar.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "anamnese".
+ */
+export interface Anamnese {
+  id: number;
+  eingegangenAm?: string | null;
+  ciphertext?: string | null;
+  encryptedKey?: string | null;
+  iv?: string | null;
+  algo?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -582,6 +750,18 @@ export interface PayloadLockedDocument {
         value: number | Faq;
       } | null)
     | ({
+        relationTo: 'aerzte';
+        value: number | Aerzte;
+      } | null)
+    | ({
+        relationTo: 'termine';
+        value: number | Termine;
+      } | null)
+    | ({
+        relationTo: 'anamnese';
+        value: number | Anamnese;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -682,7 +862,30 @@ export interface LeistungenSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   icon?: T;
+  lead?: T;
+  intro?: T;
+  leistungspunkte?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  ablauf?:
+    | T
+    | {
+        titel?: T;
+        text?: T;
+        id?: T;
+      };
+  faq?:
+    | T
+    | {
+        frage?: T;
+        antwort?: T;
+        id?: T;
+      };
   sortOrder?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -719,6 +922,79 @@ export interface FaqsSelect<T extends boolean = true> {
   question?: T;
   answer?: T;
   sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aerzte_select".
+ */
+export interface AerzteSelect<T extends boolean = true> {
+  titel?: T;
+  name?: T;
+  fachrichtung?: T;
+  foto?: T;
+  vita?: T;
+  aktiv?: T;
+  slotDauerMin?: T;
+  sprechzeiten?:
+    | T
+    | {
+        wochentag?: T;
+        von?: T;
+        bis?: T;
+        id?: T;
+      };
+  abwesenheiten?:
+    | T
+    | {
+        von?: T;
+        bis?: T;
+        grund?: T;
+        id?: T;
+      };
+  sortOrder?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "termine_select".
+ */
+export interface TermineSelect<T extends boolean = true> {
+  arzt?: T;
+  terminart?: T;
+  start?: T;
+  ende?: T;
+  patientName?: T;
+  patientGeburtsdatum?: T;
+  patientEmail?: T;
+  patientTelefon?: T;
+  versicherung?: T;
+  istNeupatient?: T;
+  anamnese?: T;
+  status?: T;
+  erinnerungErwuenscht?: T;
+  erinnerungGesendet?: T;
+  loeschdatum?: T;
+  notizPraxis?: T;
+  verifyToken?: T;
+  verifyExpiresAt?: T;
+  manageToken?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "anamnese_select".
+ */
+export interface AnamneseSelect<T extends boolean = true> {
+  eingegangenAm?: T;
+  ciphertext?: T;
+  encryptedKey?: T;
+  iv?: T;
+  algo?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1004,6 +1280,16 @@ export interface Setting {
   email: string;
   addressStreet?: string | null;
   addressCity?: string | null;
+  /**
+   * Je Zeile ein Tag bzw. Tagesbereich und die zugehörige Zeit.
+   */
+  oeffnungszeiten?:
+    | {
+        tag: string;
+        zeit: string;
+        id?: string | null;
+      }[]
+    | null;
   heroBadge?: string | null;
   heroHeadingLine1?: string | null;
   heroHeadingPrefix?: string | null;
@@ -1036,6 +1322,11 @@ export interface Setting {
   careerHeadingPrefix?: string | null;
   careerHeadingAccent?: string | null;
   careerText?: string | null;
+  buchungIntro?: string | null;
+  /**
+   * Öffentlicher Schlüssel der Praxis (Base64-SPKI). Nur damit werden Anamnesebögen verschlüsselt. Der PRIVATE Schlüssel gehört ausschließlich auf die Praxis-Geräte – niemals hier oder auf den Server.
+   */
+  anamnesePublicKey?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1054,6 +1345,13 @@ export interface SettingsSelect<T extends boolean = true> {
   email?: T;
   addressStreet?: T;
   addressCity?: T;
+  oeffnungszeiten?:
+    | T
+    | {
+        tag?: T;
+        zeit?: T;
+        id?: T;
+      };
   heroBadge?: T;
   heroHeadingLine1?: T;
   heroHeadingPrefix?: T;
@@ -1083,6 +1381,8 @@ export interface SettingsSelect<T extends boolean = true> {
   careerHeadingPrefix?: T;
   careerHeadingAccent?: T;
   careerText?: T;
+  buchungIntro?: T;
+  anamnesePublicKey?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

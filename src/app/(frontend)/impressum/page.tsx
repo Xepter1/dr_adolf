@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Impressum',
-  description: 'Impressum der AIGNER Holzbau GmbH, Landshut.',
+  description: 'Impressum der Gemeinschaftspraxis am Stadtpark, Musterstadt.',
   robots: { index: false, follow: true },
 }
 
@@ -29,48 +29,41 @@ export default async function ImpressumPage() {
 
           <h2>Anbieter</h2>
           <p className="addr">
-            <strong>AIGNER Holzbau GmbH</strong>
+            <strong>Gemeinschaftspraxis am Stadtpark</strong> (GbR)
             <br />
-            Sägewerkstraße 4<br />
-            84028 Landshut
+            Dr. med. Anna Berger · Dr. med. Jonas Frey · Sofia Klein
+            <br />
+            Stadtparkallee 12<br />
+            12345 Musterstadt
             <br />
             Deutschland
           </p>
 
-          <h2>Vertreten durch</h2>
-          <p>Martin Aigner (Geschäftsführer)</p>
-
           <h2>Kontakt</h2>
           <p className="addr">
-            Telefon: <a href="tel:+498711234567">0871 123 45 67</a>
+            Telefon: <a href="tel:+491234567890">0123 456 78 90</a>
             <br />
-            E-Mail: <a href="mailto:servus@aigner-holzbau.de">servus@aigner-holzbau.de</a>
+            E-Mail: <a href="mailto:praxis@praxis-am-stadtpark.de">praxis@praxis-am-stadtpark.de</a>
           </p>
 
-          <h2>Registereintrag</h2>
+          <h2>Medizinisch verantwortlich</h2>
+          <p>Dr. med. Anna Berger (Anschrift wie oben)</p>
+
+          <h2>Berufsbezeichnung &amp; berufsrechtliche Regelungen</h2>
           <p className="addr">
-            Eintragung im Handelsregister
+            Gesetzliche Berufsbezeichnung: Ärztin / Arzt (verliehen in der Bundesrepublik Deutschland)
             <br />
-            Registergericht: Amtsgericht Landshut
+            Zuständige Ärztekammer: Landesärztekammer Musterland
             <br />
-            Registernummer: HRB 12345
+            Zuständige Kassenärztliche Vereinigung: KV Musterland
           </p>
-
-          <h2>Umsatzsteuer-ID</h2>
           <p>
-            Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:
-            <br />
-            DE 123 456 789
+            Es gelten insbesondere die Bundesärzteordnung, die Berufsordnung der Landesärztekammer sowie das Heilberufe-Kammergesetz. Die Regelungen sind auf
+            der Website der zuständigen Ärztekammer einsehbar.
           </p>
 
-          <h2>Berufsrechtliche Angaben</h2>
-          <p className="addr">
-            Berufsbezeichnung: Zimmerermeister (verliehen in der Bundesrepublik Deutschland)
-            <br />
-            Zuständige Kammer: Handwerkskammer Niederbayern-Oberpfalz
-            <br />
-            Eingetragen in die Handwerksrolle.
-          </p>
+          <h2>Umsatzsteuer</h2>
+          <p>Heilbehandlungen sind gemäß § 4 Nr. 14 UStG von der Umsatzsteuer befreit.</p>
 
           <h2>Berufshaftpflichtversicherung</h2>
           <p className="addr">
@@ -107,9 +100,9 @@ export default async function ImpressumPage() {
           </p>
 
           <div className="note">
-            <strong>Hinweis (für dieses Muster):</strong> AIGNER Holzbau ist ein fiktives Demonstrationsprojekt. Sämtliche Angaben — Firma, Adresse, Register-
-            und Steuernummern — sind frei erfunden. Vor dem produktiven Einsatz für einen echten Betrieb bitte alle Daten ersetzen und das Impressum rechtlich
-            prüfen lassen.
+            <strong>Hinweis (für dieses Muster):</strong> „Praxis am Stadtpark" ist ein fiktives Demonstrationsprojekt. Sämtliche Angaben — Praxis, Namen,
+            Adresse, Kammern und Versicherungen — sind frei erfunden. Vor dem produktiven Einsatz bitte alle Daten ersetzen und das Impressum rechtlich (insb.
+            ärztliches Berufsrecht) prüfen lassen.
           </div>
         </div>
       </main>

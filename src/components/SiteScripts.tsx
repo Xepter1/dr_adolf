@@ -130,7 +130,7 @@ export default function SiteScripts() {
     if (sw) {
       const tbtns = Array.from(sw.querySelectorAll<HTMLButtonElement>('.tsw'))
       const meta = document.querySelector('meta[name="theme-color"]')
-      const dark: Record<string, string> = { holz: '#1b1409', schiefer: '#222a30', kalk: '#2b3127' }
+      const dark: Record<string, string> = { holz: '#102019', schiefer: '#14222e', kalk: '#2a2519' }
       const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches
       const paint = (name: string) => {
         tbtns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.themeSet === name ? 'true' : 'false'))

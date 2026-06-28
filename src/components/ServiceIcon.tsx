@@ -7,53 +7,54 @@ export function ServiceIcon({ icon }: { icon: string }) {
     stroke: 'currentColor',
     strokeWidth: 2,
     strokeLinejoin: 'round' as const,
+    strokeLinecap: 'round' as const,
     'aria-hidden': true,
   }
   switch (icon) {
-    case 'house':
+    case 'heart':
       return (
         <svg {...common}>
-          <path d="M8 22 24 8l16 14v18H8z" />
-          <path d="M20 40V28h8v12" />
+          <path d="M24 39C12 31 6 23.5 6 16.5A8.5 8.5 0 0 1 24 11a8.5 8.5 0 0 1 18 5.5C42 23.5 36 31 24 39Z" />
+          <path d="M13 23h5l2-4 3 8 2-4h6" strokeWidth="1.5" />
         </svg>
       )
-    case 'carport':
+    case 'shield':
       return (
         <svg {...common}>
-          <path d="M6 18 24 8l18 10" />
-          <path d="M10 18v22M38 18v22M10 40h28" />
-          <path d="M18 40V26h12v14" />
+          <path d="M24 6l14 5v9c0 9-6 16-14 22-8-6-14-13-14-22v-9z" />
+          <path d="M17 23l5 5 9-10" />
         </svg>
       )
-    case 'renovation':
+    case 'child':
       return (
         <svg {...common}>
-          <path d="M6 28 24 12l18 16" />
-          <path d="M30 6l4 4-4 4-4-4z" />
-          <path d="M10 28v12h28V28" />
+          <circle cx="24" cy="13" r="6" />
+          <path d="M14 40v-6a10 10 0 0 1 20 0v6" />
         </svg>
       )
-    case 'addition':
+    case 'lab':
       return (
         <svg {...common}>
-          <path d="M8 40V20l16-12 16 12v20" />
-          <path d="M8 26h32M24 8v32" />
+          <path d="M20 6v11L10 35a4 4 0 0 0 4 6h20a4 4 0 0 0 4-6L28 17V6" />
+          <path d="M17 6h14M15 30h18" />
         </svg>
       )
-    case 'interior':
+    case 'housecall':
       return (
         <svg {...common}>
-          <path d="M6 12h36v24H6z" />
-          <path d="M6 20h36M14 12v24M26 20v16" />
+          <path d="M8 22 24 8l16 14" />
+          <path d="M11 20v20h26V20" />
+          <path d="M24 28v8M20 32h8" />
         </svg>
       )
-    case 'roof':
+    case 'stethoscope':
     default:
       return (
         <svg {...common}>
-          <path d="M6 30 24 10l18 20" />
-          <path d="M12 30 24 18l12 12" />
-          <path d="M6 30h36v8H6z" />
+          <path d="M15 8v8a9 9 0 0 0 18 0V8" />
+          <path d="M13 8h4M31 8h4" />
+          <path d="M24 25v3" />
+          <circle cx="24" cy="33" r="5" />
         </svg>
       )
   }

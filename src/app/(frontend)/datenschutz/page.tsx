@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Datenschutzerklärung',
-  description: 'Datenschutzerklärung der AIGNER Holzbau GmbH.',
+  description: 'Datenschutzerklärung der Gemeinschaftspraxis am Stadtpark.',
   robots: { index: false, follow: true },
 }
 
@@ -29,15 +29,15 @@ export default async function DatenschutzPage() {
 
           <h2>1. Verantwortlicher</h2>
           <p className="addr">
-            <strong>AIGNER Holzbau GmbH</strong>
+            <strong>Gemeinschaftspraxis am Stadtpark</strong> (GbR)
             <br />
-            Martin Aigner
+            Dr. med. Anna Berger
             <br />
-            Sägewerkstraße 4, 84028 Landshut
+            Stadtparkallee 12, 12345 Musterstadt
             <br />
-            Telefon: <a href="tel:+498711234567">0871 123 45 67</a>
+            Telefon: <a href="tel:+491234567890">0123 456 78 90</a>
             <br />
-            E-Mail: <a href="mailto:servus@aigner-holzbau.de">servus@aigner-holzbau.de</a>
+            E-Mail: <a href="mailto:praxis@praxis-am-stadtpark.de">praxis@praxis-am-stadtpark.de</a>
           </p>
 
           <h2>2. Allgemeines zur Datenverarbeitung</h2>
@@ -72,19 +72,37 @@ export default async function DatenschutzPage() {
             entgegenstehen.
           </p>
 
-          <h2>5. Schriftarten (lokal gehostet)</h2>
+          <h2>5. Online-Terminbuchung</h2>
+          <p>
+            Über unser Buchungstool können Sie Termine online vereinbaren. Dabei verarbeiten wir Name, E-Mail-Adresse, optional Ihre Telefonnummer, die
+            gewählten Arzt sowie die <strong>Terminart</strong> (eine grobe Kategorie — keine Symptome oder Diagnosen). Bereits die Tatsache eines Termins
+            ist ein Gesundheitsdatum im Sinne von Art. 9 DSGVO. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b i.&nbsp;V.&nbsp;m. Art. 9 Abs. 2 lit. h DSGVO und
+            § 22 BDSG (Terminorganisation/Behandlung). Zur Bestätigung Ihrer Anfrage setzen wir ein Double-Opt-In-Verfahren ein. Terminerinnerungen erhalten
+            Sie nur mit Ihrer ausdrücklichen, jederzeit widerruflichen Einwilligung (Art. 9 Abs. 2 lit. a DSGVO). Termindaten werden kurz nach dem Termin
+            gelöscht; behandlungsrelevante Inhalte werden in die Patientenakte übernommen.
+          </p>
+
+          <h2>6. Online-Anamnesebogen (Ende-zu-Ende verschlüsselt)</h2>
+          <p>
+            Neupatienten können vorab freiwillig einen Anamnesebogen ausfüllen. Dieser wird bereits <strong>in Ihrem Browser verschlüsselt</strong>, bevor
+            er übertragen wird, und ist ausschließlich mit dem privaten Schlüssel der Praxis lesbar. Unser Server speichert nur das Chiffrat und kann den
+            Inhalt nicht entschlüsseln. Rechtsgrundlage ist Art. 9 Abs. 2 lit. h DSGVO i.&nbsp;V.&nbsp;m. § 22 BDSG. Die Angaben werden nach Übernahme in Ihre
+            Patientenakte aus dem Websystem gelöscht; in der Akte gelten die gesetzlichen Aufbewahrungsfristen (§ 630f BGB).
+          </p>
+
+          <h2>7. Schriftarten (lokal gehostet)</h2>
           <p>
             Diese Website verwendet die Schriftarten „Fraunces" und „Hanken Grotesk". Diese werden <strong>lokal vom eigenen Server</strong> ausgeliefert. Es
             besteht <strong>keine Verbindung zu Servern Dritter</strong> (z.&nbsp;B. Google Fonts), und es werden hierbei keine Daten an Dritte übertragen.
           </p>
 
-          <h2>6. Cookies &amp; Tracking</h2>
+          <h2>8. Cookies &amp; Tracking</h2>
           <p>
             Diese Website setzt <strong>keine Cookies</strong> und nutzt <strong>keine Tracking- oder Analyse-Dienste</strong>. Es findet keine Erstellung von
             Nutzerprofilen statt.
           </p>
 
-          <h2>7. Ihre Rechte</h2>
+          <h2>9. Ihre Rechte</h2>
           <p>Sie haben jederzeit das Recht auf:</p>
           <ul>
             <li>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li>
@@ -99,16 +117,16 @@ export default async function DatenschutzPage() {
             (BayLDA).
           </p>
 
-          <h2>8. Datensicherheit</h2>
+          <h2>10. Datensicherheit</h2>
           <p>
             Wir setzen eine SSL/TLS-Verschlüsselung ein, um die Übertragung Ihrer Daten zu schützen. Eine verschlüsselte Verbindung erkennen Sie am „https://"
             und dem Schloss-Symbol in Ihrer Browserzeile.
           </p>
 
           <div className="note">
-            <strong>Hinweis (für dieses Muster):</strong> AIGNER Holzbau ist ein fiktives Demonstrationsprojekt. Diese Datenschutzerklärung ist ein anpassbarer
-            Mustertext und ersetzt keine Rechtsberatung. Vor dem produktiven Einsatz bitte an die tatsächlich eingesetzten Dienste, das Hosting und den
-            Verantwortlichen anpassen und prüfen lassen.
+            <strong>Hinweis (für dieses Muster):</strong> „Praxis am Stadtpark" ist ein fiktives Demonstrationsprojekt. Diese Datenschutzerklärung ist ein
+            anpassbarer Mustertext und ersetzt keine Rechtsberatung. Gerade bei Gesundheitsdaten (Art. 9 DSGVO) bitte vor dem produktiven Einsatz an die
+            tatsächlich eingesetzten Dienste anpassen und durch einen Datenschutzbeauftragten bzw. Fachanwalt prüfen lassen.
           </div>
         </div>
       </main>
