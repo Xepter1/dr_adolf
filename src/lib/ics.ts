@@ -41,3 +41,24 @@ export function buildICS(o: ICSOptions): string {
   lines.push('STATUS:CONFIRMED', 'END:VEVENT', 'END:VCALENDAR')
   return lines.join('\r\n')
 }
+
+/**
+ * „Zu Google Kalender hinzufügen"-Link (öffnet den vorausgefüllten Termin-Dialog).
+ * Datum im UTC-Format YYYYMMDDTHHMMSSZ – dieselbe Neutralität wie beim .ics.
+ */
+export function googleCalendarUrl(o: {
+  start: Date
+  end: Date
+  title: string
+  details?: string
+  location?: string
+}): string {
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: o.title,
+    dates: `${fmt(o.start)}/${fmt(o.end)}`,
+  })
+  if (o.details) params.set('details', o.details)
+  if (o.location) params.set('location', o.location)
+  return `https://calendar.google.com/calendar/render?${params.toString()}`
+}

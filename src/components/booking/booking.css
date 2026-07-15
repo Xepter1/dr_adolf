@@ -282,6 +282,21 @@
 .bk-submit:hover { filter: brightness(1.08); }
 .bk-submit:disabled { opacity: 0.6; cursor: progress; }
 
+/* Sekundär-Button (z. B. „Apple / Outlook (.ics)" neben „Zu Google Kalender") */
+.bk-ghost {
+  align-self: flex-start;
+  background: transparent;
+  color: var(--bk-accent);
+  border: 1.5px solid var(--bk-accent);
+  border-radius: 11px;
+  padding: 11.5px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.bk-ghost:hover { background: color-mix(in srgb, var(--bk-accent) 8%, transparent); }
+
 /* Bestätigung */
 .bk-done {
   text-align: center;

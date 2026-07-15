@@ -4,6 +4,7 @@ import '@/components/booking/booking.css'
 import { getPayloadClient } from '@/lib/payload'
 import { formatTerminLabel } from '@/lib/time'
 import { siteUrl } from '@/lib/tokens'
+import { googleCalendarUrl } from '@/lib/ics'
 import { sendConfirmationEmail } from '@/lib/email'
 import type { Aerzte, Setting, Termine } from '@/payload-types'
 
@@ -11,7 +12,22 @@ export const dynamic = 'force-dynamic'
 
 type Outcome = 'ok' | 'expired' | 'invalid' | 'cancelled'
 
-function Result({ outcome, label, arztName, icsUrl, brandName }: { outcome: Outcome; label?: string; arztName?: string; icsUrl?: string; brandName: string }) {
+/** Kalender-Links (.ics für Apple/Outlook + Google) aus einem Termin bauen. */
+function calUrls(termin: Termine, brandName: string, address: string): { icsUrl?: string; googleUrl?: string } {
+  const start = new Date(termin.start)
+  const end = termin.ende ? new Date(termin.ende) : new Date(start.getTime() + 20 * 60000)
+  const icsUrl = termin.manageToken ? `${siteUrl()}/termin/ics?token=${termin.manageToken}` : undefined
+  const googleUrl = googleCalendarUrl({
+    start,
+    end,
+    title: brandName ? `Termin – ${brandName}` : 'Termin',
+    details: 'Bitte bringen Sie Ihre Versichertenkarte mit. Bei Verhinderung bitte rechtzeitig absagen.',
+    location: address || undefined,
+  })
+  return { icsUrl, googleUrl }
+}
+
+function Result({ outcome, label, arztName, icsUrl, googleUrl, brandName }: { outcome: Outcome; label?: string; arztName?: string; icsUrl?: string; googleUrl?: string; brandName: string }) {
   if (outcome === 'ok') {
     return (
       <section className="bk-done">
@@ -21,7 +37,12 @@ function Result({ outcome, label, arztName, icsUrl, brandName }: { outcome: Outc
           Ihr Termin{arztName ? <> bei <strong>{arztName}</strong></> : ''} ist verbindlich reserviert:
         </p>
         <p><strong>{label}</strong></p>
-        {icsUrl && <p style={{ marginTop: 20 }}><a className="bk-submit" href={icsUrl} style={{ display: 'inline-block', textDecoration: 'none' }}>Zum Kalender hinzufügen (.ics)</a></p>}
+        {(googleUrl || icsUrl) && (
+          <p style={{ marginTop: 20, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            {googleUrl && <a className="bk-submit" href={googleUrl} style={{ display: 'inline-block', textDecoration: 'none' }}>Zu Google Kalender</a>}
+            {icsUrl && <a className="bk-ghost" href={icsUrl} style={{ display: 'inline-block', textDecoration: 'none' }}>Apple / Outlook (.ics)</a>}
+          </p>
+        )}
         <p className="bk-hint">Wir haben Ihnen die Details zusätzlich per E-Mail geschickt. Bitte sagen Sie rechtzeitig ab, falls Sie verhindert sind.</p>
         <Link className="bk-home2" href="/">Zur Startseite</Link>
       </section>
@@ -67,13 +88,15 @@ export default async function BestaetigenPage({ searchParams }: { searchParams: 
     const t2 = already.docs[0] as Termine | undefined
     if (t2 && t2.status === 'bestaetigt') {
       const arzt = typeof t2.arzt === 'object' ? (t2.arzt as Aerzte) : null
+      const { icsUrl, googleUrl } = calUrls(t2, brandName, address)
       return wrap(
         <Result
           outcome="ok"
           brandName={brandName}
           label={formatTerminLabel(new Date(t2.start))}
           arztName={arzt ? [arzt.titel, arzt.name].filter(Boolean).join(' ') : undefined}
-          icsUrl={t2.manageToken ? `${siteUrl()}/termin/ics?token=${t2.manageToken}` : undefined}
+          icsUrl={icsUrl}
+          googleUrl={googleUrl}
         />,
       )
     }
@@ -88,7 +111,7 @@ export default async function BestaetigenPage({ searchParams }: { searchParams: 
   const arzt = typeof termin.arzt === 'object' ? (termin.arzt as Aerzte) : null
   const arztName = arzt ? [arzt.titel, arzt.name].filter(Boolean).join(' ') : ''
   const start = new Date(termin.start)
-  const icsUrl = termin.manageToken ? `${siteUrl()}/termin/ics?token=${termin.manageToken}` : undefined
+  const { icsUrl, googleUrl } = calUrls(termin, brandName, address)
 
   // Scharf schalten: bestätigen, Verify-Token entwerten, Löschdatum setzen.
   await payload.update({
@@ -109,6 +132,7 @@ export default async function BestaetigenPage({ searchParams }: { searchParams: 
       terminLabel: formatTerminLabel(start),
       arztName,
       icsUrl: icsUrl ?? '',
+      googleUrl,
       manageUrl: termin.manageToken ? `${siteUrl()}/termin/verwalten?token=${termin.manageToken}` : undefined,
       address: address || undefined,
     })
@@ -116,5 +140,5 @@ export default async function BestaetigenPage({ searchParams }: { searchParams: 
     payload.logger.error({ err }, 'Bestätigungsmail fehlgeschlagen')
   }
 
-  return wrap(<Result outcome="ok" brandName={brandName} label={formatTerminLabel(start)} arztName={arztName} icsUrl={icsUrl} />)
+  return wrap(<Result outcome="ok" brandName={brandName} label={formatTerminLabel(start)} arztName={arztName} icsUrl={icsUrl} googleUrl={googleUrl} />)
 }

@@ -3,6 +3,7 @@
 import { getPayloadClient } from '@/lib/payload'
 import { computeSlots } from '@/lib/slots'
 import { newToken, maskEmail, siteUrl } from '@/lib/tokens'
+import { formatTerminLabel } from '@/lib/time'
 import { sendDoiEmail } from '@/lib/email'
 import { TERMINARTEN, VERSICHERUNG } from '@/lib/booking'
 import type { Aerzte, Setting, Termine } from '@/payload-types'
@@ -116,6 +117,9 @@ export async function createBooking(input: BookingInput): Promise<BookingResult>
       to: input.email.trim().toLowerCase(),
       brandName,
       confirmUrl: `${siteUrl()}/termin/bestaetigen?token=${verifyToken}`,
+      terminLabel: formatTerminLabel(start),
+      arztName: [arzt.titel, arzt.name].filter(Boolean).join(' ') || undefined,
+      address: [settings.addressStreet, settings.addressCity].filter(Boolean).join(', ') || undefined,
     })
   } catch (err) {
     payload.logger.error({ err }, 'DOI-Mail fehlgeschlagen')
