@@ -21,7 +21,7 @@ services:
     environment:
       NODE_ENV: production
       # Pflicht – in Portainer setzen (openssl rand -hex 32). Nach dem 1. Deploy NIE ändern.
-      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?In Portainer setzen: openssl rand -hex 32}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?PAYLOAD_SECRET fehlt (openssl rand -hex 32)}
       # SQLite-Datei auf dem Volume. Nach dem 1. Deploy NIE ändern (sonst leere DB).
       DATABASE_URI: file:/app/data/content.db
       MEDIA_DIR: /app/media
