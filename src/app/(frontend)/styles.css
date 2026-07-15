@@ -217,11 +217,11 @@ h1 em{font-style:italic;font-weight:340}
 /* Unterpunkte in der ausgefahrenen Hälfte */
 .hero-tile-subs{position:absolute;top:0;bottom:0;width:41%;margin:0;padding:12px 12px;list-style:none;
   display:flex;flex-direction:column;justify-content:center;gap:1px;
-  opacity:0;visibility:hidden;transition:opacity .16s var(--ease),visibility 0s linear .24s}
+  opacity:0;visibility:hidden;transition:opacity .11s var(--ease),visibility 0s linear .24s}
 .hero-tile:nth-child(even) .hero-tile-subs{right:0}  /* außen rechts */
 .hero-tile:nth-child(odd)  .hero-tile-subs{left:0}   /* außen links */
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-subs,
-.hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-subs{opacity:1;visibility:visible;transition:opacity .2s var(--ease) .08s,visibility 0s}
+.hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-subs{opacity:1;visibility:visible;transition:opacity .16s var(--ease) .22s,visibility 0s}
 .hero-tile-sub{display:block;padding:5px 8px;border-radius:9px;font-size:.8rem;font-weight:500;color:rgba(244,248,246,.94);text-shadow:0 1px 8px rgba(0,0,0,.45);text-decoration:none;line-height:1.25;overflow-wrap:break-word;hyphens:auto;transition:background .15s var(--ease),color .15s var(--ease)}
 .hero-tile-sub:hover,.hero-tile-sub:focus-visible{background:rgba(255,255,255,.18);color:#fff;outline:none}
 
