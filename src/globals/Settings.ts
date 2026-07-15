@@ -18,31 +18,31 @@ export const Settings: GlobalConfig = {
             {
               type: 'row',
               fields: [
-                { name: 'brandName', type: 'text', label: 'Markenname', defaultValue: 'AIGNER', required: true },
-                { name: 'brandSuffix', type: 'text', label: 'Marken-Zusatz', defaultValue: 'Holzbau', required: true },
+                { name: 'brandName', type: 'text', label: 'Markenname', defaultValue: 'Zahnarztpraxis', required: true },
+                { name: 'brandSuffix', type: 'text', label: 'Marken-Zusatz', defaultValue: 'Adolf', required: true },
               ],
             },
             {
               type: 'row',
               fields: [
-                { name: 'legalName', type: 'text', label: 'Firmenname (rechtlich)', defaultValue: 'AIGNER Holzbau GmbH', required: true },
-                { name: 'region', type: 'text', label: 'Region', defaultValue: 'Niederbayern', required: true },
+                { name: 'legalName', type: 'text', label: 'Firmenname (rechtlich)', defaultValue: 'Zahnarztpraxis Johannes Adolf', required: true },
+                { name: 'region', type: 'text', label: 'Region', defaultValue: 'Adlkofen', required: true },
               ],
             },
-            { name: 'tagline', type: 'textarea', label: 'Footer-Slogan', defaultValue: 'Meisterhafter Holzbau aus Niederbayern. Dachstühle, Holzhäuser und Sanierungen — ehrlich, präzise, aus einer Hand.' },
+            { name: 'tagline', type: 'textarea', label: 'Footer-Slogan', defaultValue: 'Ihre Zahnarztpraxis in Adlkofen — in dritter Generation. Moderne Zahnmedizin von der Vorsorge bis zur Implantologie, ein herzliches Team und Termine, die Sie bequem online buchen.' },
             {
               type: 'row',
               fields: [
-                { name: 'phoneDisplay', type: 'text', label: 'Telefon (Anzeige)', defaultValue: '0871 123 45 67', required: true },
-                { name: 'phoneHref', type: 'text', label: 'Telefon (Wählformat)', defaultValue: '+498711234567', required: true },
+                { name: 'phoneDisplay', type: 'text', label: 'Telefon (Anzeige)', defaultValue: '08707 266', required: true },
+                { name: 'phoneHref', type: 'text', label: 'Telefon (Wählformat)', defaultValue: '+498707266', required: true },
               ],
             },
-            { name: 'email', type: 'text', label: 'E-Mail', defaultValue: 'servus@aigner-holzbau.de', required: true },
+            { name: 'email', type: 'text', label: 'E-Mail', defaultValue: 'landpraxis-adolf@gmx.de', required: true },
             {
               type: 'row',
               fields: [
-                { name: 'addressStreet', type: 'text', label: 'Straße', defaultValue: 'Sägewerkstraße 4' },
-                { name: 'addressCity', type: 'text', label: 'PLZ & Ort', defaultValue: '84028 Landshut' },
+                { name: 'addressStreet', type: 'text', label: 'Straße', defaultValue: 'Hauptstraße 26' },
+                { name: 'addressCity', type: 'text', label: 'PLZ & Ort', defaultValue: '84166 Adlkofen' },
               ],
             },
             {
@@ -66,16 +66,26 @@ export const Settings: GlobalConfig = {
         {
           label: 'Startseite (Hero)',
           fields: [
-            { name: 'heroBadge', type: 'text', label: 'Badge', defaultValue: 'Meisterbetrieb seit 1989 · Niederbayern' },
+            { name: 'heroBadge', type: 'text', label: 'Badge', defaultValue: 'Zahnarztpraxis in Adlkofen · in dritter Generation' },
             {
               type: 'row',
               fields: [
                 { name: 'heroHeadingLine1', type: 'text', label: 'Überschrift Zeile 1', defaultValue: 'Willkommen' },
                 { name: 'heroHeadingPrefix', type: 'text', label: 'Zeile 2 (Anfang)', defaultValue: 'in der ' },
-                { name: 'heroHeadingAccent', type: 'text', label: 'Zeile 2 (Akzent, kursiv)', defaultValue: 'Praxis' },
+                { name: 'heroHeadingAccent', type: 'text', label: 'Zeile 2 (Akzent, kursiv)', defaultValue: 'Praxis Adolf' },
               ],
             },
-            { name: 'heroLead', type: 'textarea', label: 'Hero-Text', defaultValue: 'Vom Dachstuhl bis zum schlüsselfertigen Holzhaus — wir verbinden traditionelles Zimmererhandwerk mit moderner Abbundtechnik. Ehrlich, präzise, aus einer Hand.' },
+            { name: 'heroLead', type: 'textarea', label: 'Hero-Text', defaultValue: 'Von der Vorsorge bis zur Implantologie — moderne Zahnmedizin in familiärer Atmosphäre. Der Mensch steht bei uns im Mittelpunkt.' },
+            { name: 'welcomeHeading', type: 'text', label: 'Willkommen: Überschrift', defaultValue: 'Herzlich willkommen' },
+            {
+              name: 'welcomeText',
+              type: 'textarea',
+              label: 'Willkommen: Text',
+              admin: { description: 'Begrüßungstext der Startseite. Mehrere Absätze durch eine Leerzeile trennen.' },
+              defaultValue:
+                'Sehr geehrte Patientin, sehr geehrter Patient,\n\nwir freuen uns, Sie auf unserer Webseite begrüßen zu dürfen und heißen Sie herzlich willkommen. Auf den folgenden Seiten möchten wir unsere Praxis und unsere Leistungen vorstellen.\n\nMittelpunkt der Behandlung ist der Patient als Mensch, sodass wir zu jeder Zeit ein Maximum an umfassender Aufklärung und individueller Behandlung bieten. Schöne und gesunde Zähne sind für jeden Menschen wichtig, deshalb ist es unsere Aufgabe, dass Sie beschwerde- und schmerzfrei sind und sich rundum wohlfühlen. Es erwartet Sie bei uns eine erstklassige zahnärztliche Therapie inklusive Vor- und Nachsorge.\n\nUm Ihren Zahnarzttermin so einfach wie nur möglich zu gestalten, bemühen wir uns um kurze Wartezeiten. Durch eine strukturierte Terminvergabe und eine Optimierung der Behandlungsabläufe beansprucht Ihr Besuch in unserer Praxis lediglich einen Bruchteil Ihrer wertvollen Zeit.',
+            },
+            { name: 'welcomeSignature', type: 'text', label: 'Willkommen: Unterschrift', defaultValue: 'Ihr Johannes Adolf' },
             {
               name: 'heroStats',
               type: 'array',
@@ -96,6 +106,35 @@ export const Settings: GlobalConfig = {
               type: 'array',
               label: 'Lauftext-Begriffe',
               fields: [{ name: 'word', type: 'text', label: 'Begriff', required: true }],
+            },
+          ],
+        },
+        {
+          label: 'Team',
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                { name: 'teamHeadingPrefix', type: 'text', label: 'Überschrift (Anfang)', defaultValue: 'Ihr Zahnarzt in ' },
+                { name: 'teamHeadingAccent', type: 'text', label: 'Überschrift (Akzent, grün)', defaultValue: 'Adlkofen.' },
+              ],
+            },
+            { name: 'teamIntro', type: 'textarea', label: 'Einleitungstext', defaultValue: 'Mittelpunkt der Behandlung ist der Mensch. Es erwartet Sie eine erstklassige zahnärztliche Therapie inklusive Vor- und Nachsorge — in familiärer Atmosphäre und mit kurzen Wartezeiten.' },
+            {
+              type: 'row',
+              fields: [
+                { name: 'teamMembersTitle', type: 'text', label: 'Team-Block: Überschrift', defaultValue: 'Unser Praxisteam' },
+                { name: 'teamMembersRole', type: 'text', label: 'Team-Block: Untertitel', defaultValue: 'Zahnmedizinische Fachangestellte' },
+              ],
+            },
+            { name: 'teamMembersText', type: 'textarea', label: 'Team-Block: Text', defaultValue: 'Damit Sie sich bei uns rundum wohlfühlen, bildet sich unser Praxisteam kontinuierlich weiter, um Ihnen modernste Behandlungsmethoden anbieten zu können. Wir freuen uns, Sie herzlich in Empfang zu nehmen.' },
+            {
+              name: 'teamMembers',
+              type: 'array',
+              label: 'Mitarbeiter',
+              labels: { singular: 'Mitarbeiter:in', plural: 'Mitarbeiter' },
+              admin: { description: 'Die Namen des Praxisteams – erscheinen unter dem Teamfoto.' },
+              fields: [{ name: 'name', type: 'text', label: 'Name', required: true }],
             },
           ],
         },
@@ -126,17 +165,17 @@ export const Settings: GlobalConfig = {
             {
               type: 'row',
               fields: [
-                { name: 'careerHeadingPrefix', type: 'text', label: 'Überschrift (Anfang)', defaultValue: 'Bau mit an dem, ' },
-                { name: 'careerHeadingAccent', type: 'text', label: 'Überschrift (Akzent)', defaultValue: 'was bleibt.' },
+                { name: 'careerHeadingPrefix', type: 'text', label: 'Überschrift (Anfang)', defaultValue: 'Werde Teil ' },
+                { name: 'careerHeadingAccent', type: 'text', label: 'Überschrift (Akzent)', defaultValue: 'unseres Teams.' },
               ],
             },
-            { name: 'careerText', type: 'textarea', label: 'Text', defaultValue: 'Wir suchen Hände, die anpacken, und Köpfe, die mitdenken. Bei uns gibt’s keine Massenabfertigung — sondern echtes Handwerk, faire Bezahlung und ein Team, das zusammenhält.' },
+            { name: 'careerText', type: 'textarea', label: 'Text', defaultValue: 'Wir suchen Menschen, die mit Herz und Sorgfalt arbeiten. Bei uns erwarten dich ein eingespieltes, freundliches Team, moderne Ausstattung und ein familiäres Praxisumfeld.' },
           ],
         },
         {
           label: 'Buchung',
           fields: [
-            { name: 'buchungIntro', type: 'textarea', label: 'Hinweis über dem Buchungstool', defaultValue: 'Buchen Sie Ihren Termin online – wählen Sie Ihren Arzt und eine Wunschzeit und bestätigen Sie per E-Mail. Bitte geben Sie keine sensiblen Gesundheitsdetails an; die Terminart genügt.' },
+            { name: 'buchungIntro', type: 'textarea', label: 'Hinweis über dem Buchungstool', defaultValue: 'Buchen Sie Ihren Termin bequem online – wählen Sie eine Wunschzeit und bestätigen Sie per E-Mail. Bitte geben Sie keine sensiblen Gesundheitsdetails an; die Terminart genügt. Bei akuten Zahnschmerzen rufen Sie uns bitte direkt an: 08707 266.' },
             {
               name: 'anamnesePublicKey',
               type: 'textarea',

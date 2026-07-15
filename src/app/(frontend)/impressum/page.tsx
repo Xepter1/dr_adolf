@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Impressum',
-  description: 'Impressum der Gemeinschaftspraxis am Stadtpark, Musterstadt.',
+  description: 'Impressum der Zahnarztpraxis Johannes Adolf, Adlkofen.',
   robots: { index: false, follow: true },
 }
 
@@ -29,37 +29,37 @@ export default async function ImpressumPage() {
 
           <h2>Anbieter</h2>
           <p className="addr">
-            <strong>Gemeinschaftspraxis am Stadtpark</strong> (GbR)
+            <strong>Zahnarztpraxis Johannes Adolf</strong>
             <br />
-            Dr. med. Anna Berger · Dr. med. Jonas Frey · Sofia Klein
+            Johannes Adolf, Zahnarzt
             <br />
-            Stadtparkallee 12<br />
-            12345 Musterstadt
+            Hauptstraße 26<br />
+            84166 Adlkofen
             <br />
             Deutschland
           </p>
 
           <h2>Kontakt</h2>
           <p className="addr">
-            Telefon: <a href="tel:+491234567890">0123 456 78 90</a>
+            Telefon: <a href="tel:+498707266">08707 266</a>
             <br />
-            E-Mail: <a href="mailto:praxis@praxis-am-stadtpark.de">praxis@praxis-am-stadtpark.de</a>
+            E-Mail: <a href="mailto:landpraxis-adolf@gmx.de">landpraxis-adolf@gmx.de</a>
           </p>
 
-          <h2>Medizinisch verantwortlich</h2>
-          <p>Dr. med. Anna Berger (Anschrift wie oben)</p>
+          <h2>Zahnärztlich verantwortlich</h2>
+          <p>Johannes Adolf, Zahnarzt (Anschrift wie oben)</p>
 
           <h2>Berufsbezeichnung &amp; berufsrechtliche Regelungen</h2>
           <p className="addr">
-            Gesetzliche Berufsbezeichnung: Ärztin / Arzt (verliehen in der Bundesrepublik Deutschland)
+            Gesetzliche Berufsbezeichnung: Zahnarzt (verliehen in der Bundesrepublik Deutschland)
             <br />
-            Zuständige Ärztekammer: Landesärztekammer Musterland
+            Zuständige Kammer: Bayerische Landeszahnärztekammer (BLZK), Fallstraße 34, 81369 München — www.blzk.de
             <br />
-            Zuständige Kassenärztliche Vereinigung: KV Musterland
+            Zuständige Kassenzahnärztliche Vereinigung: Kassenzahnärztliche Vereinigung Bayerns (KZVB), Fallstraße 34, 81369 München — www.kzvb.de
           </p>
           <p>
-            Es gelten insbesondere die Bundesärzteordnung, die Berufsordnung der Landesärztekammer sowie das Heilberufe-Kammergesetz. Die Regelungen sind auf
-            der Website der zuständigen Ärztekammer einsehbar.
+            Es gelten insbesondere das Zahnheilkundegesetz, die Berufsordnung der Bayerischen Landeszahnärztekammer, die Gebührenordnung für Zahnärzte (GOZ)
+            sowie das Heilberufe-Kammergesetz. Die vollständigen Bestimmungen sind auf der Website der BLZK (www.blzk.de) unter der Rubrik „Recht" einsehbar.
           </p>
 
           <h2>Umsatzsteuer</h2>
@@ -67,7 +67,7 @@ export default async function ImpressumPage() {
 
           <h2>Berufshaftpflichtversicherung</h2>
           <p className="addr">
-            Musterversicherung AG, 80331 München
+            Angaben zur Berufshaftpflichtversicherung (Versicherer, Sitz, Geltungsraum) bitte ergänzen.
             <br />
             Geltungsraum: Deutschland
           </p>
@@ -100,9 +100,9 @@ export default async function ImpressumPage() {
           </p>
 
           <div className="note">
-            <strong>Hinweis (für dieses Muster):</strong> „Praxis am Stadtpark" ist ein fiktives Demonstrationsprojekt. Sämtliche Angaben — Praxis, Namen,
-            Adresse, Kammern und Versicherungen — sind frei erfunden. Vor dem produktiven Einsatz bitte alle Daten ersetzen und das Impressum rechtlich (insb.
-            ärztliches Berufsrecht) prüfen lassen.
+            <strong>Hinweis:</strong> Adresse und Telefonnummer stammen aus der bisherigen Website. Bitte alle Angaben final bestätigen, die
+            Berufshaftpflichtversicherung ergänzen und das Impressum vor dem produktiven Einsatz rechtlich prüfen lassen (insb. zahnärztliches Berufsrecht
+            sowie die Datenschutzerklärung für Online-Terminbuchung und Anamnese).
           </div>
         </div>
       </main>

@@ -20,17 +20,24 @@ export const Leistungen: CollectionConfig = {
       type: 'select',
       label: 'Symbol',
       required: true,
-      defaultValue: 'stethoscope',
+      defaultValue: 'tooth',
       options: [
-        { label: 'Stethoskop (Allgemein)', value: 'stethoscope' },
-        { label: 'Herz (Vorsorge)', value: 'heart' },
-        { label: 'Schild (Impfung/Prävention)', value: 'shield' },
-        { label: 'Kind (Kinderheilkunde)', value: 'child' },
-        { label: 'Labor / Diagnostik', value: 'lab' },
-        { label: 'Hausbesuch', value: 'housecall' },
+        { label: 'Zahn (Zahnerhalt)', value: 'tooth' },
+        { label: 'Krone (Zahnersatz)', value: 'denture' },
+        { label: 'Implantat (Implantologie)', value: 'implant' },
+        { label: 'Zahnspange (Kieferorthopädie)', value: 'braces' },
+        { label: 'Funkeln (Zahnästhetik)', value: 'sparkle' },
+        { label: 'Lächelnder Zahn (Kinder)', value: 'child' },
       ],
     },
     // ---- Inhalte der Detailseite ----
+    {
+      name: 'heroImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Bild (Detailseite, neben dem Text – optional)',
+      admin: { description: 'Erscheint rechts neben dem Text im Inhaltsbereich (über „Das bieten wir"). Ohne Bild bleibt die Textspalte allein. Empfehlung: Hochformat, ca. 4:5.' },
+    },
     { name: 'lead', type: 'textarea', label: 'Einleitung (Detailseite)', admin: { description: 'Ein bis zwei Sätze unter der Überschrift der Detailseite.' } },
     { name: 'intro', type: 'textarea', label: 'Fließtext (Detailseite)', admin: { description: 'Der Hauptabsatz: worum geht es bei dieser Leistung.' } },
     {
@@ -60,6 +67,41 @@ export const Leistungen: CollectionConfig = {
       fields: [
         { name: 'frage', type: 'text', label: 'Frage', required: true },
         { name: 'antwort', type: 'textarea', label: 'Antwort', required: true },
+      ],
+    },
+    {
+      name: 'unterleistungen',
+      type: 'array',
+      label: 'Unterleistungen (eigene Detailseiten)',
+      labels: { singular: 'Unterleistung', plural: 'Unterleistungen' },
+      admin: { description: 'Untergeordnete Leistungen mit eigener Seite unter /leistungen/<kategorie>/<slug> — erscheinen auch im Aufklapp-Menü der Navbar.' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'title', type: 'text', label: 'Titel', required: true },
+            { name: 'slug', type: 'text', label: 'Slug (URL-Teil)', required: true, admin: { description: 'z. B. „professionelle-zahnreinigung".' } },
+          ],
+        },
+        { name: 'lead', type: 'textarea', label: 'Einleitung (kurz, optional)' },
+        {
+          name: 'heroImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Bild (neben dem Text – optional)',
+          admin: { description: 'Erscheint rechts neben dem Fließtext (scrollt mit). Leer = Bild der Kategorie bzw. nur Text. Empfehlung: Hochformat, ca. 4:5.' },
+        },
+        {
+          name: 'abschnitte',
+          type: 'array',
+          label: 'Abschnitte',
+          labels: { singular: 'Abschnitt', plural: 'Abschnitte' },
+          admin: { description: 'Fließtext-Abschnitte; optionale Zwischenüberschrift je Abschnitt.' },
+          fields: [
+            { name: 'titel', type: 'text', label: 'Zwischenüberschrift (optional)' },
+            { name: 'text', type: 'textarea', label: 'Text', required: true },
+          ],
+        },
       ],
     },
     {

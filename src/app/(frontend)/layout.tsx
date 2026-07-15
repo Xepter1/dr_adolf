@@ -22,21 +22,24 @@ const hanken = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.PUBLIC_URL || 'http://localhost:3000'),
+  // Demo-/Vorschau-Betrieb: komplett aus dem Google-Index halten. Auf der echten
+  // Domain DEMO_MODE weglassen/auf „false" setzen → Seite wird normal indexierbar.
+  ...(process.env.DEMO_MODE === 'true' ? { robots: { index: false, follow: false } } : {}),
   title: {
-    default: 'Praxis am Stadtpark — Hausärztliche Gemeinschaftspraxis in Musterstadt',
-    template: '%s — Praxis am Stadtpark',
+    default: 'Zahnarztpraxis Johannes Adolf — Ihr Zahnarzt in Adlkofen',
+    template: '%s — Zahnarztpraxis Johannes Adolf',
   },
   description:
-    'Hausärztliche Gemeinschaftspraxis in Musterstadt. Termine bequem online buchen, den Anamnesebogen vorab ausfüllen — moderne Medizin und persönliche Betreuung.',
-  authors: [{ name: 'Gemeinschaftspraxis am Stadtpark' }],
+    'Zahnarztpraxis Johannes Adolf in Adlkofen — in dritter Generation. Zahnerhalt, Zahnersatz, Implantologie, Kieferorthopädie, Zahnästhetik und Kinderbehandlung. Termine bequem online buchen.',
+  authors: [{ name: 'Zahnarztpraxis Johannes Adolf' }],
   icons: { icon: '/favicon.svg', apple: '/favicon.svg' },
   openGraph: {
     type: 'website',
     locale: 'de_DE',
-    siteName: 'Praxis am Stadtpark',
-    title: 'Praxis am Stadtpark — Ihre Hausarztpraxis',
+    siteName: 'Zahnarztpraxis Johannes Adolf',
+    title: 'Zahnarztpraxis Johannes Adolf — Ihr Zahnarzt in Adlkofen',
     description:
-      'Hausärztliche Gemeinschaftspraxis in Musterstadt: Termine online buchen, Anamnese vorab ausfüllen, kurze Wege. Moderne Medizin, persönlich.',
+      'Moderne Zahnmedizin in Adlkofen: Zahnerhalt, Zahnersatz, Implantologie, Kieferorthopädie und mehr. Termine online buchen, Anamnese vorab ausfüllen.',
   },
   twitter: { card: 'summary' },
 }

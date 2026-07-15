@@ -244,6 +244,14 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
+    portrait?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
   };
 }
 /**
@@ -259,7 +267,11 @@ export interface Leistungen {
    * Erscheint als Teaser (Kachel/Liste) und als Meta-Description der Detailseite.
    */
   description: string;
-  icon: 'stethoscope' | 'heart' | 'shield' | 'child' | 'lab' | 'housecall';
+  icon: 'tooth' | 'denture' | 'implant' | 'braces' | 'sparkle' | 'child';
+  /**
+   * Erscheint rechts neben dem Text im Inhaltsbereich (über „Das bieten wir"). Ohne Bild bleibt die Textspalte allein. Empfehlung: Hochformat, ca. 4:5.
+   */
+  heroImage?: (number | null) | Media;
   /**
    * Ein bis zwei Sätze unter der Überschrift der Detailseite.
    */
@@ -291,6 +303,34 @@ export interface Leistungen {
     | {
         frage: string;
         antwort: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Untergeordnete Leistungen mit eigener Seite unter /leistungen/<kategorie>/<slug> — erscheinen auch im Aufklapp-Menü der Navbar.
+   */
+  unterleistungen?:
+    | {
+        title: string;
+        /**
+         * z. B. „professionelle-zahnreinigung".
+         */
+        slug: string;
+        lead?: string | null;
+        /**
+         * Erscheint rechts neben dem Fließtext (scrollt mit). Leer = Bild der Kategorie bzw. nur Text. Empfehlung: Hochformat, ca. 4:5.
+         */
+        heroImage?: (number | null) | Media;
+        /**
+         * Fließtext-Abschnitte; optionale Zwischenüberschrift je Abschnitt.
+         */
+        abschnitte?:
+          | {
+              titel?: string | null;
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -439,7 +479,7 @@ export interface Termine {
   /**
    * Geschlossene Kategorie – kein Freitext (Datenschutz).
    */
-  terminart: 'kontrolle' | 'akut' | 'vorsorge' | 'erstgespraech' | 'befundbesprechung';
+  terminart: 'kontrolle' | 'pzr' | 'akut' | 'beratung_ersatz' | 'kfo' | 'aesthetik' | 'erstgespraech';
   start: string;
   ende?: string | null;
   patientName: string;
@@ -862,6 +902,7 @@ export interface LeistungenSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   icon?: T;
+  heroImage?: T;
   lead?: T;
   intro?: T;
   leistungspunkte?:
@@ -882,6 +923,22 @@ export interface LeistungenSelect<T extends boolean = true> {
     | {
         frage?: T;
         antwort?: T;
+        id?: T;
+      };
+  unterleistungen?:
+    | T
+    | {
+        title?: T;
+        slug?: T;
+        lead?: T;
+        heroImage?: T;
+        abschnitte?:
+          | T
+          | {
+              titel?: T;
+              text?: T;
+              id?: T;
+            };
         id?: T;
       };
   sortOrder?: T;
@@ -1039,6 +1096,16 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
         hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        portrait?:
           | T
           | {
               url?: T;
@@ -1295,6 +1362,12 @@ export interface Setting {
   heroHeadingPrefix?: string | null;
   heroHeadingAccent?: string | null;
   heroLead?: string | null;
+  welcomeHeading?: string | null;
+  /**
+   * Begrüßungstext der Startseite. Mehrere Absätze durch eine Leerzeile trennen.
+   */
+  welcomeText?: string | null;
+  welcomeSignature?: string | null;
   heroStats?:
     | {
         value: string;
@@ -1305,6 +1378,21 @@ export interface Setting {
   marquee?:
     | {
         word: string;
+        id?: string | null;
+      }[]
+    | null;
+  teamHeadingPrefix?: string | null;
+  teamHeadingAccent?: string | null;
+  teamIntro?: string | null;
+  teamMembersTitle?: string | null;
+  teamMembersRole?: string | null;
+  teamMembersText?: string | null;
+  /**
+   * Die Namen des Praxisteams – erscheinen unter dem Teamfoto.
+   */
+  teamMembers?:
+    | {
+        name: string;
         id?: string | null;
       }[]
     | null;
@@ -1357,6 +1445,9 @@ export interface SettingsSelect<T extends boolean = true> {
   heroHeadingPrefix?: T;
   heroHeadingAccent?: T;
   heroLead?: T;
+  welcomeHeading?: T;
+  welcomeText?: T;
+  welcomeSignature?: T;
   heroStats?:
     | T
     | {
@@ -1368,6 +1459,18 @@ export interface SettingsSelect<T extends boolean = true> {
     | T
     | {
         word?: T;
+        id?: T;
+      };
+  teamHeadingPrefix?: T;
+  teamHeadingAccent?: T;
+  teamIntro?: T;
+  teamMembersTitle?: T;
+  teamMembersRole?: T;
+  teamMembersText?: T;
+  teamMembers?:
+    | T
+    | {
+        name?: T;
         id?: T;
       };
   stats?:

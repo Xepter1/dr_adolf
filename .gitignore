@@ -26,5 +26,10 @@ next-env.d.ts
 *.pem
 /coverage
 
+# lokale Quell-Ablagen (Rohbilder etc.) – gehören nicht ins Repo.
+# Die fertigen Seed-Bilder liegen versioniert unter src/seed/assets/.
+/bilder
+/extraktion
+
 # lokale Tool-Konfiguration
 /.claude/

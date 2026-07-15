@@ -16,11 +16,13 @@ export interface SelectOption {
  * Auswahl bei der Buchung.
  */
 export const TERMINARTEN: SelectOption[] = [
-  { label: 'Kontrolle / Nachsorge', value: 'kontrolle' },
-  { label: 'Akute Beschwerden', value: 'akut' },
-  { label: 'Vorsorge / Check-up', value: 'vorsorge' },
+  { label: 'Kontrolle / Vorsorge', value: 'kontrolle' },
+  { label: 'Professionelle Zahnreinigung', value: 'pzr' },
+  { label: 'Akute Zahnschmerzen', value: 'akut' },
+  { label: 'Beratung Zahnersatz / Implantat', value: 'beratung_ersatz' },
+  { label: 'Kieferorthopädie-Beratung', value: 'kfo' },
+  { label: 'Ästhetik / Bleaching-Beratung', value: 'aesthetik' },
   { label: 'Erstgespräch (Neupatient)', value: 'erstgespraech' },
-  { label: 'Befundbesprechung', value: 'befundbesprechung' },
 ]
 
 /** Versicherungsart bei der Buchung. */

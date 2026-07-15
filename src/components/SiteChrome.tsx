@@ -13,9 +13,14 @@ export interface ChromeSettings {
   addressCity?: string | null
 }
 
+export interface NavSubleistung {
+  title: string
+  slug?: string | null
+}
 export interface NavLeistung {
   title: string
   slug?: string | null
+  unterleistungen?: (NavSubleistung | null)[] | null
 }
 
 const PhoneIcon = () => (
@@ -34,21 +39,33 @@ export function HeaderHome({ settings, leistungen = [] }: { settings: ChromeSett
             <li className={leistungen.length > 0 ? 'has-sub' : undefined}>
               <a href="#leistungen" aria-haspopup={leistungen.length > 0 ? true : undefined}>
                 Leistungen
-                {leistungen.length > 0 && <span className="caret" aria-hidden="true">▾</span>}
               </a>
               {leistungen.length > 0 && (
-                <ul className="submenu">
-                  {leistungen.map((l) => (
-                    <li key={l.slug ?? l.title}>
-                      <Link href={`/leistungen/${l.slug}`}>{l.title}</Link>
-                    </li>
-                  ))}
+                <ul className="submenu mega">
+                  {leistungen.map((l) => {
+                    const subs = (l.unterleistungen ?? []).filter(Boolean) as NavSubleistung[]
+                    return (
+                      <li key={l.slug ?? l.title} className="mega-col">
+                        <Link href={`/leistungen/${l.slug}`} className="mega-cat">
+                          {l.title}
+                        </Link>
+                        {subs.length > 0 && (
+                          <ul className="mega-sub">
+                            {subs.map((u) => (
+                              <li key={u.slug ?? u.title}>
+                                <Link href={`/leistungen/${l.slug}/${u.slug}`}>{u.title}</Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    )
+                  })}
                 </ul>
               )}
             </li>
-            <li><a href="#team">Unser Team</a></li>
+            <li><a href="#team">Praxis &amp; Team</a></li>
             <li><a href="#oeffnungszeiten">Öffnungszeiten</a></li>
-            <li><a href="#karriere">Karriere</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
           </ul>
         </nav>
@@ -128,9 +145,8 @@ export function FooterHome({ settings, year, leistungen = [] }: { settings: Chro
             <h4>Praxis</h4>
             <ul>
               <li><Link href="/termin">Termin buchen</Link></li>
-              <li><Link href="/#team">Unser Team</Link></li>
+              <li><Link href="/#team">Praxis &amp; Team</Link></li>
               <li><Link href="/#oeffnungszeiten">Öffnungszeiten</Link></li>
-              <li><Link href="/#karriere">Karriere</Link></li>
               <li><Link href="/#kontakt">Kontakt</Link></li>
             </ul>
           </div>

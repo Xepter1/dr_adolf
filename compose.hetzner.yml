@@ -1,0 +1,61 @@
+# ---------------------------------------------------------------------------
+# Deploy-Compose für den Hetzner-Server (Caddy Multi-Tenant, Portainer-Git-Stack).
+#
+# In Portainer:  Stacks → Add stack → "Repository"
+#   Repository URL:   https://github.com/Xepter1/dr_adolf.git
+#   Reference:        refs/heads/main
+#   Compose path:     compose.hetzner.yml     ← wichtig (nicht docker-compose.yml)
+#   Environment variables (unten dokumentiert) im Stack setzen.
+#
+# Der bestehende docker-compose.yml im Root bleibt die LOKALE Variante
+# (mit ports:, ohne Caddy) — hier NICHT verwenden.
+# ---------------------------------------------------------------------------
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dr-adolf-web:latest
+    container_name: dr-adolf-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      # Pflicht – in Portainer setzen (openssl rand -hex 32). Nach dem 1. Deploy NIE ändern.
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?In Portainer setzen: openssl rand -hex 32}
+      # SQLite-Datei auf dem Volume. Nach dem 1. Deploy NIE ändern (sonst leere DB).
+      DATABASE_URI: file:/app/data/content.db
+      MEDIA_DIR: /app/media
+      # Öffentliche URL (für Admin-Login hinter der Domain, Metadaten, CORS/CSRF).
+      PUBLIC_URL: ${PUBLIC_URL:-https://demo.adolf.xepter.de}
+      SITE_NAME: ${SITE_NAME:-Zahnarztpraxis Adolf}
+      # Demo: aus dem Google-Index halten. Auf der echten Domain auf "false" setzen.
+      DEMO_MODE: ${DEMO_MODE:-true}
+      # Admin-Erstbenutzer (nur beim allerersten Start angelegt). In Portainer setzen!
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      # Optional: E-Mail-Versand (Termin-/Formular-Mails). Hetzner blockt Port 465 →
+      # SMTP_PORT=587 (STARTTLS) verwenden. Leer = Mails landen nur im Log.
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM_ADDRESS: ${SMTP_FROM_ADDRESS:-}
+      SMTP_FROM_NAME: ${SMTP_FROM_NAME:-}
+      CONTACT_TO: ${CONTACT_TO:-}
+      CRON_SECRET: ${CRON_SECRET:-}
+    volumes:
+      - data:/app/data
+      - media:/app/media
+    networks: [caddy]
+    labels:
+      # Caddy bedient diese Domain und holt automatisch HTTPS (Let's Encrypt).
+      caddy: ${DOMAIN:-demo.adolf.xepter.de}
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+
+networks:
+  caddy:
+    external: true
+
+volumes:
+  data:
+  media:

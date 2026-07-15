@@ -17,6 +17,8 @@ export const Media: CollectionConfig = {
       { name: 'thumbnail', width: 480, height: 320, position: 'centre' },
       { name: 'card', width: 900, height: 700, position: 'centre' },
       { name: 'hero', width: 1800, height: 1100, position: 'centre' },
+      // Hochformat 4:5 – für das Bild neben dem Text auf den Leistungs-Detailseiten
+      { name: 'portrait', width: 900, height: 1125, position: 'centre' },
     ],
   },
   fields: [

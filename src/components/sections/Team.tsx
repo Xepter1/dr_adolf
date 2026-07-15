@@ -1,34 +1,36 @@
 import Link from 'next/link'
-import type { Aerzte, Media } from '@/payload-types'
+import type { Aerzte, Setting } from '@/payload-types'
 
-const initialsOf = (name: string): string =>
-  name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('')
+/** „A, B und C" – natürliche Aufzählung mit „und" vor dem letzten Namen. */
+const joinNames = (names: string[]): string =>
+  names.length <= 1 ? (names[0] ?? '') : `${names.slice(0, -1).join(', ')} und ${names[names.length - 1]}`
 
-export function Team({ aerzte }: { aerzte: Aerzte[] }) {
-  if (aerzte.length === 0) return null
+export function Team({ aerzte, settings: s }: { aerzte: Aerzte[]; settings: Setting }) {
+  const members = (s.teamMembers ?? []).map((m) => m.name).filter(Boolean)
+  const dentist = aerzte[0]?.name ?? 'Johannes Adolf'
+  const caption = joinNames([dentist, ...members])
+
   return (
     <section className="sec team" id="team">
       <div className="wrap">
-        <div className="sec-head reveal" data-index="02">
-          <span className="eyebrow">Unser Team</span>
+        <div className="sec-head reveal" data-index="01">
+          <span className="eyebrow">Praxis &amp; Team</span>
           <h2>
-            Ärzte, die <em>zuhören.</em>
+            {s.teamHeadingPrefix ?? 'Ihr Zahnarzt in '}
+            <em>{s.teamHeadingAccent ?? 'Adlkofen.'}</em>
           </h2>
-          <p>Wählen Sie Ihren Arzt — und buchen Sie direkt einen freien Termin.</p>
+          {s.teamIntro && <p>{s.teamIntro}</p>}
         </div>
-        <div className="team-grid">
-          {aerzte.map((a, i) => {
-            const foto = a.foto && typeof a.foto === 'object' ? (a.foto as Media) : null
-            return (
-              <article key={a.id} className="doc reveal">
-                <span className={`doc-avatar${foto?.url ? ' has-photo' : ''}`} data-av={i % 4} aria-hidden="true">
-                  {foto?.url ? <img src={foto.url} alt="" /> : <span className="doc-initials">{initialsOf(a.name)}</span>}
-                </span>
+
+        <div className="team-layout">
+          <figure className="team-photo reveal">
+            <img src="/team/team.jpg" alt="Das Team der Zahnarztpraxis Johannes Adolf in Adlkofen" />
+            <figcaption>v. l. {caption}</figcaption>
+          </figure>
+
+          <div className="team-side">
+            {aerzte.map((a) => (
+              <article key={a.id} className="team-bio reveal">
                 <h3>{[a.titel, a.name].filter(Boolean).join(' ')}</h3>
                 <span className="doc-fach">{a.fachrichtung}</span>
                 {a.vita && <p>{a.vita}</p>}
@@ -36,8 +38,17 @@ export function Team({ aerzte }: { aerzte: Aerzte[] }) {
                   Termin buchen <span className="arr">→</span>
                 </Link>
               </article>
-            )
-          })}
+            ))}
+
+            {members.length > 0 && (
+              <article className="team-staff reveal">
+                <h3>{s.teamMembersTitle ?? 'Unser Praxisteam'}</h3>
+                {s.teamMembersRole && <span className="doc-fach">{s.teamMembersRole}</span>}
+                {s.teamMembersText && <p>{s.teamMembersText}</p>}
+                <p className="team-names">{members.join(' · ')}</p>
+              </article>
+            )}
+          </div>
         </div>
       </div>
     </section>

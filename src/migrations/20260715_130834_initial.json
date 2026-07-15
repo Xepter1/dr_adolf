@@ -400,6 +400,403 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
+    "leistungen_leistungspunkte": {
+      "name": "leistungen_leistungspunkte",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "leistungen_leistungspunkte_order_idx": {
+          "name": "leistungen_leistungspunkte_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "leistungen_leistungspunkte_parent_id_idx": {
+          "name": "leistungen_leistungspunkte_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "leistungen_leistungspunkte_parent_id_fk": {
+          "name": "leistungen_leistungspunkte_parent_id_fk",
+          "tableFrom": "leistungen_leistungspunkte",
+          "tableTo": "leistungen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "leistungen_ablauf": {
+      "name": "leistungen_ablauf",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "titel": {
+          "name": "titel",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "leistungen_ablauf_order_idx": {
+          "name": "leistungen_ablauf_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "leistungen_ablauf_parent_id_idx": {
+          "name": "leistungen_ablauf_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "leistungen_ablauf_parent_id_fk": {
+          "name": "leistungen_ablauf_parent_id_fk",
+          "tableFrom": "leistungen_ablauf",
+          "tableTo": "leistungen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "leistungen_faq": {
+      "name": "leistungen_faq",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "frage": {
+          "name": "frage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "antwort": {
+          "name": "antwort",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "leistungen_faq_order_idx": {
+          "name": "leistungen_faq_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "leistungen_faq_parent_id_idx": {
+          "name": "leistungen_faq_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "leistungen_faq_parent_id_fk": {
+          "name": "leistungen_faq_parent_id_fk",
+          "tableFrom": "leistungen_faq",
+          "tableTo": "leistungen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "leistungen_unterleistungen_abschnitte": {
+      "name": "leistungen_unterleistungen_abschnitte",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "titel": {
+          "name": "titel",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "leistungen_unterleistungen_abschnitte_order_idx": {
+          "name": "leistungen_unterleistungen_abschnitte_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "leistungen_unterleistungen_abschnitte_parent_id_idx": {
+          "name": "leistungen_unterleistungen_abschnitte_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "leistungen_unterleistungen_abschnitte_parent_id_fk": {
+          "name": "leistungen_unterleistungen_abschnitte_parent_id_fk",
+          "tableFrom": "leistungen_unterleistungen_abschnitte",
+          "tableTo": "leistungen_unterleistungen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "leistungen_unterleistungen": {
+      "name": "leistungen_unterleistungen",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "lead": {
+          "name": "lead",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hero_image_id": {
+          "name": "hero_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "leistungen_unterleistungen_order_idx": {
+          "name": "leistungen_unterleistungen_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "leistungen_unterleistungen_parent_id_idx": {
+          "name": "leistungen_unterleistungen_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        },
+        "leistungen_unterleistungen_hero_image_idx": {
+          "name": "leistungen_unterleistungen_hero_image_idx",
+          "columns": [
+            "hero_image_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "leistungen_unterleistungen_hero_image_id_media_id_fk": {
+          "name": "leistungen_unterleistungen_hero_image_id_media_id_fk",
+          "tableFrom": "leistungen_unterleistungen",
+          "tableTo": "media",
+          "columnsFrom": [
+            "hero_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "leistungen_unterleistungen_parent_id_fk": {
+          "name": "leistungen_unterleistungen_parent_id_fk",
+          "tableFrom": "leistungen_unterleistungen",
+          "tableTo": "leistungen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "leistungen": {
       "name": "leistungen",
       "columns": {
@@ -430,7 +827,28 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'roof'"
+          "default": "'tooth'"
+        },
+        "hero_image_id": {
+          "name": "hero_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lead": {
+          "name": "lead",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "intro": {
+          "name": "intro",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "sort_order": {
           "name": "sort_order",
@@ -439,6 +857,13 @@
           "notNull": false,
           "autoincrement": false,
           "default": 0
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
@@ -458,6 +883,20 @@
         }
       },
       "indexes": {
+        "leistungen_hero_image_idx": {
+          "name": "leistungen_hero_image_idx",
+          "columns": [
+            "hero_image_id"
+          ],
+          "isUnique": false
+        },
+        "leistungen_slug_idx": {
+          "name": "leistungen_slug_idx",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        },
         "leistungen_updated_at_idx": {
           "name": "leistungen_updated_at_idx",
           "columns": [
@@ -473,7 +912,21 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "leistungen_hero_image_id_media_id_fk": {
+          "name": "leistungen_hero_image_id_media_id_fk",
+          "tableFrom": "leistungen",
+          "tableTo": "media",
+          "columnsFrom": [
+            "hero_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -710,6 +1163,619 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
+    "aerzte_sprechzeiten": {
+      "name": "aerzte_sprechzeiten",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "wochentag": {
+          "name": "wochentag",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "von": {
+          "name": "von",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bis": {
+          "name": "bis",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "aerzte_sprechzeiten_order_idx": {
+          "name": "aerzte_sprechzeiten_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "aerzte_sprechzeiten_parent_id_idx": {
+          "name": "aerzte_sprechzeiten_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "aerzte_sprechzeiten_parent_id_fk": {
+          "name": "aerzte_sprechzeiten_parent_id_fk",
+          "tableFrom": "aerzte_sprechzeiten",
+          "tableTo": "aerzte",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "aerzte_abwesenheiten": {
+      "name": "aerzte_abwesenheiten",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "von": {
+          "name": "von",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bis": {
+          "name": "bis",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "grund": {
+          "name": "grund",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "aerzte_abwesenheiten_order_idx": {
+          "name": "aerzte_abwesenheiten_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "aerzte_abwesenheiten_parent_id_idx": {
+          "name": "aerzte_abwesenheiten_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "aerzte_abwesenheiten_parent_id_fk": {
+          "name": "aerzte_abwesenheiten_parent_id_fk",
+          "tableFrom": "aerzte_abwesenheiten",
+          "tableTo": "aerzte",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "aerzte": {
+      "name": "aerzte",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "titel": {
+          "name": "titel",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "fachrichtung": {
+          "name": "fachrichtung",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "foto_id": {
+          "name": "foto_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "vita": {
+          "name": "vita",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aktiv": {
+          "name": "aktiv",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": true
+        },
+        "slot_dauer_min": {
+          "name": "slot_dauer_min",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 20
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+        }
+      },
+      "indexes": {
+        "aerzte_foto_idx": {
+          "name": "aerzte_foto_idx",
+          "columns": [
+            "foto_id"
+          ],
+          "isUnique": false
+        },
+        "aerzte_slug_idx": {
+          "name": "aerzte_slug_idx",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        },
+        "aerzte_updated_at_idx": {
+          "name": "aerzte_updated_at_idx",
+          "columns": [
+            "updated_at"
+          ],
+          "isUnique": false
+        },
+        "aerzte_created_at_idx": {
+          "name": "aerzte_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "aerzte_foto_id_media_id_fk": {
+          "name": "aerzte_foto_id_media_id_fk",
+          "tableFrom": "aerzte",
+          "tableTo": "media",
+          "columnsFrom": [
+            "foto_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "termine": {
+      "name": "termine",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "arzt_id": {
+          "name": "arzt_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "terminart": {
+          "name": "terminart",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "start": {
+          "name": "start",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ende": {
+          "name": "ende",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "patient_name": {
+          "name": "patient_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "patient_geburtsdatum": {
+          "name": "patient_geburtsdatum",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "patient_email": {
+          "name": "patient_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "patient_telefon": {
+          "name": "patient_telefon",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "versicherung": {
+          "name": "versicherung",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ist_neupatient": {
+          "name": "ist_neupatient",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anamnese_id": {
+          "name": "anamnese_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'ausstehend'"
+        },
+        "erinnerung_erwuenscht": {
+          "name": "erinnerung_erwuenscht",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "erinnerung_gesendet": {
+          "name": "erinnerung_gesendet",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "loeschdatum": {
+          "name": "loeschdatum",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notiz_praxis": {
+          "name": "notiz_praxis",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "verify_token": {
+          "name": "verify_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "verify_expires_at": {
+          "name": "verify_expires_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "manage_token": {
+          "name": "manage_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+        }
+      },
+      "indexes": {
+        "termine_arzt_idx": {
+          "name": "termine_arzt_idx",
+          "columns": [
+            "arzt_id"
+          ],
+          "isUnique": false
+        },
+        "termine_anamnese_idx": {
+          "name": "termine_anamnese_idx",
+          "columns": [
+            "anamnese_id"
+          ],
+          "isUnique": false
+        },
+        "termine_updated_at_idx": {
+          "name": "termine_updated_at_idx",
+          "columns": [
+            "updated_at"
+          ],
+          "isUnique": false
+        },
+        "termine_created_at_idx": {
+          "name": "termine_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "termine_arzt_id_aerzte_id_fk": {
+          "name": "termine_arzt_id_aerzte_id_fk",
+          "tableFrom": "termine",
+          "tableTo": "aerzte",
+          "columnsFrom": [
+            "arzt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "termine_anamnese_id_anamnese_id_fk": {
+          "name": "termine_anamnese_id_anamnese_id_fk",
+          "tableFrom": "termine",
+          "tableTo": "anamnese",
+          "columnsFrom": [
+            "anamnese_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "anamnese": {
+      "name": "anamnese",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "eingegangen_am": {
+          "name": "eingegangen_am",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ciphertext": {
+          "name": "ciphertext",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "encrypted_key": {
+          "name": "encrypted_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "iv": {
+          "name": "iv",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "algo": {
+          "name": "algo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'RSA-OAEP-256 + AES-256-GCM'"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+        }
+      },
+      "indexes": {
+        "anamnese_updated_at_idx": {
+          "name": "anamnese_updated_at_idx",
+          "columns": [
+            "updated_at"
+          ],
+          "isUnique": false
+        },
+        "anamnese_created_at_idx": {
+          "name": "anamnese_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "media": {
       "name": "media",
       "columns": {
@@ -931,6 +1997,48 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "sizes_portrait_url": {
+          "name": "sizes_portrait_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sizes_portrait_width": {
+          "name": "sizes_portrait_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sizes_portrait_height": {
+          "name": "sizes_portrait_height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sizes_portrait_mime_type": {
+          "name": "sizes_portrait_mime_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sizes_portrait_filesize": {
+          "name": "sizes_portrait_filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sizes_portrait_filename": {
+          "name": "sizes_portrait_filename",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -973,6 +2081,13 @@
           "name": "media_sizes_hero_sizes_hero_filename_idx",
           "columns": [
             "sizes_hero_filename"
+          ],
+          "isUnique": false
+        },
+        "media_sizes_portrait_sizes_portrait_filename_idx": {
+          "name": "media_sizes_portrait_sizes_portrait_filename_idx",
+          "columns": [
+            "sizes_portrait_filename"
           ],
           "isUnique": false
         }
@@ -2755,6 +3870,27 @@
           "notNull": false,
           "autoincrement": false
         },
+        "aerzte_id": {
+          "name": "aerzte_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "termine_id": {
+          "name": "termine_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anamnese_id": {
+          "name": "anamnese_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "media_id": {
           "name": "media_id",
           "type": "integer",
@@ -2838,6 +3974,27 @@
           "name": "payload_locked_documents_rels_faqs_id_idx",
           "columns": [
             "faqs_id"
+          ],
+          "isUnique": false
+        },
+        "payload_locked_documents_rels_aerzte_id_idx": {
+          "name": "payload_locked_documents_rels_aerzte_id_idx",
+          "columns": [
+            "aerzte_id"
+          ],
+          "isUnique": false
+        },
+        "payload_locked_documents_rels_termine_id_idx": {
+          "name": "payload_locked_documents_rels_termine_id_idx",
+          "columns": [
+            "termine_id"
+          ],
+          "isUnique": false
+        },
+        "payload_locked_documents_rels_anamnese_id_idx": {
+          "name": "payload_locked_documents_rels_anamnese_id_idx",
+          "columns": [
+            "anamnese_id"
           ],
           "isUnique": false
         },
@@ -2942,6 +4099,45 @@
           "tableTo": "faqs",
           "columnsFrom": [
             "faqs_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_aerzte_fk": {
+          "name": "payload_locked_documents_rels_aerzte_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "aerzte",
+          "columnsFrom": [
+            "aerzte_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_termine_fk": {
+          "name": "payload_locked_documents_rels_termine_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "termine",
+          "columnsFrom": [
+            "termine_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_anamnese_fk": {
+          "name": "payload_locked_documents_rels_anamnese_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "anamnese",
+          "columnsFrom": [
+            "anamnese_id"
           ],
           "columnsTo": [
             "id"
@@ -3238,6 +4434,80 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
+    "settings_oeffnungszeiten": {
+      "name": "settings_oeffnungszeiten",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tag": {
+          "name": "tag",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "zeit": {
+          "name": "zeit",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "settings_oeffnungszeiten_order_idx": {
+          "name": "settings_oeffnungszeiten_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "settings_oeffnungszeiten_parent_id_idx": {
+          "name": "settings_oeffnungszeiten_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "settings_oeffnungszeiten_parent_id_fk": {
+          "name": "settings_oeffnungszeiten_parent_id_fk",
+          "tableFrom": "settings_oeffnungszeiten",
+          "tableTo": "settings",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "settings_hero_stats": {
       "name": "settings_hero_stats",
       "columns": {
@@ -3379,6 +4649,73 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
+    "settings_team_members": {
+      "name": "settings_team_members",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "settings_team_members_order_idx": {
+          "name": "settings_team_members_order_idx",
+          "columns": [
+            "_order"
+          ],
+          "isUnique": false
+        },
+        "settings_team_members_parent_id_idx": {
+          "name": "settings_team_members_parent_id_idx",
+          "columns": [
+            "_parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "settings_team_members_parent_id_fk": {
+          "name": "settings_team_members_parent_id_fk",
+          "tableFrom": "settings_team_members",
+          "tableTo": "settings",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "settings_stats": {
       "name": "settings_stats",
       "columns": {
@@ -3476,7 +4813,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'AIGNER'"
+          "default": "'Zahnarztpraxis'"
         },
         "brand_suffix": {
           "name": "brand_suffix",
@@ -3484,7 +4821,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'Holzbau'"
+          "default": "'Adolf'"
         },
         "legal_name": {
           "name": "legal_name",
@@ -3492,7 +4829,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'AIGNER Holzbau GmbH'"
+          "default": "'Zahnarztpraxis Johannes Adolf'"
         },
         "region": {
           "name": "region",
@@ -3500,7 +4837,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'Niederbayern'"
+          "default": "'Adlkofen'"
         },
         "tagline": {
           "name": "tagline",
@@ -3508,7 +4845,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'Meisterhafter Holzbau aus Niederbayern. Dachstühle, Holzhäuser und Sanierungen — ehrlich, präzise, aus einer Hand.'"
+          "default": "'Ihre Zahnarztpraxis in Adlkofen — in dritter Generation. Moderne Zahnmedizin von der Vorsorge bis zur Implantologie, ein herzliches Team und Termine, die Sie bequem online buchen.'"
         },
         "phone_display": {
           "name": "phone_display",
@@ -3516,7 +4853,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'0871 123 45 67'"
+          "default": "'08707 266'"
         },
         "phone_href": {
           "name": "phone_href",
@@ -3524,7 +4861,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'+498711234567'"
+          "default": "'+498707266'"
         },
         "email": {
           "name": "email",
@@ -3532,7 +4869,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'servus@aigner-holzbau.de'"
+          "default": "'landpraxis-adolf@gmx.de'"
         },
         "address_street": {
           "name": "address_street",
@@ -3540,7 +4877,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'Sägewerkstraße 4'"
+          "default": "'Hauptstraße 26'"
         },
         "address_city": {
           "name": "address_city",
@@ -3548,7 +4885,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'84028 Landshut'"
+          "default": "'84166 Adlkofen'"
         },
         "hero_badge": {
           "name": "hero_badge",
@@ -3556,7 +4893,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'Meisterbetrieb seit 1989 · Niederbayern'"
+          "default": "'Zahnarztpraxis in Adlkofen · in dritter Generation'"
         },
         "hero_heading_line1": {
           "name": "hero_heading_line1",
@@ -3564,7 +4901,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'Holzbau,'"
+          "default": "'Willkommen'"
         },
         "hero_heading_prefix": {
           "name": "hero_heading_prefix",
@@ -3572,7 +4909,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'der '"
+          "default": "'in der '"
         },
         "hero_heading_accent": {
           "name": "hero_heading_accent",
@@ -3580,7 +4917,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'bleibt.'"
+          "default": "'Praxis Adolf'"
         },
         "hero_lead": {
           "name": "hero_lead",
@@ -3588,7 +4925,79 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'Vom Dachstuhl bis zum schlüsselfertigen Holzhaus — wir verbinden traditionelles Zimmererhandwerk mit moderner Abbundtechnik. Ehrlich, präzise, aus einer Hand.'"
+          "default": "'Von der Vorsorge bis zur Implantologie — moderne Zahnmedizin in familiärer Atmosphäre. Der Mensch steht bei uns im Mittelpunkt.'"
+        },
+        "welcome_heading": {
+          "name": "welcome_heading",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Herzlich willkommen'"
+        },
+        "welcome_text": {
+          "name": "welcome_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Sehr geehrte Patientin, sehr geehrter Patient,\n\nwir freuen uns, Sie auf unserer Webseite begrüßen zu dürfen und heißen Sie herzlich willkommen. Auf den folgenden Seiten möchten wir unsere Praxis und unsere Leistungen vorstellen.\n\nMittelpunkt der Behandlung ist der Patient als Mensch, sodass wir zu jeder Zeit ein Maximum an umfassender Aufklärung und individueller Behandlung bieten. Schöne und gesunde Zähne sind für jeden Menschen wichtig, deshalb ist es unsere Aufgabe, dass Sie beschwerde- und schmerzfrei sind und sich rundum wohlfühlen. Es erwartet Sie bei uns eine erstklassige zahnärztliche Therapie inklusive Vor- und Nachsorge.\n\nUm Ihren Zahnarzttermin so einfach wie nur möglich zu gestalten, bemühen wir uns um kurze Wartezeiten. Durch eine strukturierte Terminvergabe und eine Optimierung der Behandlungsabläufe beansprucht Ihr Besuch in unserer Praxis lediglich einen Bruchteil Ihrer wertvollen Zeit.'"
+        },
+        "welcome_signature": {
+          "name": "welcome_signature",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Ihr Johannes Adolf'"
+        },
+        "team_heading_prefix": {
+          "name": "team_heading_prefix",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Ihr Zahnarzt in '"
+        },
+        "team_heading_accent": {
+          "name": "team_heading_accent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Adlkofen.'"
+        },
+        "team_intro": {
+          "name": "team_intro",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Mittelpunkt der Behandlung ist der Mensch. Es erwartet Sie eine erstklassige zahnärztliche Therapie inklusive Vor- und Nachsorge — in familiärer Atmosphäre und mit kurzen Wartezeiten.'"
+        },
+        "team_members_title": {
+          "name": "team_members_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Unser Praxisteam'"
+        },
+        "team_members_role": {
+          "name": "team_members_role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Zahnmedizinische Fachangestellte'"
+        },
+        "team_members_text": {
+          "name": "team_members_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Damit Sie sich bei uns rundum wohlfühlen, bildet sich unser Praxisteam kontinuierlich weiter, um Ihnen modernste Behandlungsmethoden anbieten zu können. Wir freuen uns, Sie herzlich in Empfang zu nehmen.'"
         },
         "career_heading_prefix": {
           "name": "career_heading_prefix",
@@ -3596,7 +5005,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'Bau mit an dem, '"
+          "default": "'Werde Teil '"
         },
         "career_heading_accent": {
           "name": "career_heading_accent",
@@ -3604,7 +5013,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'was bleibt.'"
+          "default": "'unseres Teams.'"
         },
         "career_text": {
           "name": "career_text",
@@ -3612,7 +5021,22 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'Wir suchen Hände, die anpacken, und Köpfe, die mitdenken. Bei uns gibt’s keine Massenabfertigung — sondern echtes Handwerk, faire Bezahlung und ein Team, das zusammenhält.'"
+          "default": "'Wir suchen Menschen, die mit Herz und Sorgfalt arbeiten. Bei uns erwarten dich ein eingespieltes, freundliches Team, moderne Ausstattung und ein familiäres Praxisumfeld.'"
+        },
+        "buchung_intro": {
+          "name": "buchung_intro",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'Buchen Sie Ihren Termin bequem online – wählen Sie eine Wunschzeit und bestätigen Sie per E-Mail. Bitte geben Sie keine sensiblen Gesundheitsdetails an; die Terminart genügt. Bei akuten Zahnschmerzen rufen Sie uns bitte direkt an: 08707 266.'"
+        },
+        "anamnese_public_key": {
+          "name": "anamnese_public_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
@@ -3645,6 +5069,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "aceef2e0-5d0b-480e-af6f-02bd9c6e17b3",
+  "id": "69092480-cfa1-4703-8839-0f5ac8f5554f",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: p.title,
     description: p.lead,
-    openGraph: { type: 'article', title: `${p.title} — Praxis am Stadtpark`, description: p.lead, images: [mediaUrl(p.hero)] },
+    openGraph: { type: 'article', title: `${p.title} — Zahnarztpraxis Johannes Adolf`, description: p.lead, images: [mediaUrl(p.hero)] },
   }
 }
 

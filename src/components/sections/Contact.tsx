@@ -31,8 +31,8 @@ export function Contact({ settings: s }: { settings: Setting }) {
               Wir sind <em>für Sie da.</em>
             </h2>
             <p className="reveal d1">
-              Für einen Termin nutzen Sie am besten die Online-Buchung. Für alles andere — Rezepte, Rückfragen oder ein Anliegen — erreichen Sie uns
-              telefonisch oder per E-Mail.
+              Für einen Termin nutzen Sie am besten die Online-Buchung. Für alles andere — Rückfragen oder ein Anliegen — erreichen Sie uns telefonisch oder
+              per E-Mail. Bei akuten Zahnschmerzen rufen Sie uns bitte direkt an.
             </p>
             <div className="cinfo reveal d2">
               <span className="lbl">Telefon</span>

@@ -6,7 +6,7 @@ import { getPayloadClient } from '@/lib/payload'
 import { currentYear } from '@/lib/format'
 import { HeaderSub, FooterSub } from '@/components/SiteChrome'
 import { ServiceIcon } from '@/components/ServiceIcon'
-import type { Leistungen, Setting } from '@/payload-types'
+import type { Leistungen, Media, Setting } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,11 +24,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { leistungen } = await loadLeistungen()
   const l = leistungen.find((x) => x.slug === slug)
   if (!l) return {}
-  const title = `${l.title} — Praxis am Stadtpark`
   return {
-    title,
+    title: l.title, // Layout-Template ergänzt „— Zahnarztpraxis Johannes Adolf"
     description: l.description,
-    openGraph: { type: 'article', title, description: l.description },
+    openGraph: { type: 'article', title: `${l.title} — Zahnarztpraxis Johannes Adolf`, description: l.description },
   }
 }
 
@@ -45,6 +44,10 @@ export default async function LeistungPage({ params }: { params: Promise<{ slug:
   const punkte = l.leistungspunkte ?? []
   const ablauf = l.ablauf ?? []
   const faq = l.faq ?? []
+
+  // Bild rechts im Seitenkopf (optional) → ohne Bild steht der Text allein
+  const heroMedia = (l.heroImage && typeof l.heroImage === 'object' ? l.heroImage : null) as Media | null
+  const heroUrl = heroMedia?.sizes?.portrait?.url ?? heroMedia?.url ?? null
 
   return (
     <div className="page page--leistung">
@@ -75,23 +78,57 @@ export default async function LeistungPage({ params }: { params: Promise<{ slug:
         </section>
 
         {/* INTRO + PUNKTE */}
-        {(l.intro || punkte.length > 0) && (
+        {(l.intro || punkte.length > 0 || heroUrl) && (
           <section className="sec lcontent">
             <div className="wrap">
               <div className="lcontent-grid">
                 <div className="lintro reveal">
                   {l.intro && <p>{l.intro}</p>}
                 </div>
-                {punkte.length > 0 && (
-                  <aside className="lpoints reveal">
-                    <h2>Das bieten wir</h2>
-                    <ul>
-                      {punkte.map((p) => (
-                        <li key={p.id ?? p.text}>{p.text}</li>
-                      ))}
-                    </ul>
-                  </aside>
+                {(heroUrl || punkte.length > 0) && (
+                  <div className="lcontent-side">
+                    {heroUrl && (
+                      <figure className="lfigure reveal">
+                        <img src={heroUrl} alt={l.title} />
+                      </figure>
+                    )}
+                    {punkte.length > 0 && (
+                      <aside className="lpoints reveal">
+                        <h2>Das bieten wir</h2>
+                        <ul>
+                          {punkte.map((p) => (
+                            <li key={p.id ?? p.text}>{p.text}</li>
+                          ))}
+                        </ul>
+                      </aside>
+                    )}
+                  </div>
                 )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* UNTERLEISTUNGEN */}
+        {(l.unterleistungen?.length ?? 0) > 0 && (
+          <section className="sec lsubs">
+            <div className="wrap">
+              <div className="sec-head reveal">
+                <span className="eyebrow">Im Detail</span>
+                <h2>
+                  Unsere Leistungen im <em>Einzelnen.</em>
+                </h2>
+              </div>
+              <div className="lsubs-grid">
+                {l.unterleistungen!.map((u, idx) => (
+                  <Link key={u.slug ?? idx} href={`/leistungen/${l.slug}/${u.slug}`} className="lsub-card reveal">
+                    <h3>{u.title}</h3>
+                    {u.lead && <p>{u.lead}</p>}
+                    <span className="lsub-go" aria-hidden="true">
+                      Mehr erfahren →
+                    </span>
+                  </Link>
+                ))}
               </div>
             </div>
           </section>

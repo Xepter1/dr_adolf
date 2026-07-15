@@ -169,7 +169,6 @@ export function BookingFlow({ aerzte, brandName, intro, terminarten, versicherun
                 </span>
                 <span className="bk-card-name">{a.fullName}</span>
                 <span className="bk-card-fach">{a.fachrichtung}</span>
-                {a.vita && <span className="bk-card-vita">{a.vita}</span>}
                 <span className={`bk-next ${next ? '' : 'is-none'}`}>
                   {next ? `Nächster Termin: ${next.weekdayLabel}, ${next.dayLabel}` : 'Zurzeit ausgebucht'}
                 </span>
