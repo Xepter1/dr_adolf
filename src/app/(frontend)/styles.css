@@ -854,11 +854,16 @@ details.qa[open] .ic{background:var(--wood-2);color:var(--cream);border-color:va
 .lprose-layout .lfigure{position:sticky;top:100px}
 
 .lcontent{background:var(--bone)}
-/* Kategorieseite: rechte Spalte = Bild oben, „Das bieten wir" darunter */
-.lcontent-side{display:flex;flex-direction:column;gap:24px}
+/* Kategorieseite: oben Text + mitscrollendes Bild … */
 .lcontent-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(30px,5vw,60px);align-items:start}
+.lcontent-grid--solo{grid-template-columns:1fr}
+.lcontent-grid--solo .lintro{max-width:70ch}
+.lcontent-grid .lfigure{position:sticky;top:100px}
 .lintro p{font-size:clamp(1.06rem,1.4vw,1.26rem);line-height:1.72;color:var(--ink-2)}
 .lpoints{background:var(--cream);border:1px solid var(--line-soft);border-radius:20px;padding:28px 30px}
+/* … darunter „Das bieten wir" über die volle Breite, Häkchen in 2 Spalten */
+.lpoints--wide{margin-top:clamp(30px,4vw,52px)}
+.lpoints--wide ul{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 44px}
 .lpoints h2{font-family:var(--serif);font-size:1.4rem;font-weight:480;margin-bottom:18px;color:var(--ink)}
 .lpoints ul{list-style:none;display:grid;gap:13px}
 .lpoints li{position:relative;padding-left:30px;color:var(--ink-2);line-height:1.5}
@@ -889,7 +894,8 @@ details.qa[open] .ic{background:var(--wood-2);color:var(--cream);border-color:va
 @media(max-width:820px){
   .lcontent-grid{grid-template-columns:1fr}
   .lprose-layout{grid-template-columns:1fr}
-  .lprose-layout .lfigure{position:static;aspect-ratio:16/10;max-width:560px}
+  .lprose-layout .lfigure,.lcontent-grid .lfigure{position:static;aspect-ratio:16/10;max-width:560px}
+  .lpoints--wide ul{grid-template-columns:1fr}
   .lsteps{grid-template-columns:1fr}
 }
 @media(max-width:680px){

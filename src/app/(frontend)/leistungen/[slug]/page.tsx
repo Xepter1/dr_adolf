@@ -77,34 +77,30 @@ export default async function LeistungPage({ params }: { params: Promise<{ slug:
           </div>
         </section>
 
-        {/* INTRO + PUNKTE */}
+        {/* INTRO + BILD, darunter „Das bieten wir" über volle Breite */}
         {(l.intro || punkte.length > 0 || heroUrl) && (
           <section className="sec lcontent">
             <div className="wrap">
-              <div className="lcontent-grid">
+              <div className={`lcontent-grid${heroUrl ? '' : ' lcontent-grid--solo'}`}>
                 <div className="lintro reveal">
                   {l.intro && <p>{l.intro}</p>}
                 </div>
-                {(heroUrl || punkte.length > 0) && (
-                  <div className="lcontent-side">
-                    {heroUrl && (
-                      <figure className="lfigure reveal">
-                        <img src={heroUrl} alt={l.title} />
-                      </figure>
-                    )}
-                    {punkte.length > 0 && (
-                      <aside className="lpoints reveal">
-                        <h2>Das bieten wir</h2>
-                        <ul>
-                          {punkte.map((p) => (
-                            <li key={p.id ?? p.text}>{p.text}</li>
-                          ))}
-                        </ul>
-                      </aside>
-                    )}
-                  </div>
+                {heroUrl && (
+                  <figure className="lfigure reveal">
+                    <img src={heroUrl} alt={l.title} />
+                  </figure>
                 )}
               </div>
+              {punkte.length > 0 && (
+                <aside className="lpoints lpoints--wide reveal">
+                  <h2>Das bieten wir</h2>
+                  <ul>
+                    {punkte.map((p) => (
+                      <li key={p.id ?? p.text}>{p.text}</li>
+                    ))}
+                  </ul>
+                </aside>
+              )}
             </div>
           </section>
         )}
