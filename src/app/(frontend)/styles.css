@@ -210,7 +210,7 @@ h1 em{font-style:italic;font-weight:340}
   transition:width .24s var(--ease),transform .2s var(--ease),background .2s var(--ease);will-change:width,transform}
 .hero-tile:nth-child(even) .hero-tile-card{left:0}   /* rechte Spalte → fährt nach rechts aus */
 .hero-tile:nth-child(odd)  .hero-tile-card{right:0}  /* linke Spalte → fährt nach links aus */
-.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.1)),rgba(8,22,17,.36)}
+@media(hover:hover){.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.1)),rgba(8,22,17,.36)}}
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-card,
 .hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:170%}
 
@@ -228,15 +228,17 @@ h1 em{font-style:italic;font-weight:340}
 /* klickbare Kategorie — bleibt fix auf der Original-Kachel, über dem Glas */
 .hero-tile-cat{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;gap:12px;padding:20px 22px;text-decoration:none;
   transition:transform .2s var(--ease);will-change:transform}
-.hero-tile:hover .hero-tile-cat{transform:translateY(-3px)}
+@media(hover:hover){.hero-tile:hover .hero-tile-cat{transform:translateY(-3px)}}
 .hero-tile-ic{width:46px;height:46px;flex:0 0 auto;border-radius:13px;display:grid;place-items:center;background:rgba(190,240,222,.2);border:1px solid rgba(255,255,255,.24);color:#e9fcf3}
 .hero-tile-ic .ic{width:26px;height:26px;stroke-width:2.2}
 .hero-tile-t{font-family:var(--serif);font-size:1.08rem;font-weight:400;color:#f4f8f6;line-height:1.16;text-shadow:0 1px 12px rgba(0,0,0,.4)}
 .hero-tile-go{position:absolute;right:16px;bottom:13px;font-size:1.05rem;color:#cdeede;opacity:0;transform:translateX(-5px);transition:opacity .25s var(--ease),transform .25s var(--ease)}
-.hero-tile:hover .hero-tile-go{opacity:.92;transform:translateX(0)}
+@media(hover:hover){.hero-tile:hover .hero-tile-go{opacity:.92;transform:translateX(0)}}
 
 /* Touch / kein Hover: Morph aus (Chips übernehmen im Handy-Layout unten) */
-@media(hover:none),(pointer:coarse){.hero-tile-card{width:100%!important}}
+@media(hover:none),(pointer:coarse){.hero-tile-card{width:100%!important}
+  /* kein „Hover"-Einfärben & kein Tap-Flash beim Berühren/Scrollen auf Touch */
+  .hero-tile,.hero-tile-cat,.hero-tile-sub{-webkit-tap-highlight-color:transparent}}
 @media(max-width:1024px){
   .hero .wrap.hero-inner{grid-template-columns:1fr 1fr;gap:40px}
   .hero-tooth{display:none}
@@ -465,7 +467,7 @@ section{position:relative}
 .site-footer--sub .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .site-footer--sub a{color:var(--ember);font-weight:500}
 .site-footer--sub a:hover{text-decoration:underline}
-.site-footer--sub .links{display:flex;gap:22px}
+.site-footer--sub .links{display:flex;flex-wrap:wrap;gap:10px 22px}
 
 /* ============ REVEAL ============ */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
