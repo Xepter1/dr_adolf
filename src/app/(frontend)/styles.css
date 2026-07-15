@@ -153,7 +153,7 @@ nav a:hover::after{width:100%}
 .hero-bg2{position:absolute;inset:0;z-index:-1}
 .hero-img{position:absolute;inset:-26px;background-size:cover;background-position:center right;
   background-image:url('/hero/praxis.jpg'),linear-gradient(120deg,#0e3b2c,#0a261e 55%,#123f30);
-  filter:blur(4px) brightness(.84) saturate(1.1);transform:scale(1.06)}
+  filter:blur(4px) brightness(.72) saturate(1.1);transform:scale(1.06)}
 .hero-tint{position:absolute;inset:0;
   background:
     linear-gradient(100deg,rgba(7,21,16,.88) 0%,rgba(7,21,16,.64) 38%,rgba(7,21,16,.22) 72%,rgba(7,21,16,.06) 100%),
@@ -204,12 +204,13 @@ h1 em{font-style:italic;font-weight:340}
 
 /* die gläserne Fläche — morpht in der Breite nach außen */
 .hero-tile-card{position:absolute;top:0;height:100%;width:100%;z-index:1;border-radius:20px;overflow:hidden;
-  background:linear-gradient(155deg,rgba(255,255,255,.13),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.2);
+  /* weißer Glas-Schimmer ÜBER einer dezent dunklen Basis → Text hat immer Kontrast, bleibt aber glasig */
+  background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),rgba(8,22,17,.44);border:1px solid rgba(255,255,255,.2);
   box-shadow:0 10px 34px -14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);
   transition:width .24s var(--ease),transform .2s var(--ease),background .2s var(--ease);will-change:width,transform}
 .hero-tile:nth-child(even) .hero-tile-card{left:0}   /* rechte Spalte → fährt nach rechts aus */
 .hero-tile:nth-child(odd)  .hero-tile-card{right:0}  /* linke Spalte → fährt nach links aus */
-.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.2),rgba(255,255,255,.1))}
+.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.1)),rgba(8,22,17,.36)}
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-card,
 .hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:calc(200% + 16px)}
 
@@ -221,7 +222,7 @@ h1 em{font-style:italic;font-weight:340}
 .hero-tile:nth-child(odd)  .hero-tile-subs{left:0}   /* außen links */
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-subs,
 .hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-subs{opacity:1;visibility:visible;transition:opacity .2s var(--ease) .08s,visibility 0s}
-.hero-tile-sub{display:block;padding:6px 10px;border-radius:9px;font-size:.9rem;font-weight:500;color:rgba(244,248,246,.92);text-decoration:none;line-height:1.2;transition:background .15s var(--ease),color .15s var(--ease)}
+.hero-tile-sub{display:block;padding:6px 10px;border-radius:9px;font-size:.9rem;font-weight:500;color:rgba(244,248,246,.94);text-shadow:0 1px 8px rgba(0,0,0,.45);text-decoration:none;line-height:1.2;transition:background .15s var(--ease),color .15s var(--ease)}
 .hero-tile-sub:hover,.hero-tile-sub:focus-visible{background:rgba(255,255,255,.18);color:#fff;outline:none}
 
 /* klickbare Kategorie — bleibt fix auf der Original-Kachel, über dem Glas */
@@ -230,7 +231,7 @@ h1 em{font-style:italic;font-weight:340}
 .hero-tile:hover .hero-tile-cat{transform:translateY(-3px)}
 .hero-tile-ic{width:46px;height:46px;flex:0 0 auto;border-radius:13px;display:grid;place-items:center;background:rgba(190,240,222,.2);border:1px solid rgba(255,255,255,.24);color:#e9fcf3}
 .hero-tile-ic .ic{width:26px;height:26px;stroke-width:2.2}
-.hero-tile-t{font-family:var(--serif);font-size:1.08rem;font-weight:400;color:#f4f8f6;line-height:1.16}
+.hero-tile-t{font-family:var(--serif);font-size:1.08rem;font-weight:400;color:#f4f8f6;line-height:1.16;text-shadow:0 1px 12px rgba(0,0,0,.4)}
 .hero-tile-go{position:absolute;right:16px;bottom:13px;font-size:1.05rem;color:#cdeede;opacity:0;transform:translateX(-5px);transition:opacity .25s var(--ease),transform .25s var(--ease)}
 .hero-tile:hover .hero-tile-go{opacity:.92;transform:translateX(0)}
 
