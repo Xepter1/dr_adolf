@@ -125,7 +125,7 @@ body::before{
 .brand b{font-weight:600}
 .brand span{color:var(--wood-2)}
 nav ul{list-style:none;display:flex;gap:30px;align-items:center}
-nav a{font-size:.92rem;font-weight:500;color:var(--ink-2);position:relative;padding:4px 0}
+nav a{font-size:1rem;font-weight:500;color:var(--ink-2);position:relative;padding:4px 0}
 nav a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--wood);transition:width .35s var(--ease)}
 nav a:hover{color:var(--ink)}
 nav a:hover::after{width:100%}
@@ -141,7 +141,7 @@ nav a:hover::after{width:100%}
 .btn .arr{transition:transform .3s var(--ease)}
 .btn:hover .arr{transform:translateX(4px)}
 .nav-cta{display:flex;align-items:center;gap:18px}
-.nav-cta .tel{font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:.5em;white-space:nowrap}
+.nav-cta .tel{font-weight:600;font-size:1rem;display:flex;align-items:center;gap:.5em;white-space:nowrap}
 .nav-right{display:flex;align-items:center;gap:20px}
 .nav-right .back{font-weight:600;font-size:.9rem;color:var(--ink-2);display:inline-flex;align-items:center;gap:.5em}
 .nav-right .back:hover{color:var(--wood-2)}

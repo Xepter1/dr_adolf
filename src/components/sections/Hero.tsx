@@ -27,9 +27,6 @@ export function Hero({ settings: s, leistungen }: { settings: Setting; leistunge
             <Link href="/termin" className="btn">
               Termin buchen <span className="arr">→</span>
             </Link>
-            <a href="#leistungen" className="btn ghost">
-              Unsere Leistungen
-            </a>
           </div>
         </div>
 
