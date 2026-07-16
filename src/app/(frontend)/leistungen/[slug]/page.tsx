@@ -83,7 +83,9 @@ export default async function LeistungPage({ params }: { params: Promise<{ slug:
             <div className="wrap">
               <div className={`lcontent-grid${heroUrl ? '' : ' lcontent-grid--solo'}`}>
                 <div className="lintro reveal">
-                  {l.intro && <p>{l.intro}</p>}
+                  {l.intro?.split(/\n{2,}/).map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
                 </div>
                 {heroUrl && (
                   <figure className="lfigure reveal">
@@ -112,7 +114,7 @@ export default async function LeistungPage({ params }: { params: Promise<{ slug:
               <div className="sec-head reveal">
                 <span className="eyebrow">Im Detail</span>
                 <h2>
-                  Unsere Leistungen im <em>Einzelnen.</em>
+                  Unsere Leistungen für <em>{l.title}</em> im Einzelnen.
                 </h2>
               </div>
               <div className="lsubs-grid">

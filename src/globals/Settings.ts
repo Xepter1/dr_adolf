@@ -29,7 +29,7 @@ export const Settings: GlobalConfig = {
                 { name: 'region', type: 'text', label: 'Region', defaultValue: 'Adlkofen', required: true },
               ],
             },
-            { name: 'tagline', type: 'textarea', label: 'Footer-Slogan', defaultValue: 'Ihre Zahnarztpraxis in Adlkofen — in dritter Generation. Moderne Zahnmedizin von der Vorsorge bis zur Implantologie, ein herzliches Team und Termine, die Sie bequem online buchen.' },
+            { name: 'tagline', type: 'textarea', label: 'Footer-Slogan', defaultValue: 'Ihre Zahnarztpraxis in Adlkofen' },
             {
               type: 'row',
               fields: [

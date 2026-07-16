@@ -195,7 +195,12 @@ async function seedLeistungen(payload: Payload): Promise<void> {
       description: 'Zahn- und Kieferfehlstellungen schonend korrigieren: herausnehmbare und feste Apparaturen mit moderner, schmerzarmer Technik.',
       lead: 'Fehlstellungen von Zähnen und Kiefern — am besten in der Wachstumsphase korrigiert.',
       intro:
-        'Die Kieferorthopädie befasst sich mit Fehlentwicklungen von Ober- und Unterkiefer sowie mit Zahnfehlstellungen. Diese Abweichungen können am besten während der Wachstumsphase eines Kindes korrigiert werden. Daher empfehlen wir, kieferorthopädische Untersuchungen im Einschulungsalter und spätestens bis zum 10. Lebensjahr durchführen zu lassen. Die Behandlung lässt sich auf zwei Arten vornehmen — mit herausnehmbaren und mit festsitzenden Apparaturen. Um den Behandlungsablauf zu beschleunigen und möglichst schmerzfrei zu gestalten, greifen wir auf moderne Methodik zurück: selbstligierende, passive Brackets und thermoelastische Drahtbögen aus einer Nickel-Titan-Legierung.',
+        'Die Kieferorthopädie befasst sich mit Fehlentwicklungen von Ober- und Unterkiefer sowie mit Zahnfehlstellungen. Diese Abweichungen können am besten während der Wachstumsphase eines Kindes korrigiert werden. Daher empfehlen wir, kieferorthopädische Untersuchungen im Einschulungsalter und spätestens bis zum 10. Lebensjahr durchführen zu lassen.\n\n' +
+        'Die kieferorthopädische Behandlung lässt sich auf zwei Arten vornehmen — mit herausnehmbaren und mit festsitzenden Apparaturen.\n\n' +
+        'Herausnehmbare Apparaturen werden vor allem in den Wachstumsphasen eingesetzt, um knöcherne Fehlstellungen zu korrigieren — wie beispielsweise die häufig vorkommende Rücklage des Unterkiefers oder zu schmale Kiefer. Auch in der Retentionsphase, also bei der Sicherung des Behandlungserfolgs, spielen sie eine maßgebliche Rolle.\n\n' +
+        'Unter festsitzender Kieferorthopädie versteht man hauptsächlich Multi-Bracket-Apparaturen. Dabei wird jeder Zahn mit einem Bracket oder Band versehen; die eigentliche Zahnbewegung geschieht über einen darin befestigten Drahtbogen. Dadurch sind Zahnbewegungen möglich, die durch herausnehmbare Apparaturen nicht zu bewerkstelligen sind. In der Regel beträgt die Dauer einer solchen Therapie zwei bis drei Jahre.\n\n' +
+        'Um diesen Prozess zu beschleunigen und den Behandlungsablauf möglichst schmerzfrei zu gestalten, greifen wir auf moderne Methodik zurück. Selbstligierende, passive Brackets ermöglichen eine reibungsfreie Bewegung der Zähne, wodurch sich die Behandlungsdauer auf unter zwei Jahre verkürzen kann. Thermoelastische Drahtbögen aus einer Nickel-Titan-Legierung regulieren die auf die Zähne wirkenden Kräfte gut — so lässt sich eine möglichst schmerzarme Behandlung für Sie erzielen.\n\n' +
+        'Für eine individuelle Beratung stehen wir Ihnen gerne zur Verfügung.',
       leistungspunkte: [
         { text: 'Herausnehmbare Apparaturen — vor allem in der Wachstumsphase und zur Retention' },
         { text: 'Festsitzende Apparaturen (Multi-Bracket)' },
@@ -403,8 +408,7 @@ async function seedSettings(payload: Payload): Promise<void> {
       brandSuffix: 'Adolf',
       legalName: 'Zahnarztpraxis Johannes Adolf',
       region: 'Adlkofen',
-      tagline:
-        'Ihre Zahnarztpraxis in Adlkofen — in dritter Generation. Moderne Zahnmedizin von der Vorsorge bis zur Implantologie, ein herzliches Team und Termine, die Sie bequem online buchen.',
+      tagline: 'Ihre Zahnarztpraxis in Adlkofen',
       phoneDisplay: '08707 266',
       phoneHref: '+498707266',
       email: 'landpraxis-adolf@gmx.de',
