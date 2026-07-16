@@ -207,12 +207,15 @@ h1 em{font-style:italic;font-weight:340}
   /* weißer Glas-Schimmer ÜBER einer dezent dunklen Basis → Text hat immer Kontrast, bleibt aber glasig */
   background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),rgba(8,22,17,.44);border:1px solid rgba(255,255,255,.2);
   box-shadow:0 10px 34px -14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);
-  transition:width .24s var(--ease),transform .2s var(--ease),background .2s var(--ease);will-change:width,transform}
+  transition:width .24s var(--ease),height .24s var(--ease),transform .2s var(--ease),background .2s var(--ease);will-change:width,height,transform}
 .hero-tile:nth-child(even) .hero-tile-card{left:0}   /* rechte Spalte → fährt nach rechts aus */
 .hero-tile:nth-child(odd)  .hero-tile-card{right:0}  /* linke Spalte → fährt nach links aus */
 @media(hover:hover){.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.1)),rgba(8,22,17,.36)}}
+/* Ausgeklappt wächst die Karte auch nach unten: Die Kachel ist mit 140px zu
+   niedrig für die langen Begriffe im schmalen Panel — sonst würden die
+   Unterpunkte oben/unten abgeschnitten. */
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-card,
-.hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:170%}
+.hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:170%;height:200px}
 
 /* Unterpunkte in der ausgefahrenen Hälfte */
 .hero-tile-subs{position:absolute;top:0;bottom:0;width:41%;margin:0;padding:12px 12px;list-style:none;
@@ -253,6 +256,14 @@ h1 em{font-style:italic;font-weight:340}
 @media(hover:none),(pointer:coarse){.hero-tile-card{width:100%!important}
   /* kein „Hover"-Einfärben & kein Tap-Flash beim Berühren/Scrollen auf Touch */
   .hero-tile,.hero-tile-cat,.hero-tile-sub{-webkit-tap-highlight-color:transparent}}
+/* Zwischen Handy-Layout und breitem Desktop sind die Kacheln zu schmal für das
+   seitliche Panel (Begriffe würden extrem umbrechen) → kein Aufklappen; die
+   Kachel verlinkt direkt auf die Kategorieseite, wo alle Unterpunkte stehen. */
+@media(min-width:681px) and (max-width:1279px){
+  .hero-tile-card{width:100%!important;height:100%!important}
+  .hero-tile::after{display:none}
+  .hero-tile-subs{display:none}
+}
 @media(max-width:1024px){
   .hero .wrap.hero-inner{grid-template-columns:1fr 1fr;gap:40px}
   .hero-tooth{display:none}
