@@ -98,12 +98,6 @@ export default async function ImpressumPage() {
             Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als
             solche gekennzeichnet. Vervielfältigung, Bearbeitung und Verbreitung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung.
           </p>
-
-          <div className="note">
-            <strong>Hinweis:</strong> Adresse und Telefonnummer stammen aus der bisherigen Website. Bitte alle Angaben final bestätigen, die
-            Berufshaftpflichtversicherung ergänzen und das Impressum vor dem produktiven Einsatz rechtlich prüfen lassen (insb. zahnärztliches Berufsrecht
-            sowie die Datenschutzerklärung für Online-Terminbuchung und Anamnese).
-          </div>
         </div>
       </main>
 

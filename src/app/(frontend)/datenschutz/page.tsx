@@ -122,12 +122,6 @@ export default async function DatenschutzPage() {
             Wir setzen eine SSL/TLS-Verschlüsselung ein, um die Übertragung Ihrer Daten zu schützen. Eine verschlüsselte Verbindung erkennen Sie am „https://"
             und dem Schloss-Symbol in Ihrer Browserzeile.
           </p>
-
-          <div className="note">
-            <strong>Hinweis:</strong> Diese Datenschutzerklärung ist ein anpassbarer Mustertext und ersetzt keine Rechtsberatung. Gerade bei
-            Gesundheitsdaten (Art. 9 DSGVO) und der Online-Terminbuchung mit Anamnese bitte vor dem produktiven Einsatz an die tatsächlich eingesetzten
-            Dienste anpassen und durch einen Datenschutzbeauftragten bzw. Fachanwalt prüfen lassen.
-          </div>
         </div>
       </main>
 
