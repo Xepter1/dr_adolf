@@ -235,6 +235,20 @@ h1 em{font-style:italic;font-weight:340}
 .hero-tile-go{position:absolute;right:16px;bottom:13px;font-size:1.05rem;color:#cdeede;opacity:0;transform:translateX(-5px);transition:opacity .25s var(--ease),transform .25s var(--ease)}
 @media(hover:hover){.hero-tile:hover .hero-tile-go{opacity:.92;transform:translateX(0)}}
 
+/* Kacheln MIT Unterleistungen: dezenter Winkel am äußeren Rand — zeigt schon im
+   Ruhezustand, welche Kacheln mehr bieten und in welche Richtung sie aufklappen.
+   Nur bei echtem Hover, denn nur dort klappt überhaupt etwas auf. */
+@media(hover:hover){
+  .hero-tile[data-subs]:not([data-subs="0"])::after{
+    content:"";position:absolute;top:50%;margin-top:-4px;width:7px;height:7px;z-index:3;pointer-events:none;
+    border-right:1.5px solid rgba(226,245,238,.5);border-bottom:1.5px solid rgba(226,245,238,.5);
+    transition:opacity .2s var(--ease)}
+  .hero-tile:nth-child(odd)[data-subs]:not([data-subs="0"])::after{left:13px;transform:rotate(135deg)}  /* klappt nach links */
+  .hero-tile:nth-child(even)[data-subs]:not([data-subs="0"])::after{right:13px;transform:rotate(-45deg)} /* klappt nach rechts */
+  /* beim Aufklappen überflüssig → ausblenden */
+  .hero-tile[data-subs]:not([data-subs="0"]):hover::after{opacity:0}
+}
+
 /* Touch / kein Hover: Morph aus (Chips übernehmen im Handy-Layout unten) */
 @media(hover:none),(pointer:coarse){.hero-tile-card{width:100%!important}
   /* kein „Hover"-Einfärben & kein Tap-Flash beim Berühren/Scrollen auf Touch */
@@ -254,6 +268,7 @@ h1 em{font-style:italic;font-weight:340}
 
 /* --- HANDY: Kacheln in voller Breite, Unterleistungen als antippbare Chips sichtbar --- */
 @media(max-width:680px){
+  .hero-tile::after{display:none} /* Aufklapp-Hinweis unnötig — Chips sind sichtbar */
   .hero-tiles{grid-template-columns:1fr;gap:12px}
   .hero-tile{height:auto;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
     background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.055));
@@ -779,40 +794,8 @@ details.qa[open] .ic{background:var(--wood-2);color:var(--cream);border-color:va
 /* (Hero-Kachel-Styles inkl. Klick-Pfeil + Hover-Aufklappen stehen oben im
    „Liquid-Glass-Kacheln"-Block — hier bewusst nichts mehr.) */
 
-/* ============================================================
-   Navbar: Leistungen-Dropdown (Hover + Tastatur via :focus-within)
-   ============================================================ */
-.has-sub{position:relative}
-.has-sub > a .caret{font-size:.66em;margin-left:.4em;display:inline-block;transition:transform .25s var(--ease)}
-.has-sub:hover > a .caret,.has-sub:focus-within > a .caret{transform:rotate(180deg)}
-/* Gleicher Glas-Look wie die Hero-Kacheln. Der Backdrop wird zusätzlich leicht
-   abgedunkelt — das Dropdown erscheint auch über hellem Inhalt (gescrollt) und
-   bliebe sonst mit heller Schrift unlesbar. */
-.submenu{position:absolute;top:100%;left:50%;transform:translate(-50%,10px);min-width:252px;list-style:none;
-  background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),rgba(8,22,17,.44);
-  backdrop-filter:blur(14px) brightness(.5);-webkit-backdrop-filter:blur(14px) brightness(.5);
-  border:1px solid rgba(255,255,255,.2);border-radius:16px;
-  box-shadow:0 26px 54px -22px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);padding:8px;display:grid;gap:2px;
-  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s var(--ease),transform .2s var(--ease);z-index:130}
-.submenu::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px} /* Hover-Brücke zur Lücke */
-.has-sub:hover .submenu,.has-sub:focus-within .submenu{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,4px)}
-.submenu a{display:block;padding:10px 14px;border-radius:9px;font-size:.9rem;font-weight:500;color:rgba(244,248,246,.92)!important;white-space:nowrap}
-.submenu a::after{display:none} /* Unterstrich-Animation der Nav-Links abschalten */
-.submenu a:hover{background:rgba(255,255,255,.12);color:#fff!important}
-/* Mega-Dropdown: Kategorien + Unterleistungen — Spalten oben ausrichten, damit
-   Kategorien ohne Unterpunkte nicht mittig „im Raum schweben". */
-/* Breite stufenlos gedeckelt: Das Panel startet bei ~x=360–450 und wächst nach
-   rechts — die 420px berücksichtigen diesen Versatz, damit es NIE aus dem
-   Viewport ragt (sonst würde es abgeschnitten). auto-fit bricht bei wenig Platz
-   sauber auf zwei Reihen um; auf breiten Schirmen passen alle 6 in eine Reihe. */
-.submenu.mega{left:0;transform:translate(0,10px);min-width:0;width:min(880px,calc(100vw - 420px));padding:16px 18px;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px 14px;align-items:start}
-.has-sub:hover .submenu.mega,.has-sub:focus-within .submenu.mega{transform:translate(0,4px)}
-.mega-col{display:flex;flex-direction:column;justify-content:flex-start}
-.mega-cat{font-family:var(--serif);font-weight:600;font-size:.98rem!important;color:#f4f8f6!important;padding:6px 10px!important}
-.mega-sub{list-style:none;display:grid;gap:0;margin:1px 0 8px;padding-left:8px;border-left:1px solid rgba(255,255,255,.16)}
-.mega-sub a{font-size:.84rem!important;font-weight:500;color:rgba(235,243,239,.72)!important;padding:5px 10px!important;white-space:normal}
-.mega-sub a:hover{color:#fff!important}
+/* (Kein Leistungen-Dropdown mehr in der Navbar — die Hero-Kacheln sind die
+   Leistungsübersicht. Zugehörige .submenu/.mega-Styles wurden entfernt.) */
 
 /* ============================================================
    Leistungs-Detailseite  /leistungen/<slug>
@@ -926,9 +909,4 @@ details.qa[open] .ic{background:var(--wood-2);color:var(--cream);border-color:va
   .lprose-layout .lfigure,.lcontent-grid .lfigure{position:static;aspect-ratio:16/10;max-width:560px}
   .lpoints--wide ul{grid-template-columns:1fr}
   .lsteps{grid-template-columns:1fr}
-}
-@media(max-width:680px){
-  /* Dropdown im mobilen Vollbild-Menü ausblenden — die Kacheln in der Hero sind die Leistungs-Liste */
-  .has-sub .submenu{display:none}
-  .has-sub > a .caret{display:none}
 }

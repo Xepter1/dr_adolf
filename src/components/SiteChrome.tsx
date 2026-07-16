@@ -36,34 +36,7 @@ export function HeaderHome({ settings, leistungen = [] }: { settings: ChromeSett
         <Brand name={settings.brandName} suffix={settings.brandSuffix} href="/" />
         <nav>
           <ul>
-            <li className={leistungen.length > 0 ? 'has-sub' : undefined}>
-              <a href="#leistungen" aria-haspopup={leistungen.length > 0 ? true : undefined}>
-                Leistungen
-              </a>
-              {leistungen.length > 0 && (
-                <ul className="submenu mega">
-                  {leistungen.map((l) => {
-                    const subs = (l.unterleistungen ?? []).filter(Boolean) as NavSubleistung[]
-                    return (
-                      <li key={l.slug ?? l.title} className="mega-col">
-                        <Link href={`/leistungen/${l.slug}`} className="mega-cat">
-                          {l.title}
-                        </Link>
-                        {subs.length > 0 && (
-                          <ul className="mega-sub">
-                            {subs.map((u) => (
-                              <li key={u.slug ?? u.title}>
-                                <Link href={`/leistungen/${l.slug}/${u.slug}`}>{u.title}</Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-            </li>
+            {/* „Leistungen" bewusst nicht in der Nav — die Hero-Kacheln sind die Leistungsübersicht. */}
             <li><a href="#team">Praxis &amp; Team</a></li>
             <li><a href="#oeffnungszeiten">Öffnungszeiten</a></li>
             <li><Link href="/aktuelles">Aktuelles</Link></li>
