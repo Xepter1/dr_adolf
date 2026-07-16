@@ -207,25 +207,23 @@ h1 em{font-style:italic;font-weight:340}
   /* weißer Glas-Schimmer ÜBER einer dezent dunklen Basis → Text hat immer Kontrast, bleibt aber glasig */
   background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),rgba(8,22,17,.44);border:1px solid rgba(255,255,255,.2);
   box-shadow:0 10px 34px -14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);
-  transition:width .24s var(--ease),height .24s var(--ease),transform .2s var(--ease),background .2s var(--ease);will-change:width,height,transform}
+  transition:width .24s var(--ease),transform .2s var(--ease),background .2s var(--ease);will-change:width,transform}
 .hero-tile:nth-child(even) .hero-tile-card{left:0}   /* rechte Spalte → fährt nach rechts aus */
 .hero-tile:nth-child(odd)  .hero-tile-card{right:0}  /* linke Spalte → fährt nach links aus */
 @media(hover:hover){.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.1)),rgba(8,22,17,.36)}}
-/* Ausgeklappt wächst die Karte auch nach unten: Die Kachel ist mit 140px zu
-   niedrig für die langen Begriffe im schmalen Panel — sonst würden die
-   Unterpunkte oben/unten abgeschnitten. */
+/* Klappt ausschließlich seitlich auf — Höhe bleibt die der Kachel. */
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-card,
-.hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:170%;height:200px}
+.hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:170%}
 
 /* Unterpunkte in der ausgefahrenen Hälfte */
-.hero-tile-subs{position:absolute;top:0;bottom:0;width:41%;margin:0;padding:12px 12px;list-style:none;
-  display:flex;flex-direction:column;justify-content:center;gap:1px;
+.hero-tile-subs{position:absolute;top:0;bottom:0;width:41%;margin:0;padding:8px 10px;list-style:none;
+  display:flex;flex-direction:column;justify-content:center;gap:0;
   opacity:0;visibility:hidden;transition:opacity .11s var(--ease),visibility 0s linear .24s}
 .hero-tile:nth-child(even) .hero-tile-subs{right:0}  /* außen rechts */
 .hero-tile:nth-child(odd)  .hero-tile-subs{left:0}   /* außen links */
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-subs,
 .hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-subs{opacity:1;visibility:visible;transition:opacity .16s var(--ease) .22s,visibility 0s}
-.hero-tile-sub{display:block;padding:5px 8px;border-radius:9px;font-size:.8rem;font-weight:500;color:rgba(244,248,246,.94);text-shadow:0 1px 8px rgba(0,0,0,.45);text-decoration:none;line-height:1.25;overflow-wrap:break-word;hyphens:auto;transition:background .15s var(--ease),color .15s var(--ease)}
+.hero-tile-sub{display:block;padding:3px 7px;border-radius:8px;font-size:.75rem;font-weight:500;color:rgba(244,248,246,.94);text-shadow:0 1px 8px rgba(0,0,0,.45);text-decoration:none;line-height:1.2;overflow-wrap:break-word;hyphens:auto;transition:background .15s var(--ease),color .15s var(--ease)}
 .hero-tile-sub:hover,.hero-tile-sub:focus-visible{background:rgba(255,255,255,.18);color:#fff;outline:none}
 
 /* klickbare Kategorie — bleibt fix auf der Original-Kachel, über dem Glas */
