@@ -72,6 +72,7 @@ export interface Config {
     testimonials: Testimonial;
     jobs: Job;
     faqs: Faq;
+    aktuelles: Aktuelle;
     aerzte: Aerzte;
     termine: Termine;
     anamnese: Anamnese;
@@ -91,6 +92,7 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    aktuelles: AktuellesSelect<false> | AktuellesSelect<true>;
     aerzte: AerzteSelect<false> | AerzteSelect<true>;
     termine: TermineSelect<false> | TermineSelect<true>;
     anamnese: AnamneseSelect<false> | AnamneseSelect<true>;
@@ -404,6 +406,39 @@ export interface Faq {
     [k: string]: unknown;
   };
   sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Meldungen auf der Seite „Aktuelles“ — neueste zuerst.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aktuelles".
+ */
+export interface Aktuelle {
+  id: number;
+  titel: string;
+  datum: string;
+  /**
+   * Eine Leerzeile trennt Absätze.
+   */
+  text: string;
+  /**
+   * Vollständige Adresse, z. B. https://…
+   */
+  linkUrl?: string | null;
+  /**
+   * Ohne Angabe wird „Mehr erfahren“ verwendet.
+   */
+  linkText?: string | null;
+  /**
+   * Ausschalten blendet die Meldung sofort aus.
+   */
+  aktiv?: boolean | null;
+  /**
+   * Nach diesem Tag verschwindet die Meldung automatisch. Leer = dauerhaft sichtbar.
+   */
+  gueltigBis?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -790,6 +825,10 @@ export interface PayloadLockedDocument {
         value: number | Faq;
       } | null)
     | ({
+        relationTo: 'aktuelles';
+        value: number | Aktuelle;
+      } | null)
+    | ({
         relationTo: 'aerzte';
         value: number | Aerzte;
       } | null)
@@ -979,6 +1018,21 @@ export interface FaqsSelect<T extends boolean = true> {
   question?: T;
   answer?: T;
   sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aktuelles_select".
+ */
+export interface AktuellesSelect<T extends boolean = true> {
+  titel?: T;
+  datum?: T;
+  text?: T;
+  linkUrl?: T;
+  linkText?: T;
+  aktiv?: T;
+  gueltigBis?: T;
   updatedAt?: T;
   createdAt?: T;
 }

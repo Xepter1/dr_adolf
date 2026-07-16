@@ -15,6 +15,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   await seedAerzte(payload)
   await seedTermine(payload)
   await seedFaqs(payload)
+  await seedAktuelles(payload)
   await seedSettings(payload)
 }
 
@@ -395,6 +396,34 @@ async function seedFaqs(payload: Payload): Promise<void> {
     })
   }
   payload.logger.info('✓ 6 FAQ angelegt')
+}
+
+async function seedAktuelles(payload: Payload): Promise<void> {
+  const { totalDocs } = await payload.count({ collection: 'aktuelles' })
+  if (totalDocs > 0) return
+  const meldungen = [
+    {
+      titel: 'Termine jetzt online buchen',
+      datum: '2026-07-01T09:00:00.000Z',
+      text:
+        'Ab sofort können Sie Ihren Termin bequem online buchen — Wunschzeit wählen, per E-Mail bestätigen, fertig. Als Neupatient können Sie den Anamnesebogen direkt vorab ausfüllen.\n\n' +
+        'Telefonisch sind wir selbstverständlich weiterhin für Sie da.',
+      aktiv: true,
+    },
+    {
+      // Dauerhafter Hinweis (kein „gültig bis") — Wortlaut von der bisherigen Website.
+      titel: 'Zahnärztlicher Notdienst',
+      datum: '2026-01-01T09:00:00.000Z',
+      text: 'Sollten Sie zahnärztliche Hilfe außerhalb unserer Sprechzeiten benötigen, so finden Sie den zahnärztlichen Notdienst im Internet unter folgendem Link:',
+      linkUrl: 'https://www.zahnarzt-notdienst.de/notdienst/0/landshut-0871.php',
+      linkText: 'Zum zahnärztlichen Notdienst',
+      aktiv: true,
+    },
+  ]
+  for (const m of meldungen) {
+    await payload.create({ collection: 'aktuelles', data: m as never })
+  }
+  payload.logger.info('✓ 2 Aktuelles-Meldungen angelegt')
 }
 
 async function seedSettings(payload: Payload): Promise<void> {

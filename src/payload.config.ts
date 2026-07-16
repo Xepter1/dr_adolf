@@ -15,6 +15,7 @@ import { Leistungen } from './collections/Leistungen'
 import { Testimonials } from './collections/Testimonials'
 import { Jobs } from './collections/Jobs'
 import { Faqs } from './collections/Faqs'
+import { Aktuelles } from './collections/Aktuelles'
 import { Aerzte } from './collections/Aerzte'
 import { Termine } from './collections/Termine'
 import { Anamnese } from './collections/Anamnese'
@@ -57,7 +58,7 @@ export default buildConfig({
       description: `Redaktion · ${siteName}`,
     },
   },
-  collections: [Projekte, Leistungen, Testimonials, Jobs, Faqs, Aerzte, Termine, Anamnese, Media, Users],
+  collections: [Projekte, Leistungen, Testimonials, Jobs, Faqs, Aktuelles, Aerzte, Termine, Anamnese, Media, Users],
   globals: [Settings],
   editor: lexicalEditor(),
   db: sqliteAdapter({

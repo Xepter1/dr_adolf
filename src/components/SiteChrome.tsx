@@ -66,6 +66,7 @@ export function HeaderHome({ settings, leistungen = [] }: { settings: ChromeSett
             </li>
             <li><a href="#team">Praxis &amp; Team</a></li>
             <li><a href="#oeffnungszeiten">Öffnungszeiten</a></li>
+            <li><Link href="/aktuelles">Aktuelles</Link></li>
             <li><a href="#kontakt">Kontakt</a></li>
           </ul>
         </nav>
@@ -147,6 +148,7 @@ export function FooterHome({ settings, year, leistungen = [] }: { settings: Chro
               <li><Link href="/termin">Termin buchen</Link></li>
               <li><Link href="/#team">Praxis &amp; Team</Link></li>
               <li><Link href="/#oeffnungszeiten">Öffnungszeiten</Link></li>
+              <li><Link href="/aktuelles">Aktuelles</Link></li>
               <li><Link href="/#kontakt">Kontakt</Link></li>
             </ul>
           </div>

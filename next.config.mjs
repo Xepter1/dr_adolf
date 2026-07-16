@@ -16,7 +16,7 @@ const nextConfig = {
       { source: '/praxis/team', destination: '/#team', permanent: true },
       { source: '/kontakt-und-anfahrt', destination: '/#kontakt', permanent: true },
       { source: '/about', destination: '/#willkommen', permanent: true },
-      { source: '/aktuelles', destination: '/', permanent: true },
+      // /aktuelles NICHT mehr umleiten — die Seite gibt es jetzt wieder (gleiche URL wie früher).
     ]
   },
 }
