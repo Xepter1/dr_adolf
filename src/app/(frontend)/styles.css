@@ -205,25 +205,25 @@ h1 em{font-style:italic;font-weight:340}
 /* die gläserne Fläche — morpht in der Breite nach außen */
 .hero-tile-card{position:absolute;top:0;height:100%;width:100%;z-index:1;border-radius:20px;overflow:hidden;
   /* weißer Glas-Schimmer ÜBER einer dezent dunklen Basis → Text hat immer Kontrast, bleibt aber glasig */
-  background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),rgba(8,22,17,.44);border:1px solid rgba(255,255,255,.2);
+  background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),rgba(8,22,17,.52);border:1px solid rgba(255,255,255,.2);
   box-shadow:0 10px 34px -14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);
   transition:width .24s var(--ease),transform .2s var(--ease),background .2s var(--ease);will-change:width,transform}
 .hero-tile:nth-child(even) .hero-tile-card{left:0}   /* rechte Spalte → fährt nach rechts aus */
 .hero-tile:nth-child(odd)  .hero-tile-card{right:0}  /* linke Spalte → fährt nach links aus */
-@media(hover:hover){.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.1)),rgba(8,22,17,.36)}}
+@media(hover:hover){.hero-tile:hover .hero-tile-card{transform:translateY(-3px);background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.1)),rgba(8,22,17,.44)}}
 /* Klappt ausschließlich seitlich auf — Höhe bleibt die der Kachel. */
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-card,
 .hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:170%}
 
 /* Unterpunkte in der ausgefahrenen Hälfte */
-.hero-tile-subs{position:absolute;top:0;bottom:0;width:41%;margin:0;padding:8px 10px;list-style:none;
+.hero-tile-subs{position:absolute;top:0;bottom:0;width:41%;margin:0;padding:5px 10px;list-style:none;
   display:flex;flex-direction:column;justify-content:center;gap:0;
   opacity:0;visibility:hidden;transition:opacity .11s var(--ease),visibility 0s linear .24s}
 .hero-tile:nth-child(even) .hero-tile-subs{right:0}  /* außen rechts */
 .hero-tile:nth-child(odd)  .hero-tile-subs{left:0}   /* außen links */
 .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-subs,
 .hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-subs{opacity:1;visibility:visible;transition:opacity .16s var(--ease) .22s,visibility 0s}
-.hero-tile-sub{display:block;padding:3px 7px;border-radius:8px;font-size:.75rem;font-weight:500;color:rgba(244,248,246,.94);text-shadow:0 1px 8px rgba(0,0,0,.45);text-decoration:none;line-height:1.2;overflow-wrap:break-word;hyphens:auto;transition:background .15s var(--ease),color .15s var(--ease)}
+.hero-tile-sub{display:block;padding:2px 7px;border-radius:8px;font-size:.85rem;font-weight:700;color:rgba(244,248,246,.94);text-shadow:0 1px 8px rgba(0,0,0,.45);text-decoration:none;line-height:1.15;overflow-wrap:break-word;hyphens:auto;transition:background .15s var(--ease),color .15s var(--ease)}
 .hero-tile-sub:hover,.hero-tile-sub:focus-visible{background:rgba(255,255,255,.18);color:#fff;outline:none}
 
 /* klickbare Kategorie — bleibt fix auf der Original-Kachel, über dem Glas */
@@ -256,11 +256,27 @@ h1 em{font-style:italic;font-weight:340}
   .hero-tile,.hero-tile-cat,.hero-tile-sub{-webkit-tap-highlight-color:transparent}}
 /* Zwischen Handy-Layout und breitem Desktop sind die Kacheln zu schmal für das
    seitliche Panel (Begriffe würden extrem umbrechen) → kein Aufklappen; die
-   Kachel verlinkt direkt auf die Kategorieseite, wo alle Unterpunkte stehen. */
-@media(min-width:681px) and (max-width:1279px){
+   Kachel verlinkt direkt auf die Kategorieseite, wo alle Unterpunkte stehen.
+   Gilt nur für Maus-Geräte — Touch-Geräte (iPad) bekommen unten das Chip-Layout. */
+@media(hover:hover) and (min-width:681px) and (max-width:1279px){
   .hero-tile-card{width:100%!important;height:100%!important}
   .hero-tile::after{display:none}
   .hero-tile-subs{display:none}
+}
+/* Schmale Desktops (13"–16"-MacBook & Co.): Die H1 ist hier fast so groß wie am
+   breiten Monitor (clamp-Deckel bei 5rem), die rechte Grid-Spalte aber deutlich
+   schmaler — das Rechts-Aufklappen der rechten Kachelspalte würde in die
+   Überschrift ragen. Darum wird hier das Layout umverteilt: schmalere Zahn-
+   Spalte, breitere Text-Spalte und eine etwas kleinere H1 → rechts neben den
+   Kacheln bleibt ein garantierter Korridor fürs Panel frei. */
+@media(min-width:1280px) and (max-width:1749px){
+  .hero .wrap.hero-inner{grid-template-columns:.78fr 1.12fr 1.36fr}
+  .hero h1{font-size:4.5vw}
+  /* Kacheln sind hier schmaler → Panel etwas weiter ausfahren, damit die
+     Unterpunkte (.85rem fett) nicht umbrechen/abgeschnitten werden. Der
+     Korridor zur H1 ist breit genug (≥29px Restabstand bei 1280px). */
+  .hero-tile[data-subs]:not([data-subs="0"]):hover .hero-tile-card,
+  .hero-tile[data-subs]:not([data-subs="0"]):focus-within .hero-tile-card{width:185%}
 }
 @media(max-width:1024px){
   .hero .wrap.hero-inner{grid-template-columns:1fr 1fr;gap:40px}
@@ -275,12 +291,25 @@ h1 em{font-style:italic;font-weight:340}
 }
 @media(max-width:460px){ .hero-tiles{grid-template-columns:1fr} .hero-tile-card{width:100%!important} }
 
-/* --- HANDY: Kacheln in voller Breite, Unterleistungen als antippbare Chips sichtbar --- */
-@media(max-width:680px){
+/* Touch im Querformat (iPad 1025–1366px): gleiche 2-Spalten-Aufteilung wie
+   ≤1024px — Zahn weg, Kacheln bekommen die halbe Breite, damit die Chips
+   nicht extrem umbrechen. */
+@media (hover:none) and (min-width:1025px) and (max-width:1366px), (pointer:coarse) and (min-width:1025px) and (max-width:1366px){
+  .hero .wrap.hero-inner{grid-template-columns:1fr 1fr;gap:40px}
+  .hero-tooth{display:none}
+  .hero-content{grid-column:auto;grid-row:auto;text-align:left;justify-self:stretch;max-width:none}
+  .hero-content .hero-cta{justify-content:flex-start}
+  .hero-tiles{grid-column:auto;grid-row:auto}
+  .hero h1{font-size:clamp(2.5rem,5.4vw,5rem)}
+}
+/* --- HANDY & TOUCH (iPad bis 1366px quer): Kacheln als Liste, Unterleistungen
+   als antippbare Chips dauerhaft sichtbar — ohne Hover gibt es kein Aufklappen,
+   also müssen die Unterpunkte direkt sichtbar sein. --- */
+@media (max-width:680px), (hover:none) and (max-width:1366px), (pointer:coarse) and (max-width:1366px){
   .hero-tile::after{display:none} /* Aufklapp-Hinweis unnötig — Chips sind sichtbar */
   .hero-tiles{grid-template-columns:1fr;gap:12px}
   .hero-tile{height:auto;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
-    background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.055));
+    background:linear-gradient(155deg,rgba(255,255,255,.14),rgba(255,255,255,.055)),rgba(8,22,17,.5);
     border:1px solid rgba(255,255,255,.2);
     box-shadow:0 12px 30px -18px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.2)}
   /* innere Glasfläche neutralisieren – die Kachel selbst ist jetzt das Glas */
