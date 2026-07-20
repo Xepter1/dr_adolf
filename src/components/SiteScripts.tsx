@@ -16,6 +16,16 @@ export default function SiteScripts() {
   useEffect(() => {
     const cleanups: Array<() => void> = []
 
+    // ---- Sicherheits-Reset bei jedem Seitenwechsel ----
+    // Ein evtl. noch offenes Mobilmenü setzt `body.mobile-open` → `overflow:hidden`
+    // (Scroll-Sperre). Bei clientseitiger Navigation MUSS diese Sperre gelöst werden,
+    // sonst „erbt" die Zielseite (z. B. /termin) die Sperre und lässt sich nicht scrollen.
+    // SiteScripts hängt im geteilten (frontend)-Layout, dieser Effekt läuft also bei
+    // jedem Pfadwechsel neu — hier ist der zuverlässige Ort dafür. Zusätzlich eine evtl.
+    // inline gesetzte Scroll-Sperre (Lightbox: body.style.overflow='hidden') zurücksetzen.
+    document.body.classList.remove('mobile-open')
+    document.body.style.overflow = ''
+
     // ---- Header-Scroll-Zustand ----
     const hdr = document.getElementById('hdr')
     if (hdr) {
@@ -27,21 +37,32 @@ export default function SiteScripts() {
 
     // ---- Mobiles Menü ----
     const burger = document.getElementById('burger')
+    const closeMenu = () => {
+      document.body.classList.remove('mobile-open')
+      burger?.setAttribute('aria-label', 'Menü öffnen')
+    }
     if (burger) {
       const onBurger = () => {
-        document.body.classList.toggle('mobile-open')
-        burger.setAttribute(
-          'aria-label',
-          document.body.classList.contains('mobile-open') ? 'Menü schließen' : 'Menü öffnen',
-        )
+        const open = document.body.classList.toggle('mobile-open')
+        burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen')
       }
       burger.addEventListener('click', onBurger)
       cleanups.push(() => burger.removeEventListener('click', onBurger))
     }
-    const navLinks = Array.from(document.querySelectorAll('nav a'))
-    const closeMenu = () => document.body.classList.remove('mobile-open')
-    navLinks.forEach((a) => a.addEventListener('click', closeMenu))
-    cleanups.push(() => navLinks.forEach((a) => a.removeEventListener('click', closeMenu)))
+    // Menü schließen (und damit die Scroll-Sperre body.mobile-open lösen) bei Klick auf
+    // JEDEN Header-Link — inklusive der CTA „Termin buchen", die außerhalb von <nav> in
+    // .nav-cta liegt und deshalb früher NICHT erfasst wurde. Genau das war der Bug:
+    // Menü offen → „Termin buchen" → /termin blieb mit gesperrtem Scroll hängen.
+    const menuLinks = Array.from(document.querySelectorAll('.site-header a'))
+    menuLinks.forEach((a) => a.addEventListener('click', closeMenu))
+    cleanups.push(() => menuLinks.forEach((a) => a.removeEventListener('click', closeMenu)))
+    // Auch bei In-Page-Ankersprüngen das Menü schließen — insbesondere der
+    // „Zum Inhalt springen"-Skip-Link liegt AUSSERHALB des Headers und ändert den
+    // Pfad nicht; ohne diesen Listener bliebe die Scroll-Sperre bei Tastatur-
+    // Navigation im offenen Menü hängen. Deckt jeden künftigen Hash-Anker mit ab.
+    const onHashChange = () => closeMenu()
+    window.addEventListener('hashchange', onHashChange)
+    cleanups.push(() => window.removeEventListener('hashchange', onHashChange))
 
     // ---- Scroll-Reveal ----
     const io = new IntersectionObserver(
