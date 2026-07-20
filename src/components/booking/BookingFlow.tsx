@@ -131,7 +131,6 @@ export function BookingFlow({ aerzte, brandName, intro, terminarten, versicherun
       </span>
       <div>
         <strong>{a.fullName}</strong>
-        <span>{a.fachrichtung}</span>
       </div>
     </div>
   )
@@ -168,7 +167,6 @@ export function BookingFlow({ aerzte, brandName, intro, terminarten, versicherun
                   {a.fotoUrl ? <img src={a.fotoUrl} alt="" /> : a.initials}
                 </span>
                 <span className="bk-card-name">{a.fullName}</span>
-                <span className="bk-card-fach">{a.fachrichtung}</span>
                 <span className={`bk-next ${next ? '' : 'is-none'}`}>
                   {next ? `Nächster Termin: ${next.weekdayLabel}, ${next.dayLabel}` : 'Zurzeit ausgebucht'}
                 </span>
@@ -218,7 +216,6 @@ export function BookingFlow({ aerzte, brandName, intro, terminarten, versicherun
                 </button>
               ))}
             </div>
-            <p className="bk-hint">Bitte keine sensiblen Gesundheitsdetails angeben – die Kategorie genügt.</p>
           </div>
 
           <button type="button" className="bk-submit" disabled={!anliegenReady} onClick={() => setStep('slot')}>
